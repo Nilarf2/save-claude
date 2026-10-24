@@ -6,16 +6,189 @@ This command only writes local artifacts. It never uploads or publishes.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import re
 import shutil
 import zipfile
 from pathlib import Path
+from html.parser import HTMLParser
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
-PACKAGES = ("module-api", "content", "save", "core", "web-adapter")
-WEB_FILES = ("index.html", "start.js", "game.js", "style.css", "story.json", "character-portraits.json")
+WEB_FILES = ("index.html", "start.js", "game.js", "engine-runtime.js", "style.css", "story.json", "character-portraits.json")
+HASH_LENGTH = 16
+
+
+def fingerprint_name(logical: str, data: bytes) -> str:
+    """Names depend on final shipped bytes, never the release version/date."""
+    path = Path(logical)
+    digest = hashlib.sha256(data).hexdigest()[:HASH_LENGTH]
+    return path.with_name(f"{path.stem}.{digest}{path.suffix}").as_posix()
+
+
+def mapped_url(value: str, mapping: dict[str, str]) -> str:
+    parts = urlsplit(value)
+    if parts.scheme or parts.netloc or value.startswith(("/", "#")):
+        return value
+    logical = unquote(parts.path).removeprefix("./")
+    target = mapping.get(logical)
+    if target is None:
+        return value
+    return target + ("?" + parts.query if parts.query else "") + ("#" + parts.fragment if parts.fragment else "")
+
+
+URL_ATTR = re.compile(r"(\b(?:src|href|poster)\s*=\s*)(['\"])(.*?)\2", re.IGNORECASE)
+CSS_URL = re.compile(r"url\(\s*(['\"]?)([^'\")\s]+)\1\s*\)", re.IGNORECASE)
+JS_IMPORT = re.compile(r"\b(?:from\s*|import\s*\(\s*|import\s*)['\"]([^'\"]+)['\"]")
+
+
+def rewrite_html(text: str, mapping: dict[str, str]) -> str:
+    return URL_ATTR.sub(lambda m: m[1] + m[2] + html.escape(mapped_url(html.unescape(m[3]), mapping), quote=True) + m[2], text)
+
+
+def rewrite_css(text: str, mapping: dict[str, str]) -> str:
+    return CSS_URL.sub(lambda m: 'url("' + mapped_url(m[2], mapping) + '")', text)
+
+
+def prepare_resources(assets: list[str]) -> tuple[dict[str, str], dict[str, bytes]]:
+    """Build the external ESM dependency graph bottom-up, with no import map."""
+    mapping: dict[str, str] = {}
+    payload: dict[str, bytes] = {}
+
+    def add(logical: str, data: bytes, fingerprint: bool = True):
+        published = fingerprint_name(logical, data) if fingerprint else logical
+        if published in payload and payload[published] != data:
+            raise ValueError("Fingerprint collision: " + published)
+        mapping[logical] = published
+        payload[published] = data
+
+    for logical in assets:
+        # Attribution/license documents retain readable stable names and bytes.
+        add(logical, (ROOT / "web" / logical).read_bytes(), Path(logical).suffix.lower() not in {".txt", ".md"})
+    for logical in ("story.json", "character-portraits.json"):
+        add(logical, (ROOT / "web" / logical).read_bytes())
+    # The committed browser bundle avoids bare imports and inline-import-map
+    # restrictions, and ordinary filenames avoid uploaders skipping dist/.
+    add("engine-runtime.js", (ROOT / "web/engine-runtime.js").read_bytes())
+    game = (ROOT / "web/game.js").read_text(encoding="utf-8")
+    game, count = re.subn(r"(\bfrom\s*['\"])\./engine-runtime\.js(['\"])", lambda m: m[1] + "./" + mapping["engine-runtime.js"] + m[2], game)
+    if count != 1:
+        raise ValueError("Expected one engine-runtime.js import in game.js")
+    add("game.js", game.encode("utf-8"))
+    start = (ROOT / "web/start.js").read_text(encoding="utf-8")
+    start, count = re.subn(r"(import\(\s*['\"])\./game\.js(['\"]\s*\))", lambda m: m[1] + "./" + mapping["game.js"] + m[2], start)
+    if count != 1:
+        raise ValueError("Expected one game.js dynamic import in start.js")
+    add("start.js", start.encode("utf-8"))
+    add("style.css", rewrite_css((ROOT / "web/style.css").read_text(encoding="utf-8"), mapping).encode("utf-8"))
+    add("platform-vibehub.js", (ROOT / "tools/release/platform-vibehub.js").read_bytes())
+    return mapping, payload
+
+
+class ReleaseHTML(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.references = []
+        self.has_importmap = False
+        self.assets = {}
+        self._script = None
+        self._text = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        for name in ("src", "href", "poster"):
+            if attrs.get(name):
+                self.references.append(attrs[name])
+        if tag == "script":
+            self.has_importmap |= attrs.get("type") == "importmap"
+            self._script = attrs.get("id") == "release-assets"
+            self._text = []
+
+    def handle_data(self, data):
+        if self._script:
+            self._text.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "script" and self._script:
+            value = json.loads("".join(self._text))
+            self.assets.update(value)
+            self._script = None
+
+
+def validate_references(dist: Path) -> None:
+    """Check emitted HTML, the known ESM graph, CSS and the runtime asset map.
+
+    Dynamic game paths are covered by the resolver contract and runtime tests;
+    this is deliberately not a general JavaScript or HTML dependency parser.
+    """
+    def local_file(reference: str, owner: Path) -> Path | None:
+        parts = urlsplit(reference)
+        if parts.scheme or parts.netloc or not parts.path:
+            return None
+        path = (owner.parent / unquote(parts.path)).resolve()
+        if not path.is_relative_to(dist.resolve()) or not path.is_file():
+            raise ValueError(f"Missing/nonlocal release reference: {owner.relative_to(dist)} -> {reference}")
+        return path
+
+    entry = ReleaseHTML()
+    entry.feed((dist / "index.html").read_text(encoding="utf-8"))
+    if entry.has_importmap:
+        raise ValueError("Release entry requires external ESM, not an inline import map")
+    for value in entry.assets.values():
+        local_file(value, dist / "index.html")
+    for path in dist.glob("*.html"):
+        page = ReleaseHTML()
+        page.feed(path.read_text(encoding="utf-8"))
+        for reference in page.references:
+            local_file(reference, path)
+    for path in dist.rglob("*.css"):
+        for match in CSS_URL.finditer(path.read_text(encoding="utf-8")):
+            local_file(match[2], path)
+    for path in dist.rglob("*.js"):
+        for match in JS_IMPORT.finditer(path.read_text(encoding="utf-8")):
+            specifier = match[1]
+            if specifier.startswith((".", "/")):
+                local_file(specifier, path)
+            elif not urlsplit(specifier).scheme:
+                raise ValueError("Unmapped release module: " + specifier)
+    # game.js resolves these logical document names through the injected map.
+    for name in ("story.json", "character-portraits.json"):
+        if name not in entry.assets:
+            raise ValueError("Missing release document mapping: " + name)
+        document = local_file(entry.assets[name], dist / "index.html")
+
+        def check_logical_assets(value):
+            if isinstance(value, dict):
+                for item in value.values():
+                    check_logical_assets(item)
+            elif isinstance(value, list):
+                for item in value:
+                    check_logical_assets(item)
+            elif isinstance(value, str) and value.startswith("assets/"):
+                # Match the game's existing image/audio suffix normalization.
+                logical = re.sub(r"\.(ogg|wav)$", ".mp3", value, flags=re.IGNORECASE)
+                logical = re.sub(r"\.(png|jpg|jpeg)$", ".webp", logical, flags=re.IGNORECASE)
+                if logical not in entry.assets:
+                    raise ValueError(f"Missing logical release asset mapping: {name} -> {logical}")
+
+        check_logical_assets(json.loads(document.read_text(encoding="utf-8")))
+
+
+def write_manifest(dist: Path, mapping: dict[str, str]) -> None:
+    reverse = {published: logical for logical, published in mapping.items()}
+    files = {}
+    for path in sorted(p for p in dist.rglob("*") if p.is_file()):
+        published = path.relative_to(dist).as_posix()
+        data = path.read_bytes()
+        files[reverse.get(published, published)] = {
+            "path": published, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
+            "fingerprinted": published in reverse and published != reverse[published],
+        }
+    manifest = {"schemaVersion": 1, "hashAlgorithm": "sha256", "fingerprintHexLength": HASH_LENGTH,
+                "note": "Inventory excludes this manifest; cache reuse still depends on the hosting platform.", "files": files}
+    (dist / "release-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def copy(source: Path, target: Path) -> None:
@@ -90,7 +263,6 @@ def main() -> None:
     portraits = json.loads((ROOT / "web/character-portraits.json").read_text(encoding="utf-8"))
     assets = asset_paths(story, portraits)
     required = [ROOT / "web" / p for p in WEB_FILES]
-    required += [ROOT / "engine/packages" / package / "dist/index.js" for package in PACKAGES]
     required += [ROOT / "marketing/release" / p for p in ["cover-16x9.jpg", "cover-4x3.jpg", "icon.jpg"]]
     required += [ROOT / p for p in ["LICENSE", "ASSET-LICENSE.md", "assets/ASSET-SOURCES.json", "engine/LICENSE", "engine/UPSTREAM.json"]]
     required += [ROOT / "web/portraits.html", ROOT / "tools/release/platform-vibehub.js"]
@@ -101,8 +273,9 @@ def main() -> None:
     upstream = json.loads((ROOT / "engine/UPSTREAM.json").read_text(encoding="utf-8"))
     if upstream.get("dirty") is not False:
         raise ValueError("Release requires a clean committed engine snapshot; sync the finalized engine first")
+    mapping, payload = prepare_resources(assets)
     if args.check_only:
-        print(json.dumps({"ok": True, "runtimeAssets": len(assets), "nodes": len(story["nodes"]), "publishing": False}))
+        print(json.dumps({"ok": True, "runtimeAssets": len(assets), "fingerprintedFiles": sum(a != b for a, b in mapping.items()), "nodes": len(story["nodes"]), "publishing": False}))
         return
     if out.exists():
         raise ValueError("Output already exists; use a new version directory: " + str(out))
@@ -111,31 +284,32 @@ def main() -> None:
     for platform in ["offline", "toy", "vibehub"]:
         dist = out / platform
         dist.mkdir()
-        for name in WEB_FILES:
-            copy(ROOT / "web" / name, dist / name)
-        index = (dist / "index.html").read_text(encoding="utf-8")
-        # Deployment scanners can exclude nested build/dist directories. Publish
-        # the five runtime modules under an ordinary asset directory instead.
-        for package in PACKAGES:
-            original = f"../engine/packages/{package}/dist/index.js"
-            if index.count(original) != 1:
-                raise ValueError("Unexpected runtime import map entry: " + package)
-            index = index.replace(original, f"./runtime/{package}.js")
+        for name, data in payload.items():
+            if name == mapping["platform-vibehub.js"] and platform != "vibehub":
+                continue
+            target = dist / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(data)
+        index = rewrite_html((ROOT / "web/index.html").read_text(encoding="utf-8"), mapping)
+        # Read synchronously by game.js; development pages have no map and keep
+        # using original logical URLs. Escape '<' to prevent script termination.
+        asset_map = {name: mapping[name] for name in [*assets, "story.json", "character-portraits.json"]}
+        asset_json = json.dumps(asset_map, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+        asset_script = '<script type="application/json" id="release-assets">' + asset_json + '</script>\n'
+        if index.count("</head>") != 1 or 'id="release-assets"' in index:
+            raise ValueError("Unexpected release HTML head/assets map")
+        index = index.replace("</head>", asset_script + "</head>")
         if platform == "vibehub":
             bridge = (
                 '<script async id="vibehub-sdk" src="https://gamesvibe.app/sdk/v3/vibehub.js"></script>\n'
-                '<script defer src="platform-vibehub.js" data-work="' + html.escape(args.slug, quote=True) + '"></script>\n'
+                '<script defer src="' + mapping["platform-vibehub.js"] + '" data-work="' + html.escape(args.slug, quote=True) + '"></script>\n'
             )
             index = index.replace("</head>", bridge + "</head>")
-            copy(ROOT / "tools/release/platform-vibehub.js", dist / "platform-vibehub.js")
         (dist / "index.html").write_text(index, encoding="utf-8")
-        for source in assets:
-            copy(ROOT / "web" / source, dist / source)
-        for package in PACKAGES:
-            rel = Path("engine/packages") / package / "dist/index.js"
-            copy(ROOT / rel, dist / "runtime" / f"{package}.js")
         copy(ROOT / "LICENSE", dist / "LICENSE-code.txt")
         asset_license = (ROOT / "ASSET-LICENSE.md").read_text(encoding="utf-8").replace("(web/assets/fonts/", "(assets/fonts/")
+        for name in assets:
+            asset_license = asset_license.replace("(" + name + ")", "(" + mapping[name] + ")")
         (dist / "ASSET-LICENSE.md").write_text(asset_license, encoding="utf-8")
         copy(ROOT / "assets/ASSET-SOURCES.json", dist / "assets/ASSET-SOURCES.json")
         copy(ROOT / "engine/LICENSE", dist / "engine/LICENSE")
@@ -144,10 +318,10 @@ def main() -> None:
             copy(ROOT / "marketing/release" / name, dist / "media" / name)
         for screenshot in sorted((ROOT / "marketing/release/screenshots").glob("*.png")):
             copy(screenshot, dist / "media/screenshots" / screenshot.name)
-        release = {"version": args.version, "gameId": story["id"], "contentVersion": story["version"], "start": story["start"], "nodes": len(story["nodes"]), "runtimeAssets": len(assets), "platform": platform, "engineCommit": upstream["commit"]}
+        release = {"version": args.version, "gameId": story["id"], "contentVersion": story["version"], "start": story["start"], "nodes": len(story["nodes"]), "runtimeAssets": len(assets), "platform": platform, "engineCommit": upstream["commit"], "manifest": "release-manifest.json"}
         (dist / "release.json").write_text(json.dumps(release, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         if platform == "offline":
-            copy(ROOT / "web/portraits.html", dist / "portraits.html")
+            (dist / "portraits.html").write_text(rewrite_html((ROOT / "web/portraits.html").read_text(encoding="utf-8"), mapping), encoding="utf-8")
             (dist / "run.py").write_text(OFFLINE_LAUNCHER, encoding="utf-8")
             (dist / "启动游戏-Windows.cmd").write_bytes(b'@echo off\r\ncd /d "%~dp0"\r\npy -3 run.py\r\nif errorlevel 9009 python run.py\r\npause\r\n')
             (dist / "start.sh").write_text('#!/bin/sh\ncd "$(dirname "$0")"\nexec python3 run.py\n', encoding="utf-8")
@@ -155,6 +329,8 @@ def main() -> None:
             (dist / "开始前请读.txt").write_text(OFFLINE_README.format(version=args.version), encoding="utf-8")
         if (dist / "index.html").stat().st_size > 1024 * 1024:
             raise ValueError("Entry HTML exceeds the current Toy 1 MiB limit")
+        validate_references(dist)
+        write_manifest(dist, mapping)
         archive = out / f"save-claude-{platform}-{args.version}.zip"
         outputs.append({"platform": platform, "directory": platform, "archive": archive.name, **zip_directory(dist, archive)})
     for name in ["description.md", "release-notes.md", "platforms.json"]:

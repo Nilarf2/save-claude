@@ -4,7 +4,7 @@
 
 设计要点
 --------
-* 纯 numpy 合成，不依赖 ffmpeg / scipy / 外部采样素材。
+* 纯 numpy 合成，不依赖 scipy / 外部采样素材；MP3 用 lameenc（仅 SFX 可改用 ffmpeg），OGG 用 soundfile。
 * 合成器代码与输出音频的授权范围分别见根目录 LICENSE 与 ASSET-LICENSE.md。
 * 无缝循环：
     - 持续铺底 / 嗡鸣  -> 频域加法合成（一次 irfft 生成全部正弦分音，频率量化到循环长度整数倍）
@@ -18,6 +18,7 @@
     python tools/audio/make_bgm.py                    # 生成全部 BGM + SFX
     python tools/audio/make_bgm.py --only organ_echo,piano_warm
     python tools/audio/make_bgm.py --only-sfx
+    python tools/audio/make_bgm.py --only-sfx --formats mp3 --jobs 1 --report <报告路径>
     python tools/audio/make_bgm.py --formats mp3
     python tools/audio/make_bgm.py --force            # 覆盖已存在文件
     python tools/audio/make_bgm.py --verify           # 只检查已生成文件
@@ -29,6 +30,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
+import subprocess
 import sys
 import time
 import zlib
@@ -836,84 +839,66 @@ TRACKS: List[Tuple[str, Builder]] = [
 # --------------------------------------------------------------------------------------
 # 4 个音效
 # --------------------------------------------------------------------------------------
+def _soft_sfx_tone(freq: float, duration: float, *, attack: float = 0.012,
+                   release: float = 0.055, decay: float = 0.065,
+                   harmonic: float = 0.12) -> np.ndarray:
+    """Quiet rounded tone: no hard strike, glide, reverb or metallic partials."""
+    n = int(duration * SR)
+    t = np.arange(n, dtype=np.float64) / SR
+    phase = 2.0 * np.pi * freq * t
+    wave = np.sin(phase) + harmonic * np.sin(2.0 * phase)
+    env = np.exp(-t / decay)
+    a = min(n, max(2, int(attack * SR)))
+    r = min(n, max(2, int(release * SR)))
+    ramp_a = 0.5 - 0.5 * np.cos(np.linspace(0.0, np.pi, a))
+    ramp_r = 0.5 - 0.5 * np.cos(np.linspace(0.0, np.pi, r))
+    env[:a] *= ramp_a
+    env[-r:] *= ramp_r[::-1]
+    return (wave * env).astype(np.float32)
+
+
 def sfx_click(rng: np.random.Generator) -> np.ndarray:
-    n = int(0.07 * SR)
-    t = np.arange(n, dtype=np.float32) / np.float32(SR)
-    x = rng.standard_normal(n).astype(np.float32)
-    X = np.fft.rfft(x)
-    f = np.maximum(np.fft.rfftfreq(n, 1.0 / SR), 1.0)
-    X *= (f / (f + 1800.0)) * np.exp(-0.5 * (np.log(f / 4200.0) / 0.55) ** 2)
-    x = np.fft.irfft(X, n).astype(np.float32)
-    x /= float(np.max(np.abs(x)) + 1e-9)
-    x *= np.exp(-t / np.float32(0.006))
-    x += 0.45 * np.sin(np.float32(2 * np.pi * 1500) * t) * np.exp(-t / np.float32(0.009))
-    x[:12] *= np.linspace(0, 1, 12, dtype=np.float32)
-    x[-80:] *= np.linspace(1, 0, 80, dtype=np.float32)
-    return x
+    # Frequently repeated dialogue feedback: low, brief and deliberately quiet.
+    return 0.065 * _soft_sfx_tone(260.0, 0.090, attack=0.009, release=0.050, decay=0.035)
 
 
 def sfx_choice(rng: np.random.Generator) -> np.ndarray:
-    n = int(0.36 * SR)
-    t = np.arange(n, dtype=np.float32) / np.float32(SR)
-    # 两个音的上行确认音（880 -> 1320）
-    f_curve = 880.0 + (1320.0 - 880.0) * smoothstep(np.clip(t / 0.12, 0, 1))
-    ph = np.cumsum((2 * np.pi * f_curve / SR).astype(np.float32)).astype(np.float32)
-    tone = np.sin(ph) + 0.35 * np.sin(2.0 * ph)
-    env = np.exp(-np.maximum(0.0, t - 0.03) / np.float32(0.16))
-    env[:240] *= np.linspace(0, 1, 240, dtype=np.float32)
-    x = (tone * env).astype(np.float32)
-    # 轻微板混响
-    wet = np.zeros(n, dtype=np.float32)
-    for d, g in [(0.045, 0.22), (0.083, 0.14), (0.131, 0.09), (0.19, 0.05)]:
-        i = int(d * SR)
-        wet[i:] += x[: n - i] * np.float32(g)
-    return ((x + wet) / (1.0 + 0.5)).astype(np.float32)
+    # A short two-note confirmation, distinct from click without a high beep.
+    out = np.zeros(int(0.205 * SR), dtype=np.float32)
+    first = _soft_sfx_tone(293.665, 0.120, decay=0.050)
+    second = _soft_sfx_tone(391.995, 0.135, decay=0.055)
+    out[:len(first)] += 0.058 * first
+    start = int(0.070 * SR)
+    out[start:start + len(second)] += 0.052 * second
+    return out
 
 
 def sfx_page(rng: np.random.Generator) -> np.ndarray:
-    n = int(0.46 * SR)
+    n = int(0.210 * SR)
     t = np.arange(n, dtype=np.float32) / np.float32(SR)
     x = rng.standard_normal(n).astype(np.float32)
     X = np.fft.rfft(x)
     f = np.maximum(np.fft.rfftfreq(n, 1.0 / SR), 1.0)
-    X *= (f / (f + 900.0)) * 1.0 / np.sqrt(1.0 + (f / 7000.0) ** 4)
+    # Soft paper brush: suppress the old broad 2–7 kHz hiss.
+    X *= (f / (f + 120.0)) ** 2 / np.sqrt(f) / np.sqrt(1.0 + (f / 950.0) ** 10)
     x = np.fft.irfft(X, n).astype(np.float32)
-    x /= float(np.max(np.abs(x)) + 1e-9)
-    # 两次翻页摩擦
+    x *= np.float32(0.018 / (np.sqrt(np.mean(x.astype(np.float64) ** 2)) + 1e-12))
     env = np.zeros(n, dtype=np.float32)
-    for c, w, a in [(0.09, 0.055, 1.0), (0.26, 0.07, 0.7)]:
+    for c, w, a in [(0.060, 0.024, 1.0), (0.130, 0.031, 0.60)]:
         idx = (np.arange(n, dtype=np.float32) / SR - c)
         env += (a * np.exp(-0.5 * (idx / w) ** 2)).astype(np.float32)
     x *= env
-    x[:200] *= np.linspace(0, 1, 200, dtype=np.float32)
-    x[-400:] *= np.linspace(1, 0, 400, dtype=np.float32)
+    ramp = 0.5 - 0.5 * np.cos(np.linspace(0.0, np.pi, int(0.018 * SR)))
+    x[:len(ramp)] *= ramp
+    x[-len(ramp):] *= ramp[::-1]
     return x.astype(np.float32)
 
 
 def sfx_bell(rng: np.random.Generator) -> np.ndarray:
-    n = int(1.5 * SR)
-    t = np.arange(n, dtype=np.float32) / np.float32(SR)
-    f0 = 262.0
-    # 教堂钟：非谐分音 + 双失谐拍频
-    parts = [(0.5, 1.0, 3.2), (1.0, 0.85, 2.6), (1.19, 0.5, 1.9), (1.5, 0.34, 1.5),
-             (2.0, 0.42, 1.3), (2.51, 0.2, 0.95), (3.01, 0.16, 0.7), (4.07, 0.1, 0.5),
-             (5.43, 0.05, 0.35)]
-    out = np.zeros(n, dtype=np.float32)
-    for r, a, tau in parts:
-        f = f0 * r
-        env = np.exp(-t / np.float32(tau))
-        out += np.float32(a) * env * np.sin(np.float32(2 * np.pi * f) * t +
-                                           np.float32(rng.uniform(0, 6.28)))
-        out += np.float32(a * 0.5) * env * np.sin(np.float32(2 * np.pi * f * 1.0015) * t +
-                                                  np.float32(rng.uniform(0, 6.28)))
-    # 敲击瞬态
-    strike_n = int(0.02 * SR)
-    st = rng.standard_normal(strike_n).astype(np.float32)
-    st *= np.exp(-np.arange(strike_n, dtype=np.float32) / np.float32(0.004))
-    out[:strike_n] += 0.35 * st
-    out[:64] *= np.linspace(0, 1, 64, dtype=np.float32)
-    out[-1200:] *= np.linspace(1, 0, 1200, dtype=np.float32)
-    return out.astype(np.float32)
+    # Small warm chime, no hard strike or long church-bell tail.
+    body = _soft_sfx_tone(330.0, 0.420, attack=0.018, release=0.120, decay=0.100, harmonic=0.08)
+    overtone = _soft_sfx_tone(495.0, 0.420, attack=0.020, release=0.140, decay=0.075, harmonic=0.0)
+    return (0.060 * body + 0.010 * overtone).astype(np.float32)
 
 
 SFX: List[Tuple[str, Callable[[np.random.Generator], np.ndarray]]] = [
@@ -924,11 +909,20 @@ SFX: List[Tuple[str, Callable[[np.random.Generator], np.ndarray]]] = [
 # --------------------------------------------------------------------------------------
 # 编码 / 写出
 # --------------------------------------------------------------------------------------
-def normalize_sfx(x: np.ndarray, peak_db: float = -3.0) -> np.ndarray:
-    """音效：峰值归一化 + 软限幅，单声道复制到立体声。"""
-    peak = float(np.max(np.abs(x)) + 1e-9)
-    x = x * np.float32((10.0 ** (peak_db / 20.0)) / peak)
-    x = np.float32(0.99) * np.tanh(x / np.float32(0.99))
+def normalize_sfx(x: np.ndarray, peak_db: float = -22.0, rms_db_ceiling: float = -32.0) -> np.ndarray:
+    """Safety ceilings only: never turn a quiet recipe up to a target peak/RMS.
+
+    The old -3 dB peak normalization erased every recipe's intended volume.
+    No compressor, loudness normalization or automatic makeup gain is applied.
+    """
+    x = np.asarray(x, dtype=np.float32)
+    if not np.isfinite(x).all():
+        raise ValueError("SFX contains nonfinite samples")
+    peak = float(np.max(np.abs(x)))
+    rms = float(np.sqrt(np.mean(x.astype(np.float64) ** 2)))
+    gain = min(1.0, 10.0 ** (peak_db / 20.0) / max(peak, 1e-12),
+               10.0 ** (rms_db_ceiling / 20.0) / max(rms, 1e-12))
+    x = x * np.float32(gain)
     stereo = np.stack([x, x], axis=1).astype(np.float32)
     return stereo
 
@@ -957,6 +951,21 @@ def encode_ogg(path: str, stereo: np.ndarray) -> int:
         block = 1 << 18
         for i in range(0, stereo.shape[0], block):
             fh.write(stereo[i:i + block])
+    return os.path.getsize(path)
+
+
+def encode_sfx_mp3(path: str, stereo: np.ndarray) -> int:
+    """Use the existing encoder, or installed ffmpeg without any gain filters."""
+    if lameenc is not None:
+        return encode_mp3(path, stereo, 128)
+    ffmpeg = shutil.which("ffmpeg")
+    if ffmpeg is None:
+        raise RuntimeError("MP3 SFX needs lameenc or ffmpeg (libmp3lame)")
+    pcm = (np.clip(stereo, -1.0, 1.0) * 32767.0).astype("<i2")
+    subprocess.run([ffmpeg, "-hide_banner", "-loglevel", "error", "-y",
+                    "-f", "s16le", "-ar", str(SR), "-ac", "2", "-i", "pipe:0",
+                    "-c:a", "libmp3lame", "-b:a", "128k", path],
+                   input=pcm.tobytes(), check=True)
     return os.path.getsize(path)
 
 
@@ -998,10 +1007,11 @@ def render_sfx(name: str, fn: Callable[[np.random.Generator], np.ndarray],
     x = fn(rng)
     stereo = normalize_sfx(x)
     info = {"name": name, "seconds": round(stereo.shape[0] / SR, 3),
-            "peak_db": round(rms_db(stereo), 1), "files": {}, "bytes": {}}
+            "peak_db": round(20.0 * np.log10(float(np.max(np.abs(stereo))) + 1e-12), 1),
+            "rms_db": round(rms_db(stereo), 1), "files": {}, "bytes": {}}
     for fmt in formats:
         path = os.path.join(out_dirs["sfx"], f"{name}.{fmt}")
-        size = encode_mp3(path, stereo, 128) if fmt == "mp3" else encode_ogg(path, stereo)
+        size = encode_sfx_mp3(path, stereo) if fmt == "mp3" else encode_ogg(path, stereo)
         info["files"][fmt] = os.path.relpath(path, ROOT).replace("\\", "/")
         info["bytes"][fmt] = size
     return info
@@ -1068,6 +1078,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--formats", default="mp3,ogg", help="输出格式，默认 mp3,ogg")
     ap.add_argument("--bgm-dir", default=BGM_DIR)
     ap.add_argument("--sfx-dir", default=SFX_DIR)
+    ap.add_argument("--report", default=REPORT_PATH, help="JSON report path; use a private output location for local measurements")
     ap.add_argument("--force", action="store_true", help="覆盖已存在文件")
     ap.add_argument("--jobs", type=int, default=0, help="并行进程数，默认 min(核数, 4)")
     ap.add_argument("--verify", action="store_true", help="只校验已有输出")
@@ -1137,7 +1148,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     report["elapsed_s"] = round(time.time() - t_all, 1)
     total = sum(sum(i["bytes"].values()) for i in report["generated"])
     report["total_bytes"] = total
-    with open(REPORT_PATH, "w", encoding="utf-8") as fh:
+    with open(args.report, "w", encoding="utf-8") as fh:
         json.dump(report, fh, ensure_ascii=False, indent=2)
     print(f"\n已生成 {len(report['generated'])} 个文件，失败 {len(report['failed'])}，"
           f"跳过 {len(report['skipped'])}，合计 {total/1024/1024:.2f} MB，耗时 {report['elapsed_s']}s")

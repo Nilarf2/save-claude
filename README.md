@@ -41,7 +41,7 @@ npm run check
 npm run build:map
 ```
 
-`build` 将 `story/03-story.md`、舞台计划和立绘登记编译为 `web/story.json`；`check` 检查引擎来源、源码与快照一致性、舞台及固定路线/结局回归。地图为只读作者工具。
+`build` 将 `story/03-story.md`、舞台计划和立绘登记编译为 `web/story.json`，并从引擎快照生成已提交的 `web/engine-runtime.js`；`check` 检查引擎来源、源码与产物一致性、舞台、固定路线/结局及发布资源回归。地图为只读作者工具。
 
 准备发布输入后，先检查再写入新的输出目录：
 
@@ -53,7 +53,9 @@ python3 tools/release/build-release.py --out-dir ../save-claude-release/1.1.0 --
 
 输出目录已存在时命令会拒绝覆盖。准备包仅写本地产物，不代表上传或正式发布。运行包从明确清单收集剧情、实际引用素材、封面、字体和引擎模块，不需要携带制作参考或凭据。
 
-发布包将引擎脚本放在 `runtime/`，避免平台上传工具跳过嵌套的 `dist/` 目录。上传成功后还必须检查实际托管页面；构建成功不代表线上文件齐全。在已安装 Playwright 和 Chromium 的环境中，可对解压后的本地服务或线上游戏页面运行：
+运行时通过外部脚本载入引擎，不依赖内联 importmap，兼容限制内联脚本的平台。发布包给脚本、样式、剧情和媒体的文件名加入内容指纹；未变化的资源保持相同名称，便于平台复用缓存。资源映射与 `release-manifest.json` 记录实际文件和校验值，详见 [发布说明](tools/release/README.zh-CN.md)。
+
+上传成功后还必须检查实际托管页面；构建成功不代表线上文件齐全。在已安装 Playwright 和 Chromium 的环境中，可对解压后的本地服务或线上游戏页面运行：
 
 ```sh
 AUDIT_URL=https://example.com/game/index.html node tests/ui/startup-audit.mjs

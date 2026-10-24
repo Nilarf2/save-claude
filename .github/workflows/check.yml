@@ -19,5 +19,5 @@ jobs:
         run: node --input-type=module -e "import fs from 'node:fs'; if (JSON.parse(fs.readFileSync('engine/UPSTREAM.json', 'utf8')).dirty) throw Error('Sync a clean upstream commit before CI');"
       - run: npm run build
       - run: npm run check
-      - name: Keep the committed runtime story current
-        run: git diff --exit-code -- web/story.json
+      - name: Keep committed browser artifacts current
+        run: git diff --exit-code -- web/story.json web/engine-runtime.js

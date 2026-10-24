@@ -1,8 +1,16 @@
 // 拯救 Claude 大小姐 — 传统立绘 + 文本框 AVG
-import { compileStory } from '@text-adventure/content';
-import { createSession } from '@text-adventure/core';
+import { compileStory, createSession } from './engine-runtime.js';
 
 const $ = (s) => document.querySelector(s);
+const releaseAssetsNode = $('#release-assets');
+const releaseAssets = releaseAssetsNode ? JSON.parse(releaseAssetsNode.textContent) : {};
+if (!releaseAssets || typeof releaseAssets !== 'object' || Array.isArray(releaseAssets)) {
+  throw new Error('发布资源清单格式错误');
+}
+function resolveAsset(path) {
+  return Object.prototype.hasOwnProperty.call(releaseAssets, path) && typeof releaseAssets[path] === 'string'
+    ? releaseAssets[path] : path;
+}
 const el = {
   bgA: $('#bg-a'), bgB: $('#bg-b'), chars: $('#chars'),
   chapter: $('#chapter'), textbox: $('#textbox'), speaker: $('#speaker'),
@@ -37,6 +45,11 @@ function prepareSaveStorage(version) {
   // Remove only recognized story-save keys. Preferences, unrelated app data,
   // and this content version's saves survive every subsequent page load.
   try {
+    const probeKey = STORAGE_PREFIX + 'storage-probe';
+    const previous = localStorage.getItem(probeKey);
+    localStorage.setItem(probeKey, '1');
+    if (previous === null) localStorage.removeItem(probeKey);
+    else localStorage.setItem(probeKey, previous);
     const outdated = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -45,22 +58,23 @@ function prepareSaveStorage(version) {
       if (legacy || (versioned && !key.startsWith(SAVE_PREFIX))) outdated.push(key);
     }
     for (const key of outdated) localStorage.removeItem(key);
-  } catch (e) { /* Storage may be unavailable; playing still works. */ }
+    return true;
+  } catch (e) { return false; /* Storage may be unavailable; playing still works. */ }
 }
 
 // ---------- 资源路径 ----------
 function url(p) {
   if (!p) return null;
-  return p.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+  return resolveAsset(p.replace(/\.(png|jpg|jpeg)$/i, '.webp'));
 }
 function bgUrl(sceneId) {
   const a = S.story.assets['bg_' + sceneId];
-  return a ? url(a.src) : 'assets/bg/' + sceneId + '.webp';
+  return a ? url(a.src) : resolveAsset('assets/bg/' + sceneId + '.webp');
 }
 function bgmUrl(musicId) {
   const a = S.story.assets['bgm_' + musicId];
-  if (a) return a.src.replace(/\.(ogg|wav)$/i, '.mp3');
-  return 'assets/bgm/' + musicId + '.mp3';
+  if (a) return resolveAsset(a.src.replace(/\.(ogg|wav)$/i, '.mp3'));
+  return resolveAsset('assets/bgm/' + musicId + '.mp3');
 }
 
 // ---------- 背景（交叉淡入） ----------
@@ -284,7 +298,7 @@ function audioSettings() {
 function setSfx(name) {
   if (!S.sfxOn || document.hidden) return;
   try {
-    const a = new Audio('assets/sfx/' + name + '.mp3');
+    const a = new Audio(resolveAsset('assets/sfx/' + name + '.mp3'));
     a.volume = S.sfxVolume;
     S.sfxPlaying.add(a);
     const release = () => S.sfxPlaying.delete(a);
@@ -325,7 +339,7 @@ function spritePresentation(cid, expr) {
   if (!appearance) return { sources: [] };
   const ex = appearance.expressions || {};
   const pose = expr && appearance.poses?.[expr];
-  const sources = [...new Set([pose, expr && ex[expr], ex.normal, appearance.portrait].filter(Boolean))];
+  const sources = [...new Set([pose, expr && ex[expr], ex.normal, appearance.portrait].filter(Boolean).map(resolveAsset))];
   return {
     sources,
     framing: appearance.framing === 'waist-up' ? 'waist-up' : 'full-body',
@@ -950,11 +964,13 @@ function installPanelAccess() {
 
 // ---------- 启动 ----------
 async function boot() {
-  const res = await fetch('story.json');
+  const res = await fetch(resolveAsset('story.json'));
   if (!res.ok) throw new Error('剧本加载失败（HTTP ' + res.status + '）');
   S.story = await res.json();
   S.compiled = compileStory(S.story);
-  prepareSaveStorage(S.story.version);
+  if (!prepareSaveStorage(S.story.version)) {
+    $('.title-version').textContent = '当前环境无法保存进度，离开后需重新开始';
+  }
 
   // 章节标题表：从源剧本拿不到，就自己建 id -> 标题
   S.chapterLabels = {};
