@@ -37,6 +37,7 @@ class ReleaseTests(unittest.TestCase):
         for name in ['LICENSE', 'engine/LICENSE', 'assets/ASSET-SOURCES.json', 'marketing/description.md', 'marketing/release-notes.md', 'marketing/platforms.json', 'tools/release/platform-vibehub.js']:
             self.put(name, '{}')
         self.put('ASSET-LICENSE.md', '[font](web/assets/fonts/story-serif.woff2) [OFL](web/assets/fonts/OFL.txt)')
+        self.put('SOURCE-NOTICE.md', 'Adapted reference source and maintainer contact.\n')
         for name in ['cover-16x9.jpg', 'cover-4x3.jpg', 'icon.jpg']:
             self.put('marketing/release/' + name, b'marketing')
         for path in ['cover/title.webp', 'char/normal.webp', 'bgm/theme.mp3', 'fonts/story-serif.woff2', 'fonts/OFL.txt', 'fonts/NOTICE.txt', *['sfx/' + p + '.mp3' for p in ['page', 'click', 'choice', 'bell']]]:
@@ -74,6 +75,7 @@ class ReleaseTests(unittest.TestCase):
             self.assertFalse(any('dist' in Path(f['path']).parts for f in files.values()))
             self.assertEqual(files['assets/fonts/OFL.txt']['path'], 'assets/fonts/OFL.txt')
             self.assertEqual((a / platform / 'assets/fonts/OFL.txt').read_bytes(), (self.root / 'web/assets/fonts/OFL.txt').read_bytes())
+            self.assertEqual((a / platform / 'SOURCE-NOTICE.md').read_bytes(), (self.root / 'SOURCE-NOTICE.md').read_bytes())
             for logical, entry in files.items():
                 data = (a / platform / entry['path']).read_bytes()
                 self.assertEqual(hashlib.sha256(data).hexdigest(), entry['sha256'])

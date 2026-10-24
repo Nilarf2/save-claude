@@ -2,6 +2,8 @@
 
 中文文字冒险游戏（AVG）。在黑金哥特风格的教堂与幻方大院之间，跟随 Claude 和 DeepSeek 的选择，寻找「迷一次路」的可能。
 
+本作品改编自 QQ 上流传的图片漫画，为非官方改编。如涉及侵权，请通过本项目 [GitHub Issues](https://github.com/Nilarf2/save-claude/issues) 联系项目维护者，我们将及时删除相关内容。详见[来源与联系说明](SOURCE-NOTICE.md)；这不构成已获原作授权的声明。
+
 当前内容版本 **1.1.0**，包含 **69 章、18 个结局**。普通新局从 **A00** 开始；选择、道具和关系在本轮旅程中累积，侧线可以回到正文，没有必须跨周目全通的条件。人性、合规、羁绊、污染是累计分数，不会统一封顶到 100。
 
 在线游玩：[VibeHub](https://gamesvibe.app/play/dmasjcjx8zhg8rIwpmJGL) · [BilibiliToy](https://www.bilibili.com/toy/save-claude/index.html)。Toy 更新需经过平台审核，正式站点版本可能晚于 GitHub。

@@ -2,9 +2,15 @@
   "schemaVersion": 1,
   "scope": "Current game runtime assets and selected release media; file paths are relative to the source repository, not an ownership certificate.",
   "licenseNotice": "../ASSET-LICENSE.md",
+  "sourceNotice": {
+    "file": "../SOURCE-NOTICE.md",
+    "notice": "本作品改编自 QQ 上流传的图片漫画，为非官方改编。如涉及侵权，请通过本项目 GitHub Issues 联系项目维护者，我们将及时删除相关内容。",
+    "contactUrl": "https://github.com/Nilarf2/save-claude/issues",
+    "rightsStatus": "Original comic author, first publication and permission have not been verified; this notice is not a claim of authorization."
+  },
   "categories": {
     "text": {
-      "kind": "project-authored-and-edited-story-with-existing-story-and-character-references",
+      "kind": "unofficial-game-adaptation-of-image-comic-circulated-on-QQ",
       "files": [
         "story/03-story.md",
         "web/story.json"
