@@ -77,6 +77,15 @@ body{
   object-position:bottom center;
 }
 
+#asset-loading{
+  position:absolute;top:calc(68px + var(--safe-top));left:50%;transform:translateX(-50%);
+  z-index:35;max-width:calc(100% - 32px - var(--safe-left) - var(--safe-right));
+  padding:9px 15px;border:1px solid rgba(201,162,74,.4);border-radius:4px;
+  color:var(--gold-bright);background:rgba(6,7,10,.9);font-size:13px;
+  line-height:1.5;text-align:center;pointer-events:none;
+}
+#asset-loading[hidden]{display:none}
+
 /* ============ HUD ============ */
 #hud{
   position:absolute;top:0;left:0;right:0;
