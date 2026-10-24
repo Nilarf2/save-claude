@@ -264,7 +264,7 @@ def main() -> None:
     assets = asset_paths(story, portraits)
     required = [ROOT / "web" / p for p in WEB_FILES]
     required += [ROOT / "marketing/release" / p for p in ["cover-16x9.jpg", "cover-4x3.jpg", "icon.jpg"]]
-    required += [ROOT / p for p in ["LICENSE", "ASSET-LICENSE.md", "assets/ASSET-SOURCES.json", "engine/LICENSE", "engine/UPSTREAM.json"]]
+    required += [ROOT / p for p in ["LICENSE", "ASSET-LICENSE.md", "SOURCE-NOTICE.md", "assets/ASSET-SOURCES.json", "engine/LICENSE", "engine/UPSTREAM.json"]]
     required += [ROOT / "web/portraits.html", ROOT / "tools/release/platform-vibehub.js"]
     required += [ROOT / "marketing" / p for p in ["description.md", "release-notes.md", "platforms.json"]]
     for path in required:
@@ -307,6 +307,7 @@ def main() -> None:
             index = index.replace("</head>", bridge + "</head>")
         (dist / "index.html").write_text(index, encoding="utf-8")
         copy(ROOT / "LICENSE", dist / "LICENSE-code.txt")
+        copy(ROOT / "SOURCE-NOTICE.md", dist / "SOURCE-NOTICE.md")
         asset_license = (ROOT / "ASSET-LICENSE.md").read_text(encoding="utf-8").replace("(web/assets/fonts/", "(assets/fonts/")
         for name in assets:
             asset_license = asset_license.replace("(" + name + ")", "(" + mapping[name] + ")")
