@@ -26,7 +26,7 @@ python3 tools/image/generate-image.py --endpoint https://provider.example/v1/ima
 
 默认仅本地预览请求大小，**不联网、不读取密钥、不生成图片**。需要真实生成时由操作者配置 `IMAGE_API_KEY` 进程环境变量（可用 `--key-env` 指定变量名），核对提供方和费用后显式增加 `--execute`。不能覆盖已有文件；不自动重试，超时须先查服务端状态，避免重复收费。
 
-协议是一个明确的适配器约定，不保证兼容每家服务：无参考图时 POST JSON `{model,prompt,n:1,size,background?}`；有参考图时 POST multipart，单图 `image`，多图重复 `image[]`；响应需 `data[0].b64_json`，图片格式必须匹配 `--out`。不内置提供方/模型别名，不跟随重定向，不下载响应 URL，不输出响应正文、密钥或私有提示词。若服务只返回 URL、任务 ID 或不同字段，在游戏项目编写专属 adapter，再交回离线处理与审核工具。
+协议是一个明确的适配器约定，不保证兼容每家服务：无参考图时 POST JSON `{model,prompt,n:1,size,background?}`；有参考图时 POST multipart，单图 `image`，多图重复 `image[]`；响应需 `data[0].b64_json` 或 `data[0].url`，图片格式必须匹配 `--out`。不内置提供方/模型别名，不跟随重定向，不输出响应正文、密钥、签名 URL 或私有提示词。图片 URL 仅接受 HTTPS 默认端口 443，无用户名/密码/片段；解析到的所有地址必须为公网 IP，并固定到已验证的地址建立 TLS 连接。下载使用独立连接，不携带 API Authorization、Cookie，也不使用环境代理；下载上限 50 MiB，连接/读取超时 30 秒，正文传输受总时限检查。输出仍按文件签名核对扩展名。若服务只返回任务 ID 或不同字段，在游戏项目编写专属 adapter，再交回离线处理与审核工具。
 
 通用提示词位于 `templates/prompts/`。先批准一张完整身份/服饰基准，再从同一基准生成表情和动作；不要把多个已漂移的版本互相作为基准。批量处理前先做单张审核。
 
