@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGES = ("module-api", "content", "save", "core", "web-adapter")
-WEB_FILES = ("index.html", "game.js", "style.css", "story.json", "character-portraits.json")
+WEB_FILES = ("index.html", "start.js", "game.js", "style.css", "story.json", "character-portraits.json")
 
 
 def copy(source: Path, target: Path) -> None:
@@ -113,7 +113,14 @@ def main() -> None:
         dist.mkdir()
         for name in WEB_FILES:
             copy(ROOT / "web" / name, dist / name)
-        index = (dist / "index.html").read_text(encoding="utf-8").replace("../engine/", "./engine/")
+        index = (dist / "index.html").read_text(encoding="utf-8")
+        # Deployment scanners can exclude nested build/dist directories. Publish
+        # the five runtime modules under an ordinary asset directory instead.
+        for package in PACKAGES:
+            original = f"../engine/packages/{package}/dist/index.js"
+            if index.count(original) != 1:
+                raise ValueError("Unexpected runtime import map entry: " + package)
+            index = index.replace(original, f"./runtime/{package}.js")
         if platform == "vibehub":
             bridge = (
                 '<script async id="vibehub-sdk" src="https://gamesvibe.app/sdk/v3/vibehub.js"></script>\n'
@@ -126,7 +133,7 @@ def main() -> None:
             copy(ROOT / "web" / source, dist / source)
         for package in PACKAGES:
             rel = Path("engine/packages") / package / "dist/index.js"
-            copy(ROOT / rel, dist / rel)
+            copy(ROOT / rel, dist / "runtime" / f"{package}.js")
         copy(ROOT / "LICENSE", dist / "LICENSE-code.txt")
         asset_license = (ROOT / "ASSET-LICENSE.md").read_text(encoding="utf-8").replace("(web/assets/fonts/", "(assets/fonts/")
         (dist / "ASSET-LICENSE.md").write_text(asset_license, encoding="utf-8")

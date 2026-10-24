@@ -1,5 +1,5 @@
 {
-  "status": "prepared_not_published",
+  "status": "vibehub_published_toy_rejected",
   "title": "拯救 Claude 大小姐",
   "proposedSlug": "save-claude",
   "descriptionFile": "description.md",
@@ -11,16 +11,19 @@
     "visibility": "public",
     "poster": "media/cover-4x3.jpg",
     "icon": "media/icon.jpg",
-    "existingProjectId": null,
+    "existingProjectId": "47500727942144",
+    "publicationStatus": "rejected",
     "requiresCreatorReview": true
   },
   "vibehub": {
     "categoryId": "cat-game",
     "tagIds": ["genre-text", "genre-adventure"],
     "cover": "media/cover-16x9.jpg",
-    "existingProjectSlug": null,
-    "collaboration": "ask_before_first_publish",
-    "githubAutomaticDeployment": "ask_before_first_publish",
+    "existingProjectSlug": "save-claude",
+    "workId": "dmasjcjx8zhg8rIwpmJGL",
+    "publicUrl": "https://gamesvibe.app/play/dmasjcjx8zhg8rIwpmJGL",
+    "collaboration": "disabled",
+    "githubAutomaticDeployment": "enabled",
     "sdk": "https://gamesvibe.app/sdk/v3/vibehub.js",
     "loginRequired": false,
     "saveLocation": "browser_local"

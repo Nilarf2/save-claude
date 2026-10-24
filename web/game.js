@@ -20,7 +20,7 @@ const S = {
   story: null, compiled: null, session: null,
   log: [], auto: false, autoTimer: null,
   typing: false, typeTimer: null, fullText: '',
-  bgId: null, bgFront: true,
+  bgId: null, bgTarget: null, bgReady: null, bgFront: true, cancelVisualWait: null,
   spriteSlots: { left: null, right: null }, spriteSides: new Map(), activeSprite: null, chapterId: null,
   stageContinuity: null, present: new Set(),
   bgmId: null, bgm: null, musicOn: true, musicVolume: .34, sfxOn: true, sfxVolume: .42,
@@ -30,7 +30,6 @@ const S = {
   restoredStage: null, restoredLog: false,
 };
 
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
 
 function prepareSaveStorage(version) {
@@ -67,29 +66,16 @@ function bgmUrl(musicId) {
 // ---------- 背景（交叉淡入） ----------
 const bgCache = new Map();
 const portraitCache = new Map();
-function preload(src) {
-  if (!src || bgCache.has(src)) return bgCache.get(src);
-  const img = new Image();
-  img.src = src;
-  bgCache.set(src, img);
-  return img;
-}
-function waitForImage(img, timeout = 700) {
-  if (!img) return Promise.resolve(false);
+function waitForImage(img) {
   if (img.complete) return Promise.resolve(img.naturalWidth > 0);
   return new Promise(resolve => {
-    let done = false;
     const finish = ok => {
-      if (done) return;
-      done = true;
-      clearTimeout(timer);
       img.removeEventListener('load', onload);
       img.removeEventListener('error', onerror);
       resolve(ok);
     };
     const onload = () => finish(img.naturalWidth > 0);
     const onerror = () => finish(false);
-    const timer = setTimeout(() => finish(false), timeout);
     img.addEventListener('load', onload, { once: true });
     img.addEventListener('error', onerror, { once: true });
     if (img.complete) finish(img.naturalWidth > 0);
@@ -97,47 +83,88 @@ function waitForImage(img, timeout = 700) {
 }
 async function decodeImage(img) {
   if (!await waitForImage(img)) return false;
-  // A successful download does not mean the bitmap has been decoded yet.
-  // Keep a short bound so damaged images never hold the dialogue indefinitely.
   if (typeof img.decode === 'function') {
-    try {
-      if (!await Promise.race([img.decode().then(() => true), sleep(700).then(() => false)])) return false;
-    } catch (e) { return false; }
+    try { await img.decode(); } catch (e) { return false; }
   }
   return img.naturalWidth > 0;
 }
-const painted = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-
-// 立绘必须先到位再开始打字。每个候选只等待一个短超时；全部失败时
-// 返回 null，让对白继续，缺失或损坏的素材不会卡住剧情。
-function preloadPortrait(src) {
+function loadImage(src, cache) {
   if (!src) return Promise.resolve(null);
-  if (portraitCache.has(src)) return portraitCache.get(src);
-  const promise = new Promise(resolve => {
-    const img = new Image();
-    let done = false;
-    const finish = async ok => {
-      if (done) return;
-      done = true;
-      clearTimeout(timer);
-      const ready = ok && await decodeImage(img);
-      // A transient download/decode failure must not poison this image for the
-      // entire session. Remove only this request's cache entry.
-      if (!ready && portraitCache.get(src) === promise) portraitCache.delete(src);
-      resolve(ready ? img : null);
-    };
-    const timer = setTimeout(() => finish(false), 700);
-    img.onload = () => finish(img.naturalWidth > 0);
-    img.onerror = () => finish(false);
-    img.src = src;
-    if (img.complete) queueMicrotask(() => finish(img.naturalWidth > 0));
+  if (cache.has(src)) return cache.get(src);
+  const img = new Image();
+  img.src = src;
+  // A dialogue deadline is not a download failure. Keep listening so a slow
+  // successful response can still replace the current scene's loading state.
+  const promise = decodeImage(img).then(ready => {
+    if (!ready && cache.get(src) === promise) cache.delete(src);
+    return ready ? img : null;
   });
-  portraitCache.set(src, promise);
+  cache.set(src, promise);
   return promise;
+}
+const painted = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+const preloadPortrait = src => loadImage(src, portraitCache);
+
+// Bound the wait for a scene, independently of the real resource lifetime.
+// Already timed-out resources do not hold each subsequent dialogue for 12s.
+const visualTimedOut = new WeakSet();
+function visualStatus(message = '') {
+  let status = $('#asset-loading');
+  if (!status && message) {
+    status = document.createElement('div');
+    status.id = 'asset-loading';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    $('#app').append(status);
+  }
+  if (status) { status.textContent = message; status.hidden = !message; }
+}
+function waitForVisuals(requests, renderId) {
+  S.cancelVisualWait?.();
+  const pending = new Set(requests.filter(Boolean));
+  if (!pending.size) { visualStatus(); return Promise.resolve(); }
+  return new Promise(resolve => {
+    let settled = false, feedbackTimer, deadlineTimer;
+    const current = () => renderId === S.renderId;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(feedbackTimer); clearTimeout(deadlineTimer);
+      if (S.cancelVisualWait === cancel) S.cancelVisualWait = null;
+      resolve();
+    };
+    const cancel = () => { finish(); visualStatus(); };
+    const timeout = () => {
+      if (!current()) { finish(); return; }
+      for (const request of pending) visualTimedOut.add(request);
+      for (const [side, slot] of Object.entries(S.spriteSlots)) {
+        if (slot && !slot.img && !slot.previous) attachMissingPortrait(side, slot, true);
+      }
+      // An old location must not accompany the new location's dialogue.
+      if (S.bgTarget && S.bgTarget !== S.bgId) {
+        el.bgA.style.opacity = '0'; el.bgB.style.opacity = '0';
+      }
+      visualStatus('画面仍在加载，可继续阅读');
+      finish();
+    };
+    S.cancelVisualWait = cancel;
+    feedbackTimer = setTimeout(() => { if (current()) visualStatus('正在准备画面…'); }, 300);
+    for (const request of pending) {
+      Promise.resolve(request).then(() => {
+        pending.delete(request);
+        if (!pending.size) { if (current()) visualStatus(); finish(); }
+      });
+    }
+    // Resolved cached images leave pending first; they must not restart a
+    // deadline for the other resource that already timed out on the last line.
+    queueMicrotask(() => {
+      if (!settled) deadlineTimer = setTimeout(timeout, [...pending].some(p => !visualTimedOut.has(p)) ? 12000 : 0);
+    });
+  });
 }
 async function firstPortrait(sources, isCurrent = () => true) {
   // 保留 pose/expression 的优先级：动作图不能因为普通图更快而被抢先
-  // 显示；单个损坏候选只占用短超时，随后继续走同角色 fallback。
+  // 显示；真实加载失败后继续走同角色 fallback。对白的等待另有上限。
   for (const src of sources) {
     if (!isCurrent()) return null;
     const img = await preloadPortrait(src);
@@ -157,11 +184,14 @@ function attachPortrait(img, side, slot) {
   else delete img.dataset.pose;
   // Keep the old image visible until the replacement has decoded.
   slot.previous?.remove();
+  if (slot.img !== img) slot.img?.remove();
+  slot.previous = null;
+  slot.img = img;
   el.chars.append(img);
   return true;
 }
 
-function attachMissingPortrait(side, slot) {
+function attachMissingPortrait(side, slot, loading = false) {
   if (S.spriteSlots[side] !== slot) return false;
   const card = document.createElement('div');
   card.className = 'sprite show portrait-missing ' + side;
@@ -169,41 +199,45 @@ function attachMissingPortrait(side, slot) {
   card.dataset.character = slot.cid;
   card.dataset.framing = 'waist-up';
   card.classList.toggle('dim', S.activeSprite !== slot.cid);
-  card.innerHTML = '<strong>' + esc(characterName(slot.cid)) + '</strong><small>图像暂不可用</small>';
+  card.innerHTML = '<strong>' + esc(characterName(slot.cid)) + '</strong><small>' + (loading ? '正在加载…' : '图像暂不可用') + '</small>';
   slot.previous?.remove();
+  slot.img?.remove();
+  slot.previous = null;
   slot.img = card;
   el.chars.append(card);
   return Promise.resolve(true);
 }
 let bgRequestId = 0;
-async function setBg(sceneId) {
-  if (!sceneId || sceneId === S.bgId) return true;
-  const initial = !S.bgId;
-  const src = bgUrl(sceneId);
-  const front = S.bgFront ? el.bgA : el.bgB;
-  const back = S.bgFront ? el.bgB : el.bgA;
+function setBg(sceneId) {
+  if (!sceneId) return S.bgReady || Promise.resolve(true);
+  if (sceneId === S.bgId && sceneId === S.bgTarget) return Promise.resolve(true);
+  if (sceneId === S.bgTarget && S.bgReady) return S.bgReady;
   const requestId = ++bgRequestId;
-  const ready = await decodeImage(preload(src));
-  if (requestId !== bgRequestId) return false;
-  // 即使背景缺失也记住本次尝试，避免每个对白节点重复等待。
-  S.bgId = sceneId;
-  if (!ready) {
-    // Do not leave an unrelated old location behind a new scene's dialogue.
-    front.style.opacity = '0'; back.style.opacity = '0';
-    return false;
-  }
-  // The first scene has no previous background to crossfade from. Show the
-  // decoded bitmap immediately instead of typing over a one-second black fade.
-  if (initial) { back.style.transition = 'none'; front.style.transition = 'none'; }
-  back.style.backgroundImage = 'url("' + src + '")';
-  back.style.opacity = '1';
-  front.style.opacity = '0';
-  if (initial) {
-    void back.offsetWidth;
-    back.style.transition = ''; front.style.transition = '';
-  }
-  S.bgFront = !S.bgFront;
-  return true;
+  S.bgTarget = sceneId;
+  const src = bgUrl(sceneId);
+  const promise = loadImage(src, bgCache).then(img => {
+    if (requestId !== bgRequestId) return false;
+    if (S.bgReady === promise) S.bgReady = null;
+    const front = S.bgFront ? el.bgA : el.bgB;
+    const back = S.bgFront ? el.bgB : el.bgA;
+    if (!img) {
+      front.style.opacity = '0'; back.style.opacity = '0';
+      return false;
+    }
+    const initial = !S.bgId;
+    if (initial) { back.style.transition = 'none'; front.style.transition = 'none'; }
+    back.style.backgroundImage = 'url("' + src + '")';
+    back.style.opacity = '1'; front.style.opacity = '0';
+    if (initial) {
+      void back.offsetWidth;
+      back.style.transition = ''; front.style.transition = '';
+    }
+    S.bgId = sceneId;
+    S.bgFront = !S.bgFront;
+    return true;
+  });
+  S.bgReady = promise;
+  return promise;
 }
 
 // ---------- 音乐 ----------
@@ -305,13 +339,12 @@ function setSprite(cid, expr) {
   if (expr === undefined) expr = previous?.cid === cid ? previous.expr : '';
   const { sources, framing, pose } = spritePresentation(cid, expr);
   const key = [cid, framing, pose, ...sources].join('|');
-  if (previous?.cid === cid && previous.key === key) return previous.ready || Promise.resolve(true);
-  const slot = { cid, key, img: null, expr, framing, pose, previous: previous?.img, ready: null };
+  if (previous?.cid === cid && previous.key === key && !previous.failed) return previous.ready || Promise.resolve(true);
+  const slot = { cid, key, img: null, expr, framing, pose, previous: previous?.img || previous?.previous, ready: null };
   S.spriteSlots[side] = slot;
   slot.ready = firstPortrait(sources, () => S.spriteSlots[side] === slot).then(found => {
     if (S.spriteSlots[side] !== slot) return false;
-    if (!found) return attachMissingPortrait(side, slot);
-    slot.img = found.img;
+    if (!found) { slot.failed = true; return attachMissingPortrait(side, slot); }
     const ok = attachPortrait(found.img, side, slot);
     return Promise.resolve(ok).then(ok => {
       if (ok) slot.img?.classList.toggle('dim', S.activeSprite !== cid);
@@ -328,7 +361,7 @@ function spriteSide(cid) {
   let side = ['left', 'right'].find(slot => !S.spriteSlots[slot]);
   if (!side) side = ['left', 'right'].find(slot => S.spriteSlots[slot]?.cid !== S.activeSprite) || 'right';
   const old = S.spriteSlots[side];
-  if (old) { old.img?.remove(); S.spriteSides.delete(old.cid); S.spriteSlots[side] = null; }
+  if (old) { old.img?.remove(); old.previous?.remove(); S.spriteSides.delete(old.cid); S.spriteSlots[side] = null; }
   S.spriteSides.set(cid, side);
   return side;
 }
@@ -526,6 +559,8 @@ async function render(result) {
 
 async function renderNode(result) {
   const renderId = ++S.renderId;
+  S.cancelVisualWait?.();
+  visualStatus();
   clearTimeout(S.autoTimer);
   S.finishTyping?.(false);
   const v = result.view ?? result;
@@ -541,7 +576,6 @@ async function renderNode(result) {
   const sourceLine = sourceNode?.lines?.[result.state?.lineIndex ?? S.session?.snapshot()?.lineIndex ?? 0];
   const sceneNode = chapterId ? S.story.nodes.find(node => node.id === chapterId + ':scene') : null;
   const continuity = sceneNode?.stage?.continuity || null;
-  let stageReady = [];
   const chapterChanged = !!(chapterId && chapterId !== S.chapterId);
   if (chapterChanged) {
     const continues = continuity && continuity === S.stageContinuity;
@@ -549,35 +583,32 @@ async function renderNode(result) {
     S.chapterId = chapterId;
     S.stageContinuity = continuity;
     setChapter(S.chapterLabels[chapterId] || chapterId);
-    if (sceneNode?.stage && !sourceLine?.stage && !sourceNode?.stage) stageReady = applyStage(sceneNode.stage, sourceLine);
+    if (sceneNode?.stage && !sourceLine?.stage && !sourceNode?.stage) applyStage(sceneNode.stage, sourceLine);
   }
   if (S.restoredStage) {
-    const restored = [];
     for (const [side, sprite] of Object.entries(S.restoredStage)) {
       const cid = canonicalCid(sprite?.cid);
       if (!['left', 'right'].includes(side) || !characterRecord(cid)) continue;
       S.spriteSides.set(cid, side);
       S.present.add(cid);
-      restored.push(setSprite(cid, sprite.expr));
+      setSprite(cid, sprite.expr);
     }
-    stageReady.push(...restored);
     S.restoredStage = null;
   }
   const explicitLineStage = sourceLine?.stage || sourceNode?.stage;
-  if (v.line) stageReady.push(...applyStage(explicitLineStage, sourceLine));
+  if (v.line) applyStage(explicitLineStage, sourceLine);
   const lineBackground = explicitLineStage?.background || sourceLine?.background;
   if (v.scene) {
     const initialBackground = chapterChanged || !S.bgId ? (v.scene.background || v.scene.scene) : null;
-    const bgReady = setBg(lineBackground || initialBackground);
+    setBg(lineBackground || initialBackground || S.bgTarget);
     // The engine exposes music in the persisted audio channel, not view.scene.
     setBgm(result.state?.audio?.music?.asset || S.session.snapshot().state.audio?.music?.asset);
-    await Promise.all([bgReady, ...stageReady]);
-    if (renderId !== S.renderId) return;
-  } else {
-    if (lineBackground) stageReady.push(setBg(lineBackground));
-    await Promise.all(stageReady);
-    if (renderId !== S.renderId) return;
-  }
+  } else if (lineBackground) setBg(lineBackground);
+  // Wait only for the current slots: a restored or replaced request may have
+  // been superseded while authored staging was applied above.
+  const visuals = [S.bgReady, ...Object.values(S.spriteSlots).map(slot => slot?.ready)];
+  await waitForVisuals(visuals, renderId);
+  if (renderId !== S.renderId) return;
 
   if (v.awaiting === 'ended') { hideSprite(); showEnding(v.ending); return; }
 
@@ -610,9 +641,6 @@ async function renderNode(result) {
     // 不再从名字猜人。资源解码并提交到舞台后才开始打字。
     el.text.textContent = '';
     el.nextInd.classList.remove('show');
-    const otherSprites = Object.values(S.spriteSlots).filter(slot => slot?.ready).map(slot => slot.ready);
-    await Promise.all(otherSprites);
-    if (renderId !== S.renderId) return;
     await painted();
     if (renderId !== S.renderId) return;
 
@@ -835,6 +863,8 @@ function resetPlayback() {
   ++S.renderSequence;
   S.renderPending = false;
   ++bgRequestId;
+  S.cancelVisualWait?.();
+  visualStatus();
   clearTimeout(S.autoTimer);
   stopSfx();
   S.finishTyping?.(false);
@@ -842,7 +872,7 @@ function resetPlayback() {
   S.auto = false;
   el.autoBtn.classList.remove('on');
   el.autoBtn.setAttribute('aria-pressed', 'false');
-  S.log = []; S.bgId = null; S.chapterId = null; S.chapterName = '';
+  S.log = []; S.bgId = null; S.bgTarget = null; S.bgReady = null; S.chapterId = null; S.chapterName = '';
   S.stageContinuity = null; S.present.clear();
   S.restoredStage = null; S.restoredLog = false;
   hideSprite();
@@ -1012,6 +1042,9 @@ function returnToTitle() {
   // Invalidate pending background/portrait work and typing before exposing
   // the title. Old async results can no longer mutate the next session.
   ++S.renderId; ++S.renderSequence; ++bgRequestId;
+  S.cancelVisualWait?.();
+  visualStatus();
+  S.bgReady = null; S.bgTarget = null;
   S.renderPending = false;
   S.finishTyping?.(false);
   S.auto = false;
