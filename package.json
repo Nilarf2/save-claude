@@ -11,7 +11,7 @@
     "engine/packages/*"
   ],
   "scripts": {
-    "build": "node tools/compile/build-v3.mjs",
+    "build": "node tools/compile/build-v3.mjs && npm run build:runtime",
     "build:map": "node tools/authoring/build-story-map.mjs",
     "check:engine": "node tools/sync-engine.mjs --check",
     "check:story": "node tools/compile/check-snapshot.mjs",
@@ -20,6 +20,12 @@
     "test:logic": "node tests/logic/check-endings.mjs",
     "test:fixed": "node tools/authoring/check-fixed-paths.mjs",
     "test": "npm run test:compiler && npm run test:logic && npm run test:fixed",
-    "check": "npm run check:engine && npm run check:story && npm run check:stage && npm test"
+    "check": "npm run check:engine && npm run check:runtime && npm run check:story && npm run check:stage && npm test && npm run check:release",
+    "build:runtime": "node tools/compile/build-browser-runtime.mjs",
+    "check:runtime": "node tools/compile/build-browser-runtime.mjs --check",
+    "check:release": "python3 -B -m unittest discover -s tests/release -v"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

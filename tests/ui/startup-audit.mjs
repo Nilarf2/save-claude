@@ -22,16 +22,20 @@ try {
   const context = await browser.newContext();
   const page = await context.newPage();
   const errors = [];
+  const scripts = new Map();
+  page.on('response', response => {
+    const name = new URL(response.url()).pathname.split('/').at(-1);
+    const match = /^(start|game|engine-runtime)(?:\.[a-f0-9]{16})?\.js$/.exec(name);
+    if (match) scripts.set(match[1], response.url());
+  });
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(url, { waitUntil: 'domcontentloaded' });
   await page.locator('#btn-start:not(:disabled)').waitFor({ timeout: 30000 });
   assert.equal((await page.locator('#btn-start').innerText()).replace(/\s/g, ''), '开始游戏');
-  const imports = await page.evaluate(() => {
-    const map = JSON.parse(document.querySelector('script[type="importmap"]').textContent);
-    return Object.fromEntries(Object.entries(map.imports).map(([name, path]) => [name, new URL(path, location.href).href]));
-  });
+  assert.equal(await page.locator('script[type="importmap"]').count(), 0);
+  assert.deepEqual([...scripts.keys()].sort(), ['engine-runtime', 'game', 'start']);
   const modules = [];
-  for (const [name, moduleUrl] of Object.entries(imports)) {
+  for (const [name, moduleUrl] of scripts) {
     const response = await context.request.get(moduleUrl);
     assert.equal(response.status(), 200, name + ' exists on this host');
     const type = response.headers()['content-type'] || '';
@@ -42,12 +46,12 @@ try {
   await page.waitForFunction(() => document.querySelector('#text').textContent.length > 0, null, { timeout: 30000 });
   assert.deepEqual(errors, []);
   await page.screenshot({ path: resolve(out, 'opening.png') });
-  results.push({ name: 'served release starts and all engine modules have a JavaScript MIME type', passed: true, modules });
+  results.push({ name: 'served release starts with external modules and JavaScript MIME types', passed: true, modules });
   await context.close();
 
   const failureContext = await browser.newContext();
   const failurePage = await failureContext.newPage();
-  const coreUrl = imports['@text-adventure/core'];
+  const coreUrl = scripts.get('engine-runtime');
   assert.ok(coreUrl, 'core module is declared');
   let blocked = 0;
   await failurePage.route(coreUrl, async route => {
