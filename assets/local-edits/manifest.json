@@ -120,6 +120,6 @@
       ]
     },
     "compositing": "Use only reviewed edit regions; soften the boundary inside the region, preserve source alpha, and retain the original canvas. Necklace artifacts were cleaned locally from the same generated fabric, without additional generation.",
-    "productionEncoding": "Runtime edited WebP is lossless; marketing JPEG uses quality 95, 4:4:4."
+    "productionEncoding": "Edited portraits and main cover: lossless WebP; four background screens: WebP quality 95; marketing JPEG: 4:4:4, quality 95 (16:9) or 92 (4:3)."
   }
 }
