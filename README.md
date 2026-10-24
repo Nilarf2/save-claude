@@ -4,6 +4,8 @@
 
 当前内容版本 **1.1.0**，包含 **69 章、18 个结局**。普通新局从 **A00** 开始；选择、道具和关系在本轮旅程中累积，侧线可以回到正文，没有必须跨周目全通的条件。人性、合规、羁绊、污染是累计分数，不会统一封顶到 100。
 
+在线游玩：[VibeHub](https://gamesvibe.app/play/dmasjcjx8zhg8rIwpmJGL)。BilibiliToy 的当前提交尚未通过内容审核，暂不提供正式游玩链接。
+
 本仓库是这款游戏的内容、界面与交付工具。通用确定性状态机来自独立项目 [Text Adventure Engine](https://github.com/Nilarf2/text-adventure-engine)；游戏内 `engine/` 是有来源记录的运行快照，不是另一套独立开发的引擎。
 
 ## 运行游戏
