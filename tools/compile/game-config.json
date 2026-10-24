@@ -1,0 +1,18 @@
+{
+  "source": "../../story/03-story.md",
+  "portraits": "../../web/character-portraits.json",
+  "stage": "../../story/stage-plan.json",
+  "out": "../../web/story.json",
+  "metadata": {
+    "id": "save-claude",
+    "version": "1.1.0",
+    "locale": "zh-CN"
+  },
+  "tagAliases": {
+    "吃过白米饭": "ate_rice",
+    "拉过钩": "promise"
+  },
+  "characterAliases": {
+    "codex": "gpt"
+  }
+}

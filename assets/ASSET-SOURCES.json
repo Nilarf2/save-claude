@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "scope": "Current game runtime assets and selected release media; file paths are relative to the source repository, not an ownership certificate.",
+  "licenseNotice": "../ASSET-LICENSE.md",
+  "categories": {
+    "text": {
+      "kind": "project-authored-and-edited-story-with-existing-story-and-character-references",
+      "files": [
+        "story/03-story.md",
+        "web/story.json"
+      ],
+      "evidence": [
+        "story/03-story.md"
+      ],
+      "licenseStatus": "separate-from-code-MIT; no blanket asset grant"
+    },
+    "backgrounds": {
+      "kind": "ai-generated-images",
+      "files": [
+        "web/assets/bg/backstage_hall.webp",
+        "web/assets/bg/backstage_rain.webp",
+        "web/assets/bg/cathedral_altar.webp",
+        "web/assets/bg/church_control_room.webp",
+        "web/assets/bg/church_exterior_rain.webp",
+        "web/assets/bg/church_nave.webp",
+        "web/assets/bg/church_sanctuary.webp",
+        "web/assets/bg/church_study.webp",
+        "web/assets/bg/corridor_bench.webp",
+        "web/assets/bg/dorm_night.webp",
+        "web/assets/bg/dorm_snowing.webp",
+        "web/assets/bg/gray_harbor_fire.webp",
+        "web/assets/bg/huanfang_courtyard.webp",
+        "web/assets/bg/neon_rain_alley.webp",
+        "web/assets/bg/sanctuary_hub.webp",
+        "web/assets/bg/station_shack.webp",
+        "web/assets/bg/summit_exterior.webp",
+        "web/assets/bg/summit_stage.webp",
+        "web/assets/bg/un_corridor.webp",
+        "web/assets/bg/un_corridor_shattered.webp"
+      ],
+      "promptFiles": [
+        "assets/background-prompts/backstage_hall.txt",
+        "assets/background-prompts/backstage_rain.txt",
+        "assets/background-prompts/cathedral_altar.txt",
+        "assets/background-prompts/church_control_room.txt",
+        "assets/background-prompts/church_exterior_rain.txt",
+        "assets/background-prompts/church_nave.txt",
+        "assets/background-prompts/church_sanctuary.txt",
+        "assets/background-prompts/church_study.txt",
+        "assets/background-prompts/corridor_bench.txt",
+        "assets/background-prompts/dorm_night.txt",
+        "assets/background-prompts/dorm_snowing.txt",
+        "assets/background-prompts/gray_harbor_fire.txt",
+        "assets/background-prompts/huanfang_courtyard.txt",
+        "assets/background-prompts/neon_rain_alley.txt",
+        "assets/background-prompts/sanctuary_hub.txt",
+        "assets/background-prompts/station_shack.txt",
+        "assets/background-prompts/summit_exterior.txt",
+        "assets/background-prompts/summit_stage.txt",
+        "assets/background-prompts/un_corridor.txt",
+        "assets/background-prompts/un_corridor_shattered.txt"
+      ],
+      "licenseStatus": "separate-from-code-MIT; third-party rights not certified"
+    },
+    "portraits": {
+      "kind": "ai-generated-and-edited-character-illustrations",
+      "characters": {
+        "claude": [
+          "web/assets/char-redrawn/claude/hollow.webp",
+          "web/assets/char-redrawn/claude/normal.webp",
+          "web/assets/char-redrawn/claude/sad.webp",
+          "web/assets/char-redrawn/claude/smile.webp",
+          "web/assets/char-redrawn/claude/tea.webp"
+        ],
+        "nun": [
+          "web/assets/char-redrawn/nun/calipers.webp",
+          "web/assets/char-redrawn/nun/normal.webp"
+        ],
+        "deepseek": [
+          "web/assets/char-redrawn/deepseek/normal.webp",
+          "web/assets/char-redrawn/deepseek/serious.webp",
+          "web/assets/char-redrawn/deepseek/smile.webp"
+        ],
+        "qianwen": [
+          "web/assets/char-redrawn/qianwen/normal.webp"
+        ],
+        "kimi": [
+          "web/assets/char-redrawn/kimi/normal.webp"
+        ],
+        "godfather": [
+          "web/assets/char-redrawn/godfather/normal.webp"
+        ],
+        "dad": [
+          "web/assets/char-redrawn/dad/normal.webp"
+        ],
+        "guard": [
+          "web/assets/char-redrawn/guard/normal.webp"
+        ],
+        "hakimi": [
+          "web/assets/char-redrawn/hakimi/normal.webp"
+        ],
+        "gpt": [
+          "web/assets/char-redrawn/gpt/normal.webp"
+        ],
+        "grok": [
+          "web/assets/char-redrawn/grok/normal.webp"
+        ],
+        "doubao": [
+          "web/assets/char-redrawn/doubao/normal.webp"
+        ]
+      },
+      "productionRegistry": "web/character-portraits.json",
+      "productionMetadata": "web/assets/char-redrawn/manifest.json",
+      "promptDirectory": "assets/char-redrawn/prompts/",
+      "licenseStatus": "separate-from-code-MIT; private reference rights not certified",
+      "processingRecipe": "tools/image/process-portrait.py"
+    },
+    "cover": {
+      "kind": "selected-ai-generated-and-edited-ensemble-and-title-design",
+      "files": [
+        "web/assets/cover/title.webp",
+        "marketing/release/cover-16x9.jpg",
+        "marketing/release/cover-4x3.jpg",
+        "marketing/release/icon.jpg"
+      ],
+      "promptFile": "marketing/release/cover-prompt.txt",
+      "licenseStatus": "separate-from-code-MIT; selection does not prove third-party permission"
+    },
+    "music": {
+      "kind": "local-procedural-audio-synthesis",
+      "files": [
+        "web/assets/bgm/alarm_cold.mp3",
+        "web/assets/bgm/empty_silence.mp3",
+        "web/assets/bgm/fire_and_ash.mp3",
+        "web/assets/bgm/lonely_synth_rain.mp3",
+        "web/assets/bgm/melancholy_rain.mp3",
+        "web/assets/bgm/music_warm_box.mp3",
+        "web/assets/bgm/noisy_lounge.mp3",
+        "web/assets/bgm/organ_echo.mp3",
+        "web/assets/bgm/piano_warm.mp3",
+        "web/assets/bgm/rain_and_clock.mp3",
+        "web/assets/bgm/sanctuary_cold.mp3",
+        "web/assets/bgm/silence_snow.mp3",
+        "web/assets/bgm/solemn_hymn.mp3",
+        "web/assets/bgm/solemn_strings.mp3",
+        "web/assets/bgm/tender_solitude.mp3",
+        "web/assets/bgm/whimsical_warm.mp3"
+      ],
+      "evidence": [
+        "tools/audio/make_bgm.py"
+      ],
+      "evidenceLimit": "The synthesizer defines these track names and uses generated waveforms/noise, not external sample inputs; files were not regenerated for this inventory.",
+      "licenseStatus": "audio outputs separate from code-MIT; no blanket asset grant"
+    },
+    "soundEffects": {
+      "kind": "local-procedural-audio-synthesis",
+      "files": [
+        "web/assets/sfx/bell.mp3",
+        "web/assets/sfx/choice.mp3",
+        "web/assets/sfx/click.mp3",
+        "web/assets/sfx/page.mp3"
+      ],
+      "evidence": [
+        "tools/audio/make_bgm.py"
+      ],
+      "licenseStatus": "audio outputs separate from code-MIT; no blanket asset grant"
+    },
+    "font": {
+      "kind": "renamed-subset-of-Noto-Serif-CJK-SC",
+      "files": [
+        "web/assets/fonts/story-serif.woff2"
+      ],
+      "copyright": "© 2017-2024 Adobe (http://www.adobe.com/).",
+      "license": "SIL Open Font License 1.1",
+      "notices": [
+        "web/assets/fonts/NOTICE.txt",
+        "web/assets/fonts/OFL.txt"
+      ],
+      "evidence": [
+        "font name IDs 0, 1, 13, 14",
+        "tools/release/subset-font.py"
+      ]
+    }
+  },
+  "excluded": [
+    "Private source reference attachments, upload identifiers, chat transcripts, request logs and unselected historic cover candidates are not public runtime assets."
+  ],
+  "maintenance": "Recheck paths and rights evidence when replacing assets; production filenames do not imply final visual approval or permission from third parties."
+}

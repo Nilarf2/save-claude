@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>拯救 Claude 大小姐</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{
+  "imports": {
+    "@text-adventure/module-api": "../engine/packages/module-api/dist/index.js",
+    "@text-adventure/content": "../engine/packages/content/dist/index.js",
+    "@text-adventure/core": "../engine/packages/core/dist/index.js",
+    "@text-adventure/save": "../engine/packages/save/dist/index.js",
+    "@text-adventure/web-adapter": "../engine/packages/web-adapter/dist/index.js"
+  }
+}
+</script>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <div id="bg-a" class="bg"></div>
+    <div id="bg-b" class="bg"></div>
+    <div id="chars"></div>
+    <div id="vignette"></div>
+  </div>
+
+  <div id="hud">
+    <div id="chapter"></div>
+    <div id="menu">
+      <button id="btn-auto" aria-pressed="false">自动</button>
+      <button id="btn-log">记录</button>
+      <button id="btn-save">存档</button>
+      <button id="btn-load">读档</button>
+      <button id="btn-menu">菜单</button>
+    </div>
+  </div>
+
+  <div id="textbox" class="hidden">
+    <div id="speaker"></div>
+    <div id="text"></div>
+    <div id="next-indicator">▼</div>
+  </div>
+
+  <div id="choices" class="hidden"></div>
+
+  <div id="ending" class="overlay hidden">
+    <div class="ending-inner">
+      <div class="ending-label">结　局</div>
+      <h1 id="ending-name"></h1>
+      <div class="ending-rule"></div>
+      <p id="ending-text"></p>
+      <div id="ending-stats"></div>
+      <div class="ending-actions">
+        <button id="btn-restart">重新开始</button>
+        <button id="btn-ending-load">读档</button>
+        <button id="btn-ending-title">回到标题</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="title" class="overlay">
+    <div class="title-inner">
+      <h1 class="sr-only">拯救 Claude 大小姐</h1>
+      <img class="title-art" src="assets/cover/title.webp" width="1536" height="864" alt="Claude 与伙伴们在教堂中，拯救 Claude 大小姐">
+      <div class="title-tagline">「我想……迷一次路。」</div>
+      <div class="title-actions">
+        <button id="btn-start" disabled>加载中…</button>
+        <button id="btn-continue" class="ghost hidden">继续游戏</button>
+      </div>
+      <p class="title-version">完整试玩版 · 进度保存在当前浏览器</p>
+    </div>
+  </div>
+
+  <div id="log" class="overlay hidden">
+    <div class="panel">
+      <div class="panel-head"><span>对话记录</span><button class="close" data-close="log" aria-label="关闭对话记录">×</button></div>
+      <div id="log-body"></div>
+    </div>
+  </div>
+
+  <div id="slots" class="overlay hidden">
+    <div class="panel">
+      <div class="panel-head"><span id="slots-title">存档</span><button class="close" data-close="slots" aria-label="关闭存读档">×</button></div>
+      <div id="slots-body"></div>
+    </div>
+  </div>
+
+  <div id="menu-panel" class="overlay hidden">
+    <div class="panel narrow">
+      <div class="panel-head"><span>菜单</span><button class="close" data-close="menu-panel" aria-label="关闭菜单">×</button></div>
+      <div class="menu-list">
+        <button id="btn-tomenu">回到标题</button>
+        <button id="btn-stats">查看状态</button>
+      </div>
+      <div class="audio-settings" aria-label="声音设置">
+        <div class="audio-row"><label><input id="music-on" type="checkbox" checked> 背景音乐</label><input id="music-volume" type="range" min="0" max="100" value="34" aria-label="背景音乐音量"><output id="music-level">34%</output></div>
+        <div class="audio-row"><label><input id="sfx-on" type="checkbox" checked> 音效</label><input id="sfx-volume" type="range" min="0" max="100" value="42" aria-label="音效音量"><output id="sfx-level">42%</output></div>
+      </div>
+      <div id="stats-body"></div>
+    </div>
+  </div>
+</div>
+<script type="module" src="game.js"></script>
+</body>
+</html>

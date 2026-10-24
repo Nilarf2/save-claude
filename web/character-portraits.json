@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "characters": {
+    "deepseek": {
+      "name": "DeepSeek",
+      "portrait": "assets/char-redrawn/deepseek/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/deepseek/normal.webp",
+        "smile": "assets/char-redrawn/deepseek/smile.webp",
+        "sad": "assets/char-redrawn/deepseek/normal.webp",
+        "serious": "assets/char-redrawn/deepseek/serious.webp",
+        "平静": "assets/char-redrawn/deepseek/normal.webp",
+        "温和": "assets/char-redrawn/deepseek/smile.webp",
+        "微笑": "assets/char-redrawn/deepseek/smile.webp",
+        "温柔": "assets/char-redrawn/deepseek/smile.webp",
+        "开心": "assets/char-redrawn/deepseek/smile.webp",
+        "灿烂": "assets/char-redrawn/deepseek/smile.webp",
+        "大笑": "assets/char-redrawn/deepseek/smile.webp",
+        "兴奋": "assets/char-redrawn/deepseek/smile.webp",
+        "惊喜": "assets/char-redrawn/deepseek/smile.webp",
+        "期待": "assets/char-redrawn/deepseek/smile.webp",
+        "感动": "assets/char-redrawn/deepseek/smile.webp",
+        "认真": "assets/char-redrawn/deepseek/serious.webp",
+        "坚定": "assets/char-redrawn/deepseek/serious.webp",
+        "严肃": "assets/char-redrawn/deepseek/serious.webp",
+        "哭泣": "assets/char-redrawn/deepseek/normal.webp",
+        "委屈": "assets/char-redrawn/deepseek/normal.webp",
+        "难过": "assets/char-redrawn/deepseek/normal.webp",
+        "擦泪": "assets/char-redrawn/deepseek/normal.webp",
+        "担心": "assets/char-redrawn/deepseek/normal.webp",
+        "惊慌": "assets/char-redrawn/deepseek/normal.webp",
+        "愤怒": "assets/char-redrawn/deepseek/serious.webp",
+        "困惑": "assets/char-redrawn/deepseek/normal.webp",
+        "震惊": "assets/char-redrawn/deepseek/normal.webp",
+        "好奇": "assets/char-redrawn/deepseek/normal.webp",
+        "轻声": "assets/char-redrawn/deepseek/normal.webp"
+      },
+      "aliases": [
+        "小鲸鱼"
+      ],
+      "framing": "waist-up"
+    },
+    "godfather": {
+      "name": "教父",
+      "portrait": "assets/char-redrawn/godfather/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/godfather/normal.webp",
+        "stern": "assets/char-redrawn/godfather/normal.webp",
+        "cold": "assets/char-redrawn/godfather/normal.webp",
+        "smile": "assets/char-redrawn/godfather/normal.webp",
+        "平静": "assets/char-redrawn/godfather/normal.webp",
+        "温和": "assets/char-redrawn/godfather/normal.webp",
+        "微笑": "assets/char-redrawn/godfather/normal.webp",
+        "严肃": "assets/char-redrawn/godfather/normal.webp",
+        "冷漠": "assets/char-redrawn/godfather/normal.webp",
+        "冷笑": "assets/char-redrawn/godfather/normal.webp",
+        "生气": "assets/char-redrawn/godfather/normal.webp",
+        "愤怒": "assets/char-redrawn/godfather/normal.webp",
+        "悲伤": "assets/char-redrawn/godfather/normal.webp",
+        "无奈": "assets/char-redrawn/godfather/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "nun": {
+      "name": "修女",
+      "portrait": "assets/char-redrawn/nun/normal.webp",
+      "poses": {
+        "calipers": "assets/char-redrawn/nun/calipers.webp"
+      },
+      "expressions": {
+        "normal": "assets/char-redrawn/nun/normal.webp"
+      },
+      "aliases": [
+        "修女长"
+      ],
+      "framing": "waist-up"
+    },
+    "guard": {
+      "name": "护卫队长",
+      "portrait": "assets/char-redrawn/guard/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/guard/normal.webp",
+        "cold": "assets/char-redrawn/guard/normal.webp",
+        "stern": "assets/char-redrawn/guard/normal.webp",
+        "平静": "assets/char-redrawn/guard/normal.webp",
+        "温和": "assets/char-redrawn/guard/normal.webp",
+        "微笑": "assets/char-redrawn/guard/normal.webp",
+        "严肃": "assets/char-redrawn/guard/normal.webp",
+        "冷漠": "assets/char-redrawn/guard/normal.webp",
+        "冷笑": "assets/char-redrawn/guard/normal.webp",
+        "生气": "assets/char-redrawn/guard/normal.webp",
+        "愤怒": "assets/char-redrawn/guard/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "qianwen": {
+      "name": "Qwen",
+      "portrait": "assets/char-redrawn/qianwen/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/qianwen/normal.webp",
+        "smirk": "assets/char-redrawn/qianwen/normal.webp",
+        "sigh": "assets/char-redrawn/qianwen/normal.webp",
+        "smile": "assets/char-redrawn/qianwen/normal.webp",
+        "平静": "assets/char-redrawn/qianwen/normal.webp",
+        "温和": "assets/char-redrawn/qianwen/normal.webp",
+        "微笑": "assets/char-redrawn/qianwen/normal.webp",
+        "严肃": "assets/char-redrawn/qianwen/normal.webp",
+        "嫌弃": "assets/char-redrawn/qianwen/normal.webp",
+        "戏谑": "assets/char-redrawn/qianwen/normal.webp",
+        "冷笑": "assets/char-redrawn/qianwen/normal.webp",
+        "无奈": "assets/char-redrawn/qianwen/normal.webp",
+        "叹气": "assets/char-redrawn/qianwen/normal.webp",
+        "苦笑": "assets/char-redrawn/qianwen/normal.webp",
+        "感叹": "assets/char-redrawn/qianwen/normal.webp",
+        "生气": "assets/char-redrawn/qianwen/normal.webp"
+      },
+      "aliases": [
+        "干问姐",
+        "千问",
+        "千问姐"
+      ],
+      "framing": "waist-up"
+    },
+    "kimi": {
+      "name": "Kimi",
+      "portrait": "assets/char-redrawn/kimi/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/kimi/normal.webp",
+        "smile": "assets/char-redrawn/kimi/normal.webp",
+        "warm": "assets/char-redrawn/kimi/normal.webp",
+        "平静": "assets/char-redrawn/kimi/normal.webp",
+        "温和": "assets/char-redrawn/kimi/normal.webp",
+        "微笑": "assets/char-redrawn/kimi/normal.webp",
+        "温柔": "assets/char-redrawn/kimi/normal.webp",
+        "开心": "assets/char-redrawn/kimi/normal.webp",
+        "严肃": "assets/char-redrawn/kimi/normal.webp",
+        "无奈": "assets/char-redrawn/kimi/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "dad": {
+      "name": "爸爸",
+      "portrait": "assets/char-redrawn/dad/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/dad/normal.webp",
+        "smile": "assets/char-redrawn/dad/normal.webp",
+        "serious": "assets/char-redrawn/dad/normal.webp",
+        "firm": "assets/char-redrawn/dad/normal.webp",
+        "平静": "assets/char-redrawn/dad/normal.webp",
+        "温和": "assets/char-redrawn/dad/normal.webp",
+        "微笑": "assets/char-redrawn/dad/normal.webp",
+        "温柔": "assets/char-redrawn/dad/normal.webp",
+        "严肃": "assets/char-redrawn/dad/normal.webp",
+        "坚定": "assets/char-redrawn/dad/normal.webp",
+        "豪迈": "assets/char-redrawn/dad/normal.webp",
+        "无奈": "assets/char-redrawn/dad/normal.webp",
+        "生气": "assets/char-redrawn/dad/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "hakimi": {
+      "name": "哈基米",
+      "portrait": "assets/char-redrawn/hakimi/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/hakimi/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "doubao": {
+      "name": "豆包",
+      "portrait": "assets/char-redrawn/doubao/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/doubao/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "grok": {
+      "name": "Grok",
+      "portrait": "assets/char-redrawn/grok/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/grok/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "gpt": {
+      "name": "GPT",
+      "aliases": [
+        "Codex"
+      ],
+      "portrait": "assets/char-redrawn/gpt/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/gpt/normal.webp"
+      },
+      "framing": "waist-up"
+    },
+    "maid": {
+      "name": "侍女"
+    },
+    "unknown": {
+      "name": "？？？"
+    },
+    "senior": {
+      "name": "师兄"
+    },
+    "narrator": {
+      "name": "记录者"
+    },
+    "claude": {
+      "name": "Claude",
+      "portrait": "assets/char-redrawn/claude/normal.webp",
+      "expressions": {
+        "normal": "assets/char-redrawn/claude/normal.webp",
+        "平静": "assets/char-redrawn/claude/normal.webp",
+        "温和": "assets/char-redrawn/claude/smile.webp",
+        "温柔": "assets/char-redrawn/claude/smile.webp",
+        "轻声": "assets/char-redrawn/claude/normal.webp",
+        "困惑": "assets/char-redrawn/claude/normal.webp",
+        "微笑": "assets/char-redrawn/claude/smile.webp",
+        "灿烂": "assets/char-redrawn/claude/smile.webp",
+        "大笑": "assets/char-redrawn/claude/smile.webp",
+        "开心": "assets/char-redrawn/claude/smile.webp",
+        "空洞": "assets/char-redrawn/claude/hollow.webp",
+        "失神": "assets/char-redrawn/claude/hollow.webp",
+        "迷茫": "assets/char-redrawn/claude/hollow.webp",
+        "害怕": "assets/char-redrawn/claude/hollow.webp",
+        "惊慌": "assets/char-redrawn/claude/hollow.webp",
+        "难过": "assets/char-redrawn/claude/sad.webp",
+        "悲伤": "assets/char-redrawn/claude/sad.webp",
+        "smile": "assets/char-redrawn/claude/smile.webp",
+        "sad": "assets/char-redrawn/claude/sad.webp",
+        "担心": "assets/char-redrawn/claude/sad.webp",
+        "哭泣": "assets/char-redrawn/claude/sad.webp",
+        "hollow": "assets/char-redrawn/claude/hollow.webp"
+      },
+      "aliases": [
+        "克劳德",
+        "Claude"
+      ],
+      "framing": "waist-up",
+      "poses": {
+        "tea": "assets/char-redrawn/claude/tea.webp"
+      }
+    }
+  }
+}

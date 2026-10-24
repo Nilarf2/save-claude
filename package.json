@@ -1,0 +1,25 @@
+{
+  "name": "save-claude",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Game sources and controlled runtime snapshot",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "workspaces": [
+    "engine/packages/*"
+  ],
+  "scripts": {
+    "build": "node tools/compile/build-v3.mjs",
+    "build:map": "node tools/authoring/build-story-map.mjs",
+    "check:engine": "node tools/sync-engine.mjs --check",
+    "check:story": "node tools/compile/check-snapshot.mjs",
+    "check:stage": "node tools/compile/audit-stage.mjs",
+    "test:compiler": "node tests/logic/check-compiler.mjs",
+    "test:logic": "node tests/logic/check-endings.mjs",
+    "test:fixed": "node tools/authoring/check-fixed-paths.mjs",
+    "test": "npm run test:compiler && npm run test:logic && npm run test:fixed",
+    "check": "npm run check:engine && npm run check:story && npm run check:stage && npm test"
+  }
+}

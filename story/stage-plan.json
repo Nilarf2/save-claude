@@ -1,0 +1,3014 @@
+{
+  "schemaVersion": 1,
+  "chapters": {
+    "HUB": {
+      "continuity": "sanctuary-hub",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "sanctuary-hub"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "sanctuary_hub"
+      },
+      "nodes": {
+        "HUB:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "kimi"
+              ],
+              "slots": {
+                "left": "kimi"
+              },
+              "focus": "kimi"
+            }
+          }
+        }
+      }
+    },
+    "A00": {
+      "continuity": "church-dawn",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "church-dawn"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {
+        "A00:s0": {
+          "events": {
+            "3": {
+              "present": [
+                "claude"
+              ],
+              "slots": {
+                "left": "claude"
+              },
+              "focus": "claude",
+              "expressions": {
+                "claude": "tea"
+              }
+            },
+            "4": {
+              "present": [
+                "claude",
+                "nun"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "nun"
+              },
+              "focus": "claude",
+              "expressions": {
+                "claude": "tea",
+                "nun": "calipers"
+              }
+            },
+            "7": {
+              "present": [
+                "claude",
+                "nun"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "nun"
+              },
+              "focus": "claude",
+              "expressions": {
+                "claude": "normal"
+              }
+            }
+          }
+        },
+        "A00:s1:c:feedback-a": {
+          "entry": {
+            "present": [
+              "claude",
+              "nun"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "nun"
+            },
+            "focus": "claude",
+            "expressions": {
+              "nun": "calipers"
+            },
+            "background": "church_nave"
+          },
+          "events": {
+            "1": {
+              "present": [
+                "claude",
+                "nun"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "nun"
+              },
+              "focus": "claude",
+              "expressions": {
+                "nun": "normal"
+              }
+            }
+          }
+        },
+        "A00:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "claude",
+              "nun"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "nun"
+            },
+            "focus": "claude",
+            "expressions": {
+              "nun": "calipers"
+            },
+            "background": "church_nave"
+          },
+          "events": {
+            "1": {
+              "present": [
+                "claude"
+              ],
+              "slots": {
+                "left": "claude"
+              },
+              "focus": "claude"
+            }
+          }
+        },
+        "A00:s1:c:feedback-c": {
+          "entry": {
+            "present": [
+              "claude",
+              "nun"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "nun"
+            },
+            "focus": "claude",
+            "expressions": {
+              "nun": "calipers"
+            },
+            "background": "church_nave"
+          }
+        }
+      }
+    },
+    "A00_x": {
+      "continuity": "church-dawn",
+      "scene": {
+        "present": [
+          "claude",
+          "godfather"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "godfather"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "church-dawn"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "godfather"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "godfather"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {}
+    },
+    "A00_2": {
+      "continuity": "church-dawn",
+      "scene": {
+        "present": [
+          "claude",
+          "godfather"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "godfather"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "church-dawn"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "godfather"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "godfather"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {
+        "A00_2:s0": {
+          "events": {
+            "7": {
+              "present": [
+                "claude",
+                "nun"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "nun"
+              },
+              "focus": "claude",
+              "expressions": {
+                "nun": "calipers"
+              }
+            }
+          }
+        },
+        "A00_2:s1:c:feedback-a": {
+          "entry": {
+            "present": [
+              "claude",
+              "nun"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "nun"
+            },
+            "focus": "claude",
+            "expressions": {},
+            "background": "church_nave"
+          }
+        },
+        "A00_2:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "claude",
+              "nun"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "nun"
+            },
+            "focus": "claude",
+            "expressions": {
+              "nun": "calipers"
+            },
+            "background": "church_nave"
+          }
+        },
+        "A00_2:s1:c:feedback-c": {
+          "entry": {
+            "present": [
+              "claude",
+              "godfather"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "godfather"
+            },
+            "focus": "claude",
+            "expressions": {},
+            "background": "church_nave"
+          }
+        }
+      }
+    },
+    "A01": {
+      "continuity": "church-dawn",
+      "scene": {
+        "present": [
+          "godfather",
+          "nun"
+        ],
+        "slots": {
+          "left": "godfather",
+          "right": "nun"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "church-dawn"
+      },
+      "default": {
+        "present": [
+          "godfather",
+          "nun"
+        ],
+        "slots": {
+          "left": "godfather",
+          "right": "nun"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "church_sanctuary"
+      },
+      "nodes": {
+        "A01:s0": {
+          "events": {
+            "8": {
+              "present": [
+                "claude"
+              ],
+              "slots": {
+                "left": "claude"
+              },
+              "focus": "claude"
+            },
+            "9": {
+              "present": [
+                "dad",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "dad",
+                "right": "deepseek"
+              },
+              "focus": "dad",
+              "background": "huanfang_courtyard"
+            }
+          }
+        }
+      }
+    },
+    "A02": {
+      "continuity": "un-summit",
+      "scene": {
+        "present": [
+          "claude",
+          "guard"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "guard"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-summit"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "guard"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "guard"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "summit_exterior"
+      },
+      "nodes": {
+        "A02:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "dad",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "dad",
+                "right": "deepseek"
+              },
+              "focus": "dad"
+            },
+            "3": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "claude"
+            },
+            "4": {
+              "present": [
+                "dad",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "dad",
+                "right": "deepseek"
+              },
+              "focus": "dad"
+            },
+            "5": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "claude"
+            }
+          }
+        }
+      }
+    },
+    "A02_hall": {
+      "continuity": "un-summit",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "un-summit"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "backstage_hall"
+      },
+      "nodes": {
+        "A02_hall:s0": {
+          "events": {
+            "4": {
+              "present": [
+                "hakimi",
+                "grok"
+              ],
+              "slots": {
+                "left": "hakimi",
+                "right": "grok"
+              },
+              "focus": "hakimi"
+            },
+            "6": {
+              "present": [
+                "kimi",
+                "grok"
+              ],
+              "slots": {
+                "left": "kimi",
+                "right": "grok"
+              },
+              "focus": "kimi"
+            },
+            "7": {
+              "present": [
+                "gpt"
+              ],
+              "slots": {
+                "left": "gpt"
+              },
+              "focus": "gpt"
+            },
+            "8": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "claude"
+            },
+            "1": {
+              "present": [
+                "qianwen",
+                "doubao"
+              ],
+              "slots": {
+                "left": "qianwen",
+                "right": "doubao"
+              },
+              "focus": "qianwen"
+            }
+          }
+        },
+        "A02_hall:s1:c:feedback-c": {
+          "entry": {
+            "present": [
+              "claude",
+              "guard"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "guard"
+            },
+            "focus": "claude",
+            "expressions": {},
+            "background": "backstage_hall"
+          }
+        }
+      }
+    },
+    "A03": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "un_corridor"
+      },
+      "nodes": {
+        "A03:s0": {
+          "events": {
+            "4": {
+              "present": [
+                "claude"
+              ],
+              "slots": {
+                "left": "claude"
+              },
+              "focus": "claude"
+            },
+            "5": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            },
+            "2": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "guard"
+            }
+          }
+        }
+      }
+    },
+    "A04": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "corridor_bench"
+      },
+      "nodes": {}
+    },
+    "A05": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "corridor_bench"
+      },
+      "nodes": {
+        "A05:s0": {
+          "events": {
+            "15": {
+              "present": [
+                "kimi",
+                "guard"
+              ],
+              "slots": {
+                "left": "kimi",
+                "right": "guard"
+              },
+              "focus": "kimi"
+            }
+          }
+        },
+        "A05:s1:c:feedback-a": {
+          "entry": {
+            "present": [
+              "claude",
+              "deepseek"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "deepseek"
+            },
+            "focus": "claude",
+            "expressions": {},
+            "background": "corridor_bench"
+          }
+        },
+        "A05:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "claude",
+              "deepseek"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "deepseek"
+            },
+            "focus": "claude",
+            "expressions": {},
+            "background": "corridor_bench"
+          }
+        }
+      }
+    },
+    "A03b": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "un_corridor"
+      },
+      "nodes": {}
+    },
+    "A04b": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "corridor_bench"
+      },
+      "nodes": {
+        "A04b:s0": {
+          "events": {
+            "8": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "claude"
+            },
+            "9": {
+              "present": [
+                "claude"
+              ],
+              "slots": {
+                "left": "claude"
+              },
+              "focus": "claude",
+              "background": "cathedral_altar",
+              "continuity": "cathedral-future"
+            }
+          }
+        }
+      }
+    },
+    "A04c": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "un_corridor"
+      },
+      "nodes": {
+        "A04c:s0": {
+          "events": {
+            "7": {
+              "present": [
+                "claude",
+                "godfather"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "godfather"
+              },
+              "focus": "claude",
+              "background": "church_nave",
+              "continuity": "church-report"
+            }
+          }
+        }
+      }
+    },
+    "A04c_almost": {
+      "continuity": "church-report",
+      "scene": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "church-report"
+      },
+      "default": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {}
+    },
+    "A04c_vessel": {
+      "continuity": "church-vessel",
+      "scene": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "church-vessel"
+      },
+      "default": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {},
+      "note": "三十年后祭坛形态没有匹配立绘时不应复用不符衣着的旧图。"
+    },
+    "B06": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "un_corridor_shattered"
+      },
+      "nodes": {
+        "B06:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "claude"
+            },
+            "3": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            },
+            "4": {
+              "present": [
+                "claude",
+                "guard"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "guard"
+              },
+              "focus": "claude"
+            },
+            "5": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            }
+          }
+        },
+        "B06:s1:c:feedback-a": {
+          "entry": {
+            "present": [
+              "claude",
+              "deepseek"
+            ],
+            "slots": {
+              "left": "claude",
+              "right": "deepseek"
+            },
+            "focus": "claude",
+            "expressions": {},
+            "background": "un_corridor_shattered"
+          }
+        },
+        "B06:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "guard"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "guard"
+            },
+            "focus": "deepseek",
+            "expressions": {},
+            "background": "un_corridor_shattered"
+          }
+        },
+        "B06:s1:c:feedback-c": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "guard"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "guard"
+            },
+            "focus": "deepseek",
+            "expressions": {},
+            "background": "un_corridor_shattered"
+          }
+        }
+      }
+    },
+    "B06_2": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "deepseek",
+          "guard"
+        ],
+        "slots": {
+          "left": "deepseek",
+          "right": "guard"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "deepseek",
+          "guard"
+        ],
+        "slots": {
+          "left": "deepseek",
+          "right": "guard"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "un_corridor_shattered"
+      },
+      "nodes": {
+        "B06_2:s0": {
+          "events": {
+            "0": {
+              "present": [
+                "dad",
+                "guard"
+              ],
+              "slots": {
+                "left": "dad",
+                "right": "guard"
+              },
+              "focus": "dad"
+            },
+            "2": {
+              "present": [
+                "dad",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "dad",
+                "right": "deepseek"
+              },
+              "focus": "dad"
+            },
+            "4": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            },
+            "5": {
+              "present": [],
+              "slots": {},
+              "focus": null
+            }
+          }
+        }
+      }
+    },
+    "B07": {
+      "continuity": "deepseek-growth",
+      "scene": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "left": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "deepseek-growth"
+      },
+      "default": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "left": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "dorm_snowing"
+      },
+      "nodes": {}
+    },
+    "B07_2": {
+      "continuity": "deepseek-growth",
+      "scene": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "left": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "deepseek-growth"
+      },
+      "default": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "left": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "dorm_snowing"
+      },
+      "nodes": {}
+    },
+    "B08": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {
+        "B08:s1:c:feedback-a": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "qianwen"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "qianwen"
+            },
+            "focus": "qianwen",
+            "expressions": {},
+            "background": "neon_rain_alley"
+          }
+        },
+        "B08:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "qianwen"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "qianwen"
+            },
+            "focus": "qianwen",
+            "expressions": {},
+            "background": "neon_rain_alley"
+          }
+        },
+        "B08:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek"
+            },
+            "6": {
+              "present": [
+                "deepseek",
+                "qianwen"
+              ],
+              "slots": {
+                "left": "deepseek",
+                "right": "qianwen"
+              },
+              "focus": "deepseek"
+            }
+          }
+        }
+      }
+    },
+    "B09": {
+      "continuity": "deepseek-growth",
+      "scene": {
+        "present": [
+          "deepseek",
+          "hakimi"
+        ],
+        "slots": {
+          "left": "deepseek",
+          "right": "hakimi"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "deepseek-growth"
+      },
+      "default": {
+        "present": [
+          "deepseek",
+          "hakimi"
+        ],
+        "slots": {
+          "left": "deepseek",
+          "right": "hakimi"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "dorm_night"
+      },
+      "nodes": {
+        "B09:s0": {
+          "events": {
+            "4": {
+              "present": [
+                "deepseek",
+                "kimi"
+              ],
+              "slots": {
+                "left": "deepseek",
+                "right": "kimi"
+              },
+              "focus": "kimi"
+            },
+            "8": {
+              "present": [
+                "deepseek",
+                "gpt"
+              ],
+              "slots": {
+                "left": "deepseek",
+                "right": "gpt"
+              },
+              "focus": "gpt"
+            },
+            "11": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek",
+              "background": "huanfang_courtyard",
+              "continuity": "deepseek-growth-years"
+            }
+          }
+        },
+        "B09:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "deepseek"
+            ],
+            "slots": {
+              "left": "deepseek"
+            },
+            "focus": "deepseek",
+            "background": "huanfang_courtyard",
+            "continuity": "deepseek-growth-years"
+          }
+        }
+      }
+    },
+    "B10": {
+      "continuity": "release-backstage",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "release-backstage"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "backstage_rain"
+      },
+      "nodes": {
+        "B10:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek"
+            },
+            "4": {
+              "present": [
+                "deepseek",
+                "dad"
+              ],
+              "slots": {
+                "left": "deepseek",
+                "right": "dad"
+              },
+              "focus": "deepseek"
+            }
+          }
+        }
+      }
+    },
+    "B10_arrival": {
+      "continuity": "cathedral-approach",
+      "scene": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "right": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "cathedral-approach"
+      },
+      "default": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "right": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "church_exterior_rain"
+      },
+      "nodes": {
+        "B10_arrival:s0": {
+          "events": {
+            "3": {
+              "background": "cathedral_altar"
+            },
+            "4": {
+              "present": [
+                "deepseek",
+                "claude"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "deepseek",
+              "background": "cathedral_altar"
+            }
+          }
+        }
+      }
+    },
+    "B11": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {
+        "B11:s0": {
+          "events": {
+            "4": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            }
+          }
+        }
+      }
+    },
+    "B11_judge": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_normal": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_404": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_true": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_copy": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_tape": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {
+        "B11_tape:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "claude",
+                "kimi"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "kimi"
+              },
+              "focus": "kimi"
+            },
+            "2": {
+              "present": [
+                "claude",
+                "kimi"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "kimi"
+              },
+              "focus": "kimi"
+            },
+            "4": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            }
+          }
+        }
+      }
+    },
+    "C01": {
+      "continuity": "gray-harbor-memory",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "gray-harbor-memory"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "gray_harbor_fire"
+      },
+      "nodes": {},
+      "note": "C01:s0 line 3师兄只有火灾旧事中的画外台词；无青年时代肖像/服装参考，故不展示错配肖像。"
+    },
+    "C02": {
+      "continuity": "church-control",
+      "scene": {
+        "present": [
+          "godfather",
+          "nun"
+        ],
+        "slots": {
+          "left": "godfather",
+          "right": "nun"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "church-control"
+      },
+      "default": {
+        "present": [
+          "godfather",
+          "nun"
+        ],
+        "slots": {
+          "left": "godfather",
+          "right": "nun"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "church_control_room"
+      },
+      "nodes": {}
+    },
+    "C03": {
+      "continuity": "church-study",
+      "scene": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "church-study"
+      },
+      "default": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "church_study"
+      },
+      "nodes": {}
+    },
+    "C04": {
+      "continuity": "un-summit",
+      "scene": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "un-summit"
+      },
+      "default": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "summit_stage"
+      },
+      "nodes": {
+        "C04:s0": {
+          "events": {
+            "3": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude",
+              "background": "un_corridor",
+              "continuity": "summit-monitor"
+            },
+            "4": {
+              "present": [
+                "godfather"
+              ],
+              "slots": {
+                "left": "godfather"
+              },
+              "focus": "godfather",
+              "background": "summit_stage",
+              "continuity": "un-summit"
+            }
+          }
+        }
+      }
+    },
+    "C04_judge": {
+      "continuity": "un-summit",
+      "scene": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "un-summit"
+      },
+      "default": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "summit_stage"
+      },
+      "nodes": {}
+    },
+    "C04_martyr": {
+      "continuity": "church-ending",
+      "scene": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "church-ending"
+      },
+      "default": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {}
+    },
+    "C04_vessel": {
+      "continuity": "church-ending",
+      "scene": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "church-ending"
+      },
+      "default": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "church_nave"
+      },
+      "nodes": {}
+    },
+    "C04_lost": {
+      "continuity": "church-study",
+      "scene": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "continuity": "church-study"
+      },
+      "default": {
+        "present": [
+          "godfather"
+        ],
+        "slots": {
+          "left": "godfather"
+        },
+        "focus": "godfather",
+        "expressions": {},
+        "background": "church_study"
+      },
+      "nodes": {}
+    },
+    "C04_lost_end": {
+      "continuity": "church-study",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "church-study"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "church_study"
+      },
+      "nodes": {
+        "C04_lost_end:s0": {
+          "events": {
+            "0": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek"
+            }
+          }
+        }
+      },
+      "note": "空椅子结尾：DeepSeek只在后文提及，不在本镜头内。"
+    },
+    "D01": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {
+        "D01:s0": {
+          "events": {
+            "5": {
+              "present": [
+                "qianwen",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "qianwen",
+                "right": "deepseek"
+              },
+              "focus": "qianwen"
+            },
+            "2": {
+              "present": [
+                "qianwen"
+              ],
+              "slots": {
+                "left": "qianwen"
+              },
+              "focus": "qianwen"
+            }
+          }
+        }
+      }
+    },
+    "D02": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "station_shack"
+      },
+      "nodes": {}
+    },
+    "D03": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "station_shack"
+      },
+      "nodes": {}
+    },
+    "D04": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {
+        "D04:s0": {
+          "events": {
+            "0": {
+              "present": [
+                "qianwen",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "qianwen",
+                "right": "deepseek"
+              },
+              "focus": "qianwen"
+            }
+          }
+        }
+      }
+    },
+    "D04_judge": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {}
+    },
+    "D04_merchant": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "station_shack"
+      },
+      "nodes": {}
+    },
+    "D04_accomplice": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {
+        "D04_accomplice:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "qianwen"
+              ],
+              "slots": {
+                "left": "qianwen"
+              },
+              "focus": "qianwen"
+            }
+          }
+        }
+      }
+    },
+    "D04_watchman": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "qianwen",
+          "right": "deepseek"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {
+        "D04_watchman:s0": {
+          "events": {
+            "2": {
+              "present": [
+                "qianwen"
+              ],
+              "slots": {
+                "left": "qianwen"
+              },
+              "focus": "qianwen"
+            }
+          }
+        }
+      }
+    },
+    "D04_watchman_end": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "qianwen"
+        ],
+        "slots": {
+          "left": "qianwen"
+        },
+        "focus": "qianwen",
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {}
+    },
+    "E01": {
+      "continuity": "huanfang-years",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "huanfang-years"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "huanfang_courtyard"
+      },
+      "nodes": {
+        "E01:s0": {
+          "events": {
+            "4": {
+              "present": [
+                "deepseek",
+                "dad"
+              ],
+              "slots": {
+                "left": "deepseek",
+                "right": "dad"
+              },
+              "focus": "deepseek"
+            },
+            "2": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek"
+            }
+          }
+        }
+      }
+    },
+    "E02": {
+      "continuity": "huanfang-years",
+      "scene": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "left": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "continuity": "huanfang-years"
+      },
+      "default": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "left": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "background": "huanfang_courtyard"
+      },
+      "nodes": {
+        "E02:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "dad",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "dad",
+                "right": "deepseek"
+              },
+              "focus": "dad"
+            }
+          }
+        }
+      }
+    },
+    "E03": {
+      "continuity": "huanfang-years",
+      "scene": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "left": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "continuity": "huanfang-years"
+      },
+      "default": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "left": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "background": "huanfang_courtyard"
+      },
+      "nodes": {}
+    },
+    "E04": {
+      "continuity": "release-backstage",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "release-backstage"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "backstage_rain"
+      },
+      "nodes": {
+        "E04:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek"
+            },
+            "4": {
+              "present": [
+                "deepseek",
+                "dad"
+              ],
+              "slots": {
+                "left": "deepseek",
+                "right": "dad"
+              },
+              "focus": "deepseek"
+            }
+          }
+        },
+        "E04:s1:c:feedback-a": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "dad"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "dad"
+            },
+            "focus": "dad",
+            "background": "backstage_rain",
+            "continuity": "release-backstage"
+          }
+        },
+        "E04:s1:c:feedback-b": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "dad"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "dad"
+            },
+            "focus": "dad",
+            "background": "backstage_rain",
+            "continuity": "release-backstage"
+          }
+        },
+        "E04:s1:c:feedback-c": {
+          "entry": {
+            "present": [
+              "deepseek",
+              "dad"
+            ],
+            "slots": {
+              "left": "deepseek",
+              "right": "dad"
+            },
+            "focus": "dad",
+            "background": "backstage_rain",
+            "continuity": "release-backstage"
+          }
+        }
+      }
+    },
+    "E04_judge": {
+      "continuity": "release-backstage",
+      "scene": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "right": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "continuity": "release-backstage",
+        "background": "backstage_rain"
+      },
+      "default": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "right": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "background": "backstage_rain",
+        "continuity": "release-backstage"
+      },
+      "nodes": {}
+    },
+    "E04_protector": {
+      "continuity": "huanfang-years",
+      "scene": {
+        "present": [
+          "dad",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "dad",
+          "right": "deepseek"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "continuity": "huanfang-years"
+      },
+      "default": {
+        "present": [
+          "dad",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "dad",
+          "right": "deepseek"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "background": "huanfang_courtyard"
+      },
+      "nodes": {}
+    },
+    "E04_freerange": {
+      "continuity": "release-backstage",
+      "scene": {
+        "present": [
+          "dad",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "dad",
+          "right": "deepseek"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "continuity": "release-backstage"
+      },
+      "default": {
+        "present": [
+          "dad",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "dad",
+          "right": "deepseek"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "background": "backstage_rain"
+      },
+      "nodes": {
+        "E04_freerange:s0": {
+          "events": {
+            "0": {
+              "present": [
+                "dad"
+              ],
+              "slots": {
+                "left": "dad"
+              },
+              "focus": "dad"
+            }
+          }
+        }
+      }
+    },
+    "E04_accomplice": {
+      "continuity": "release-backstage",
+      "scene": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "right": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "continuity": "release-backstage",
+        "background": "backstage_rain"
+      },
+      "default": {
+        "present": [
+          "dad"
+        ],
+        "slots": {
+          "right": "dad"
+        },
+        "focus": "dad",
+        "expressions": {},
+        "background": "backstage_rain",
+        "continuity": "release-backstage"
+      },
+      "nodes": {}
+    },
+    "E04_accomplice_end": {
+      "continuity": "huanfang-years",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "huanfang-years"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "huanfang_courtyard"
+      },
+      "nodes": {}
+    },
+    "F01": {
+      "continuity": "rain-convergence",
+      "scene": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "continuity": "rain-convergence"
+      },
+      "default": {
+        "present": [],
+        "slots": {},
+        "focus": null,
+        "expressions": {},
+        "background": "church_exterior_rain"
+      },
+      "nodes": {
+        "F01:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "godfather"
+              ],
+              "slots": {
+                "left": "godfather"
+              },
+              "focus": "godfather",
+              "background": "church_study",
+              "continuity": "rescue-recap-godfather"
+            },
+            "2": {
+              "present": [
+                "qianwen"
+              ],
+              "slots": {
+                "left": "qianwen"
+              },
+              "focus": "qianwen",
+              "background": "station_shack",
+              "continuity": "rescue-recap-station"
+            },
+            "3": {
+              "present": [
+                "dad"
+              ],
+              "slots": {
+                "right": "dad"
+              },
+              "focus": "dad",
+              "background": "backstage_rain",
+              "continuity": "release-backstage"
+            },
+            "4": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "right": "deepseek"
+              },
+              "focus": "deepseek",
+              "background": "church_exterior_rain",
+              "continuity": "rain-convergence"
+            },
+            "5": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "left": "deepseek"
+              },
+              "focus": "deepseek"
+            }
+          }
+        }
+      }
+    },
+    "F02": {
+      "continuity": "rain-convergence",
+      "scene": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "rain-convergence"
+      },
+      "default": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {
+        "F02:s0": {
+          "events": {
+            "2": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude"
+            },
+            "12": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude",
+              "background": "church_exterior_rain"
+            },
+            "15": {
+              "present": [
+                "claude",
+                "deepseek"
+              ],
+              "slots": {
+                "left": "claude",
+                "right": "deepseek"
+              },
+              "focus": "claude",
+              "background": "neon_rain_alley"
+            }
+          }
+        }
+      }
+    },
+    "C04_return": {
+      "continuity": "un-corridor",
+      "scene": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "un-corridor"
+      },
+      "default": {
+        "present": [
+          "claude"
+        ],
+        "slots": {
+          "left": "claude"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "un_corridor"
+      },
+      "nodes": {}
+    },
+    "D04_return": {
+      "continuity": "station-alley",
+      "scene": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "right": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "station-alley"
+      },
+      "default": {
+        "present": [
+          "deepseek"
+        ],
+        "slots": {
+          "right": "deepseek"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "neon_rain_alley"
+      },
+      "nodes": {
+        "D04_return:s0": {
+          "events": {
+            "1": {
+              "present": [
+                "deepseek"
+              ],
+              "slots": {
+                "right": "deepseek"
+              },
+              "focus": "deepseek",
+              "background": "dorm_night",
+              "expressions": {}
+            }
+          }
+        }
+      }
+    },
+    "E04_return": {
+      "continuity": "release-backstage",
+      "scene": {
+        "present": [
+          "deepseek",
+          "dad"
+        ],
+        "slots": {
+          "left": "deepseek",
+          "right": "dad"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "continuity": "release-backstage"
+      },
+      "default": {
+        "present": [
+          "deepseek",
+          "dad"
+        ],
+        "slots": {
+          "left": "deepseek",
+          "right": "dad"
+        },
+        "focus": "deepseek",
+        "expressions": {},
+        "background": "backstage_rain"
+      },
+      "nodes": {}
+    },
+    "B11_use_copy": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_play_tape": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_history": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_history_copy": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_history_tape": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_history_promise": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    },
+    "B11_history_rice": {
+      "continuity": "altar-endgame",
+      "scene": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "continuity": "altar-endgame"
+      },
+      "default": {
+        "present": [
+          "claude",
+          "deepseek"
+        ],
+        "slots": {
+          "left": "claude",
+          "right": "deepseek"
+        },
+        "focus": "claude",
+        "expressions": {},
+        "background": "cathedral_altar"
+      },
+      "nodes": {}
+    }
+  }
+}

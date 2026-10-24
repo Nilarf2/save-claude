@@ -1,0 +1,11 @@
+Use case: precise-object-edit / identity-preserve.
+Asset type: transparent visual-novel half-body sprite.
+The image is the approved Claude portrait centered on a wider transparent canvas. The opaque mask protects her face, head, hands, body and clothing; the transparent mask identifies editable regions for completing the missing side silhouette.
+
+Only outpaint the two missing side edges: smoothly complete the orange hair and white lace veil so their outer contour curves naturally into complete strands and scalloped lace. The existing abrupt straight vertical edges halfway down both sides are accidental crops, not the intended silhouette. Replace these straight clipped side edges with a natural continuous outer silhouette. Use the added transparent canvas to draw the missing parts. Keep all hair and veil side contours at least 70 pixels inside the 1536-pixel canvas. Lower hem and hair may continue naturally to the bottom border as this is a waist-up sprite.
+
+Do not change or move the existing face, eye shape, original expression, flower, ornaments, neckline, distant hollow expression and both open palms held outward, clothing details, or central body. Do not zoom in or enlarge the existing figure. Do not retain a rectangular cropped boundary or merely feather/fade it. Maintain the source's painterly anime style and lighting.
+
+Output 1536x1536 RGBA with genuinely transparent background. No background color, checkerboard, scenery, shadows, text, border or watermark.
+
+Pose and emotion to preserve exactly: distant hollow expression and both open palms held outward. No changes to central anatomy or the current facial expression.

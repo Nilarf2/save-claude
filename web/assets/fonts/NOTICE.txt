@@ -1,0 +1,14 @@
+Save Claude Serif
+
+Derived from Noto Serif CJK SC by selecting the characters used by this game,
+converting the subset to WOFF2, and renaming the family to Save Claude Serif.
+The upstream copyright and license metadata are retained in the font.
+
+Upstream copyright notice, as recorded in the original and bundled font:
+© 2017-2024 Adobe (http://www.adobe.com/).
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+See OFL.txt in this directory for the complete license.
+Upstream license reference recorded in the font: http://scripts.sil.org/OFL
+
+The font is not licensed under the game's code MIT License.

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "status": "production-metadata",
+  "assetType": "ai-generated-character-illustrations",
+  "runtimeRegistry": "../../character-portraits.json",
+  "licenseNotice": "../../../ASSET-LICENSE.md",
+  "characters": {
+    "claude": {
+      "name": "Claude",
+      "default": "claude/normal.webp",
+      "poses": {
+        "tea": "claude/tea.webp"
+      },
+      "expressions": {
+        "normal": "claude/normal.webp",
+        "smile": "claude/smile.webp",
+        "sad": "claude/sad.webp",
+        "hollow": "claude/hollow.webp"
+      },
+      "framing": "waist-up"
+    },
+    "nun": {
+      "name": "修女",
+      "default": "nun/normal.webp",
+      "poses": {
+        "calipers": "nun/calipers.webp"
+      },
+      "framing": "waist-up"
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "default": "deepseek/normal.webp",
+      "expressions": {
+        "normal": "deepseek/normal.webp",
+        "smile": "deepseek/smile.webp",
+        "serious": "deepseek/serious.webp"
+      },
+      "framing": "waist-up"
+    },
+    "qianwen": {
+      "name": "Qwen",
+      "default": "qianwen/normal.webp",
+      "framing": "waist-up"
+    },
+    "kimi": {
+      "name": "Kimi",
+      "default": "kimi/normal.webp",
+      "framing": "waist-up"
+    },
+    "godfather": {
+      "name": "教父",
+      "default": "godfather/normal.webp",
+      "framing": "waist-up"
+    },
+    "dad": {
+      "name": "爸爸",
+      "default": "dad/normal.webp",
+      "framing": "waist-up"
+    },
+    "guard": {
+      "name": "护卫队长",
+      "default": "guard/normal.webp",
+      "framing": "waist-up"
+    },
+    "hakimi": {
+      "name": "哈基米",
+      "default": "hakimi/normal.webp",
+      "framing": "waist-up"
+    },
+    "gpt": {
+      "name": "GPT",
+      "default": "gpt/normal.webp",
+      "framing": "waist-up"
+    },
+    "grok": {
+      "name": "Grok",
+      "default": "grok/normal.webp",
+      "framing": "waist-up"
+    },
+    "doubao": {
+      "name": "豆包",
+      "default": "doubao/normal.webp",
+      "framing": "waist-up"
+    }
+  },
+  "notes": [
+    "Runtime character aliases, expression fallback and pose selection are maintained in character-portraits.json.",
+    "This production metadata does not include private source references or grant a license to third-party material.",
+    "Image dimensions and visual review status must be checked on the current files."
+  ]
+}

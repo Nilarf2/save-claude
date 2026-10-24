@@ -1,0 +1,49 @@
+# 依赖
+node_modules/
+engine/node_modules/
+__pycache__/
+*.pyc
+
+# 私人参考附件、来源元数据与内嵌审核页只保留本地，不进入公开仓库。
+/assets/refs/
+/docs/character-review/
+/assets/char-redrawn/raw/
+/assets/char-redrawn/review/
+/assets/char-redrawn/*-review.jpg
+/web/assets/char-unified/
+/tmp/
+# 运行缓存 / 临时产物
+assets/probe/
+tools/image/_tmp/
+tools/image/logs/
+tools/image/__pycache__/
+/shots/
+.playwright-cli/
+*.log
+
+# 临时/探测脚本（一次性排查用，不留仓库）
+tools/image/_*.py
+tools/image/_*.png
+tools/image/_*.jpg
+engine/_probe*
+engine/probe-story.json
+
+# 重复/原始大文件（webp 版本已保留）
+web/assets/bgm/*.ogg
+assets/char/claude/*.png
+
+# 环境密钥（示例配置可跟踪）
+.env
+.env.*
+!.env.example
+tools/image/.env
+tools/**/.env
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# Root build output and transient vendor-swap directories
+/build/
+/.engine-sync-*/
+/.engine-previous-*/

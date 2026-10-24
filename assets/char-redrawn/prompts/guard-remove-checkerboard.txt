@@ -1,0 +1,2 @@
+图1是已经画好的同一位护卫队长半身立绘，只去除人物以外误画的灰白棋盘格背景，输出真正透明RGBA alpha。不要重新设计人物，保持同一脸型、金发、黑金兜帽制服、金十字金链、黑手套、金色权杖、所有衣饰细节、同一姿势与画布构图。完整头顶兜帽、权杖上端与握杖手保持不变。
+Only background extraction: erase the painted white/gray checkerboard outside the character and staff; set those pixels alpha=0. Preserve the exact character, face, clothes, staff and hand details, pose, size and lighting. Genuinely transparent PNG/RGBA, not a checkerboard picture. Do not add any background color, checkerboard texture, glow, shadow, scenery, text, speech bubble or second person. 1024x1536。

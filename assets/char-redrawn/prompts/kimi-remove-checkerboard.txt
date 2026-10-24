@@ -1,0 +1,2 @@
+图1是已经画好的同一张Kimi人物立绘。任务仅删除人物以外误画的灰白棋盘格背景：输出真正透明RGBA alpha，不要再画棋盘格。保持所有人物像素外观不变：同一银白长发、淡紫眼、黑蝴蝶结、月牙音符发饰、K徽章、蓝黑星空/白褶饰书记官衣服、同一脸型与姿势、一手羽毛笔、另一手K保温杯，完整发顶与手指道具、原画布构图和光照均不改变。
+只执行background extraction: erase the painted checkerboard background, make all outside-subject pixels alpha=0, genuinely transparent PNG/RGBA. Do not draw any white/gray/black background, checkerboard texture, halo, shadow, scenery or new objects. Keep the character and props identical. 1024x1536。

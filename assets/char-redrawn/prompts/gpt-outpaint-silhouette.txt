@@ -1,0 +1,5 @@
+Use case: precise-object-edit / identity-preserve.
+Asset type: transparent visual-novel half-body sprite.
+The source portrait has been centered on a larger transparent canvas. Preserve the existing central protected portrait. Only outpaint missing outer silhouette: the entire two white branching antlers and silver-white hair on both sides; both antler tips were accidentally clipped at the top border. Keep the same lavender eyes, face, lace dress, cup, saucer and hand pose. The antlers must have natural complete tips and no straight clipped boundary.
+Use the expanded transparent area. Keep the complete head, accessories, hair, hands and weapon at least 60 pixels inside both sides and the top border. The lower waist-up costume may continue naturally to the bottom. Do not zoom, shift the face or change the outfit, body scale, existing pose, expression, painterly anime rendering or lighting. Do not add more props, text or shadows.
+Output 1536x1536 RGBA, genuinely transparent background, no checkerboard, no colored background, no border or watermark.
