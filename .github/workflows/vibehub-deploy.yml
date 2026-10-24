@@ -1,0 +1,65 @@
+name: Build and deploy to VibeHub
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: vibehub-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Agent: replace this block after detecting the repository's package manager and build script.
+      - name: Build static site
+        run: |
+          npm ci --ignore-scripts && npm run build && npm run check && python3 tools/release/build-release.py --out-dir build/vibehub-release --version "${GITHUB_SHA:-local}"
+
+      - name: Install verified VibeHub CLI
+        if: github.event_name == 'push'
+        run: |
+          installer="$(mktemp)"
+          curl -fsSL --retry 3 https://vibe.lumigrav.space/downloads/vibehub-cli/install.sh -o "$installer"
+          sh "$installer"
+          rm -f "$installer"
+
+      - name: Create concise release note
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          pull_request="$(
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" \
+              --jq '.[0] | select(.) | "PR #\(.number) · \(.head.ref) · \(.title)"' \
+              2>/dev/null || true
+          )"
+          if [ -n "$pull_request" ]; then
+            release_note="$pull_request"
+          else
+            commit_title="$(git log -1 --pretty=%s)"
+            release_note="直接推送 · ${commit_title:0:1000}"
+          fi
+          printf '%s\n' "$release_note" > "$RUNNER_TEMP/vibehub-release-note.txt"
+
+      - name: Publish built files
+        if: github.event_name == 'push'
+        env:
+          VIBEHUB_TOKEN: ${{ secrets.VIBEHUB_PROJECT_TOKEN }}
+        run: |
+          "$HOME/.local/bin/vibehub" update \
+            --slug save-claude \
+            --dir build/vibehub-release/vibehub \
+            --note-file "$RUNNER_TEMP/vibehub-release-note.txt"
