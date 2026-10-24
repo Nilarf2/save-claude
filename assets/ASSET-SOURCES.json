@@ -66,7 +66,8 @@
         "assets/background-prompts/un_corridor.txt",
         "assets/background-prompts/un_corridor_shattered.txt"
       ],
-      "licenseStatus": "separate-from-code-MIT; third-party rights not certified"
+      "licenseStatus": "separate-from-code-MIT; third-party rights not certified",
+      "localEditManifest": "assets/local-edits/manifest.json"
     },
     "portraits": {
       "kind": "ai-generated-and-edited-character-illustrations",
@@ -119,7 +120,8 @@
       "productionMetadata": "web/assets/char-redrawn/manifest.json",
       "promptDirectory": "assets/char-redrawn/prompts/",
       "licenseStatus": "separate-from-code-MIT; private reference rights not certified",
-      "processingRecipe": "tools/image/process-portrait.py"
+      "processingRecipe": "tools/image/process-portrait.py",
+      "localEditManifest": "assets/local-edits/manifest.json"
     },
     "cover": {
       "kind": "selected-ai-generated-and-edited-ensemble-and-title-design",
@@ -130,7 +132,8 @@
         "marketing/release/icon.jpg"
       ],
       "promptFile": "marketing/release/cover-prompt.txt",
-      "licenseStatus": "separate-from-code-MIT; selection does not prove third-party permission"
+      "licenseStatus": "separate-from-code-MIT; selection does not prove third-party permission",
+      "localEditManifest": "assets/local-edits/manifest.json"
     },
     "music": {
       "kind": "local-procedural-audio-synthesis",

@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "fd407f91fc78c2bbfd8f92043c746cc9f85e9144",
+  "model": "gpt-image-2.5-sunburst",
+  "scope": "Selected local clothing and fictional network display corrections, not new character designs.",
+  "maskConvention": "These are final native-resolution composite regions: white permits edited image pixels; black preserves the original. API PNG alpha masks use the inverse (opaque protects).",
+  "items": [
+    {
+      "id": "gpt-neckline",
+      "target": "web/assets/char-redrawn/gpt/normal.webp",
+      "prompt": "gpt-neckline.txt",
+      "compositeRegion": "gpt-neckline-region.png"
+    },
+    {
+      "id": "grok-neckline",
+      "target": "web/assets/char-redrawn/grok/normal.webp",
+      "prompt": "grok-neckline.txt",
+      "compositeRegion": "grok-neckline-region.png"
+    },
+    {
+      "id": "hakimi-neckline",
+      "target": "web/assets/char-redrawn/hakimi/normal.webp",
+      "prompt": "hakimi-neckline.txt",
+      "compositeRegion": "hakimi-neckline-region.png"
+    },
+    {
+      "id": "cover-hakimi-neckline",
+      "target": "web/assets/cover/title.webp",
+      "prompt": "cover-hakimi-neckline.txt",
+      "compositeRegion": "cover-hakimi-neckline-region.png",
+      "marketingMapping": {
+        "cover-16x9.jpg": {
+          "scale": 1.25,
+          "offset": [
+            0,
+            0
+          ]
+        },
+        "cover-4x3.jpg": {
+          "scale": 0.78125,
+          "offset": [
+            0,
+            112
+          ]
+        }
+      }
+    },
+    {
+      "id": "backstage_hall-screen",
+      "target": "web/assets/bg/backstage_hall.webp",
+      "prompt": "backstage_hall-screen.txt",
+      "compositeRegion": "backstage_hall-screen-region.png"
+    },
+    {
+      "id": "church_control_room-screen",
+      "target": "web/assets/bg/church_control_room.webp",
+      "prompt": "church_control_room-screen.txt",
+      "compositeRegion": "church_control_room-screen-region.png"
+    },
+    {
+      "id": "huanfang_courtyard-screen",
+      "target": "web/assets/bg/huanfang_courtyard.webp",
+      "prompt": "huanfang_courtyard-screen.txt",
+      "compositeRegion": "huanfang_courtyard-screen-region.png"
+    },
+    {
+      "id": "summit_stage-screen",
+      "target": "web/assets/bg/summit_stage.webp",
+      "prompt": "summit_stage-screen.txt",
+      "compositeRegion": "summit_stage-screen-region.png"
+    }
+  ],
+  "processing": {
+    "gpt-neckline": {
+      "crop": [
+        560,
+        620,
+        980,
+        1040
+      ],
+      "generationSize": [
+        1024,
+        1024
+      ],
+      "prefill": "opaque ivory with fine vertical gold seam; protect original jewelry",
+      "resampleBack": [
+        420,
+        420
+      ]
+    },
+    "hakimi-neckline": {
+      "crop": [
+        360,
+        730,
+        760,
+        1130
+      ],
+      "generationSize": [
+        1024,
+        1024
+      ],
+      "prefill": "opaque off-white only in upper chest openings; original straps and star stay in front",
+      "resampleBack": [
+        400,
+        400
+      ],
+      "preserve": "entire crop-top hem and bare midriff"
+    },
+    "landscapeImages": {
+      "generationSize": [
+        1536,
+        1024
+      ],
+      "paddingTopAndBottom": 80,
+      "cropBack": [
+        0,
+        80,
+        1536,
+        944
+      ]
+    },
+    "compositing": "Use only reviewed edit regions; soften the boundary inside the region, preserve source alpha, and retain the original canvas. Necklace artifacts were cleaned locally from the same generated fabric, without additional generation.",
+    "productionEncoding": "Runtime edited WebP is lossless; marketing JPEG uses quality 95, 4:4:4."
+  }
+}

@@ -1,0 +1,4 @@
+Use case: identity-preserve.
+Asset type: existing visual-novel character sprite, localized clothing correction.
+Image 1 is the exact edit target. Change only the specified neckline/chest clothing region. Preserve the face, age appearance, eyes, expression, hair, pose, hands, props, jewelry, outfit colors, painterly anime linework, dimensions, subject position and all surrounding pixels. Do not redesign the character or crop the silhouette.
+Replace the low central neckline/chest opening with a fitted opaque black fabric insert up to the existing black neck ornament. Keep the black/burgundy/gold Gothic costume style, subtle flat gold embroidery, original outer bodice silhouette and burgundy mantle. The chest is fully covered without cleavage lines. Preserve the large black bow, gold brooch, hands, axe, hair, face and shoulder cut exactly. Do not redraw the bust or change its proportions.
