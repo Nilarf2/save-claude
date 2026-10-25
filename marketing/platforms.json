@@ -1,5 +1,4 @@
 {
-  "status": "vibehub_published_toy_rejected",
   "title": "拯救 Claude 大小姐",
   "proposedSlug": "save-claude",
   "descriptionFile": "description.md",
@@ -12,7 +11,8 @@
     "poster": "media/cover-4x3.jpg",
     "icon": "media/icon.jpg",
     "existingProjectId": "47500727942144",
-    "publicationStatus": "rejected",
+    "publicUrl": "https://www.bilibili.com/toy/save-claude/index.html",
+    "publicationStatusSource": "public_work_page",
     "requiresCreatorReview": true
   },
   "vibehub": {
