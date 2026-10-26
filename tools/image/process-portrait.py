@@ -22,7 +22,7 @@ def main():
     image = Image.open(args.src).convert('RGBA')
     # Remove near-invisible export specks, retaining the visible translucent veil.
     image.putalpha(image.getchannel('A').point(lambda alpha: alpha if alpha > 8 else 0))
-    prepare = runpy.run_path(str(ROOT / 'engine/tools/image/prepare-sprite.py'))['prepare']
+    prepare = runpy.run_path(str(ROOT / 'tools/image/prepare-sprite.py'))['prepare']
     with tempfile.TemporaryDirectory() as directory:
         cleaned = Path(directory) / 'cleaned.png'
         normalized = Path(directory) / 'normalized.png'

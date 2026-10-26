@@ -5,11 +5,11 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const upstream = JSON.parse(await readFile(resolve(root, 'engine/UPSTREAM.json'), 'utf8'));
+const upstream = JSON.parse(await readFile(resolve(root, 'vendor/general-engine/PROVENANCE.json'), 'utf8'));
 const output = resolve(root, 'web/engine-runtime.js');
 const result = await build({
   stdin: {
-    contents: "export { compileStory } from '@text-adventure/content';\nexport { createSession } from '@text-adventure/core';\n",
+    contents: "export { compileStory, createSession, prepareSnapshot, validateSnapshot, createNarrativeWebAdapter, NARRATIVE_ENGINE_VERSION } from '@general-engine/engine/narrative';\n",
     resolveDir: root,
     sourcefile: 'browser-engine-entry.js',
     loader: 'js',

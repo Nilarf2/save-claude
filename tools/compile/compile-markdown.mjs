@@ -620,7 +620,7 @@ export async function compileMarkdownFile(options) {
   return story;
 }
 
-const HELP = `Usage: node tools/authoring/compile-markdown.mjs --source story.md --out build/story.json --id story-id
+const HELP = `Usage: node tools/compile/compile-markdown.mjs --source story.md --out build/story.json --id story-id
   [--portraits portraits.json] [--stage stage.json] [--assets-root directory]
   [--version 1.0.0] [--title title] [--locale zh-CN] [--config compiler.json]
 Config JSON accepts the same camelCase keys, metadata, tagAliases and characterAliases.

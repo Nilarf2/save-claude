@@ -3,7 +3,7 @@ import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { basename, resolve, join, isAbsolute } from 'node:path';
 import { parseArgs } from 'node:util';
 import { pathToFileURL } from 'node:url';
-import './story-map/review-data.js';
+import './review-data.js';
 export const { analyzeGraph, validateEvidence } = globalThis.StoryMapReview;
 
 /** This review tool accepts engine JSON and game extensions; it never executes modules. */
@@ -59,7 +59,7 @@ async function main() {
   const json = JSON.stringify(data).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
   await writeFile(join(out, 'story-map.json'), json + '\n');
   await writeFile(join(out, 'story-map-data.js'), 'globalThis.STORY_MAP = JSON.parse(' + JSON.stringify(json) + ');\n');
-  for (const name of pageFiles) await copyFile(new URL(`story-map/${name}`, import.meta.url), join(out, name));
+  for (const name of pageFiles) await copyFile(new URL(name, import.meta.url), join(out, name));
   console.log(`只读剧情地图：${out}/index.html (${data.nodes.length} 节点，${data.edges.length} 连线)`);
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main().catch(error => { console.error(error.message); process.exitCode = 1; });

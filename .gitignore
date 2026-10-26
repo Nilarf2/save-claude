@@ -1,6 +1,5 @@
 # 依赖
 node_modules/
-engine/node_modules/
 __pycache__/
 *.pyc
 
@@ -25,8 +24,6 @@ tools/image/__pycache__/
 tools/image/_*.py
 tools/image/_*.png
 tools/image/_*.jpg
-engine/_probe*
-engine/probe-story.json
 
 # 重复/原始大文件（webp 版本已保留）
 web/assets/bgm/*.ogg

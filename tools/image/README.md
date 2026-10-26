@@ -1,6 +1,6 @@
 # 游戏美术流程
 
-通用生图、蒙版编辑、透明处理和审核工具来自 `engine/tools/image/`；它们的源码在独立引擎仓库维护。服务地址、模型与凭据由操作者自行配置，仓库没有读取本机私有配置的脚本。
+图像生成、蒙版编辑、透明处理和审核工具属于本游戏的素材工作流。服务地址、模型与凭据由操作者自行配置，仓库没有读取本机私有配置的脚本。
 
 游戏内容分别维护在：
 
@@ -21,6 +21,6 @@ python tools/image/process-portrait.py --src path/to/approved-candidate.png --ou
 
 此步骤去除 alpha 不大于 8 的几乎不可见导出杂点，再调用通用工具等比放进 1536 × 1536 画布；上、左、右留 48 像素，半身下摆对齐底部，不横向挤压或裁掉头发。最后按质量 91 编码 WebP，保留透明通道，降低手机首次加载量。返回码 2 表示原图仍有贴边风险，需要人工判断。已有输出不会被覆盖。
 
-在深色、浅色和棋盘格下审阅后，才替换清单指向的正式 WebP。随后运行 `python tools/release/build-portrait-review.py` 更新 `web/portraits.html`，并在游戏的桌面、手机横屏和竖屏中检查。完整工作流见 `engine/docs/WORKFLOW.zh-CN.md`；素材权利范围见根目录 `ASSET-LICENSE.md`。
+在深色、浅色和棋盘格下审阅后，才替换清单指向的正式 WebP。随后运行 `python tools/release/build-portrait-review.py` 更新 `web/portraits.html`，并在游戏的桌面、手机横屏和竖屏中检查。完整工作流见 `tools/authoring/WORKFLOW.zh-CN.md`；素材权利范围见根目录 `ASSET-LICENSE.md`。
 
 已有正式立绘的局部衣料修订应保留原画布和 alpha，按 `assets/local-edits/manifest.json` 合成；不要再次运行上面的重新取景步骤，否则会改变既有角色的比例和位置。

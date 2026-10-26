@@ -264,15 +264,13 @@ def main() -> None:
     assets = asset_paths(story, portraits)
     required = [ROOT / "web" / p for p in WEB_FILES]
     required += [ROOT / "marketing/release" / p for p in ["cover-16x9.jpg", "cover-4x3.jpg", "icon.jpg"]]
-    required += [ROOT / p for p in ["LICENSE", "ASSET-LICENSE.md", "SOURCE-NOTICE.md", "assets/ASSET-SOURCES.json", "engine/LICENSE", "engine/UPSTREAM.json"]]
+    required += [ROOT / p for p in ["LICENSE", "ASSET-LICENSE.md", "SOURCE-NOTICE.md", "assets/ASSET-SOURCES.json", "vendor/general-engine/LICENSE", "vendor/general-engine/PROVENANCE.json"]]
     required += [ROOT / "web/portraits.html", ROOT / "tools/release/platform-vibehub.js"]
     required += [ROOT / "marketing" / p for p in ["description.md", "release-notes.md", "platforms.json"]]
     for path in required:
         if not path.is_file():
             raise ValueError("Missing release input: " + str(path.relative_to(ROOT)))
-    upstream = json.loads((ROOT / "engine/UPSTREAM.json").read_text(encoding="utf-8"))
-    if upstream.get("dirty") is not False:
-        raise ValueError("Release requires a clean committed engine snapshot; sync the finalized engine first")
+    upstream = json.loads((ROOT / "vendor/general-engine/PROVENANCE.json").read_text(encoding="utf-8"))
     mapping, payload = prepare_resources(assets)
     if args.check_only:
         print(json.dumps({"ok": True, "runtimeAssets": len(assets), "fingerprintedFiles": sum(a != b for a, b in mapping.items()), "nodes": len(story["nodes"]), "publishing": False}))
@@ -313,8 +311,8 @@ def main() -> None:
             asset_license = asset_license.replace("(" + name + ")", "(" + mapping[name] + ")")
         (dist / "ASSET-LICENSE.md").write_text(asset_license, encoding="utf-8")
         copy(ROOT / "assets/ASSET-SOURCES.json", dist / "assets/ASSET-SOURCES.json")
-        copy(ROOT / "engine/LICENSE", dist / "engine/LICENSE")
-        copy(ROOT / "engine/UPSTREAM.json", dist / "engine/UPSTREAM.json")
+        copy(ROOT / "vendor/general-engine/LICENSE", dist / "engine/LICENSE")
+        copy(ROOT / "vendor/general-engine/PROVENANCE.json", dist / "engine/PROVENANCE.json")
         for name in ["cover-16x9.jpg", "cover-4x3.jpg", "icon.jpg"]:
             copy(ROOT / "marketing/release" / name, dist / "media" / name)
         for screenshot in sorted((ROOT / "marketing/release/screenshots").glob("*.png")):

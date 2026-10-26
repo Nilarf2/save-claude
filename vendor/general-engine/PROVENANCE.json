@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/Nilarf2/general-engine.git",
+  "commit": "13cd8f26181993682e004893043d2b0e1b9b4359",
+  "version": "0.3.0-alpha.0",
+  "package": "@general-engine/engine",
+  "entry": "./narrative",
+  "distribution": "Controlled local tarball containing the built Narrative public entry",
+  "sha256": "481f397a17bd26d076aee935a16ef897da82a0221ffef69a0059c833ed59c452"
+}

@@ -33,8 +33,8 @@ class ReleaseTests(unittest.TestCase):
         self.put('web/character-portraits.json', json.dumps({'portrait': 'assets/char/normal.webp'}))
         self.put('web/portraits.html', '<a href="index.html">Play</a><img src="assets/char/normal.webp">')
         self.put('web/engine-runtime.js', 'export const compileStory = () => 1;\nexport const createSession = () => null;\n')
-        self.put('engine/UPSTREAM.json', json.dumps({'dirty': False, 'commit': 'fixture-commit'}))
-        for name in ['LICENSE', 'engine/LICENSE', 'assets/ASSET-SOURCES.json', 'marketing/description.md', 'marketing/release-notes.md', 'marketing/platforms.json', 'tools/release/platform-vibehub.js']:
+        self.put('vendor/general-engine/PROVENANCE.json', json.dumps({'commit': 'fixture-commit'}))
+        for name in ['LICENSE', 'vendor/general-engine/LICENSE', 'assets/ASSET-SOURCES.json', 'marketing/description.md', 'marketing/release-notes.md', 'marketing/platforms.json', 'tools/release/platform-vibehub.js']:
             self.put(name, '{}')
         self.put('ASSET-LICENSE.md', '[font](web/assets/fonts/story-serif.woff2) [OFL](web/assets/fonts/OFL.txt)')
         self.put('SOURCE-NOTICE.md', 'Adapted reference source and maintainer contact.\n')

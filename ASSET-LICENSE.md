@@ -1,8 +1,8 @@
 # 素材与代码授权范围
 
-根目录 `LICENSE` 的 MIT License 适用于本项目有权授出的原创程序代码和解释代码的技术文档。它**不自动覆盖游戏文字、人物设定、剧情设计、立绘、背景、封面、配乐、音效、原始参考附件或第三方标识**。独立引擎按 `engine/LICENSE` 及 `engine/UPSTREAM.json` 的来源记录使用。
+根目录 `LICENSE` 的 MIT License 适用于本项目有权授出的原创程序代码和解释代码的技术文档。它**不自动覆盖游戏文字、人物设定、剧情设计、立绘、背景、封面、配乐、音效、原始参考附件或第三方标识**。General Engine Narrative 包按 `vendor/general-engine/LICENSE` 及 `vendor/general-engine/PROVENANCE.json` 的来源记录使用。
 
-本说明公开已能核实的制作来源与许可边界，不替第三方出具授权。文件在仓库中、由作者选用、得到外观确认、具有提示词或 AI 生成记录，都不能单独证明作者拥有全部第三方权利，也不代表素材库可以自由商用。
+本说明公开已能核实的制作来源与许可边界，不替第三方出具授权。文件在仓库中、由作者选用、得到外观确认、具有提示词或 AI 生成记录，都不能单独证明作者拥有全部第三方权利，也不代表素材库可以自由商用。General Engine Narrative 的代码包来源与许可见 `vendor/general-engine/PROVENANCE.json`、包内许可证和其记录的上游仓库。
 
 ## 作品来源与联系
 

@@ -3,8 +3,7 @@
 // randomness, direct ending jumps, browser automation, or asset hashing.
 import { readFile } from 'node:fs/promises';
 import { strict as assert } from 'node:assert';
-import { compileStory } from '@text-adventure/content';
-import { createSession } from '@text-adventure/core';
+import { compileStory, createSession } from '@general-engine/engine/narrative';
 const args = process.argv.slice(2);
 if (args.length && (args.length !== 2 || args[0] !== '--story')) throw new Error('Usage: check-fixed-paths.mjs [--story path/to/story.json]');
 const story = JSON.parse(await readFile(args.length ? args[1] : new URL('../../web/story.json', import.meta.url), 'utf8'));

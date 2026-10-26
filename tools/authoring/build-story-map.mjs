@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Keep source locations and default output here; map generation lives upstream.
+// Keep source locations and default output here; the static map is a game tool.
 import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,5 +17,5 @@ const temp=await mkdtemp(resolve(tmpdir(),'save-claude-story-map-'));
 try{
  const meta=resolve(temp,'source-map.json');
  await writeFile(meta,JSON.stringify({sourceDocument:'story/03-story.md',chapterLines,revision}));
- execFileSync(process.execPath,[resolve(root,'engine/tools/authoring/build-story-map.mjs'),'--story',resolve(root,'web/story.json'),'--out',out,'--meta',meta,'--revision',revision],{stdio:'inherit'});
+ execFileSync(process.execPath,[resolve(root,'tools/authoring/story-map/generate.mjs'),'--story',resolve(root,'web/story.json'),'--out',out,'--meta',meta,'--revision',revision],{stdio:'inherit'});
 }finally{await rm(temp,{recursive:true,force:true});}

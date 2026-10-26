@@ -1,0 +1,18 @@
+{
+  "name": "@general-engine/engine",
+  "version": "0.3.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./narrative": {
+      "types": "./lib/narrative/index.d.ts",
+      "import": "./lib/narrative/index.js"
+    }
+  },
+  "files": [
+    "lib/narrative",
+    "LICENSE",
+    "NOTICE.md"
+  ]
+}

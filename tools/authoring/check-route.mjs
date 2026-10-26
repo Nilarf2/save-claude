@@ -4,8 +4,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
-import { compileStory } from '../../packages/content/dist/index.js';
-import { createSession } from '../../packages/core/dist/index.js';
+import { compileStory, createSession } from '@general-engine/engine/narrative';
 
 const { values } = parseArgs({ options: { story: { type: 'string' }, route: { type: 'string' }, out: { type: 'string' }, modules: { type: 'string' }, help: { type: 'boolean' } } });
 if (values.help) { console.log('node tools/authoring/check-route.mjs --story story.json --route route.json --out build/route.json [--modules ./game-modules.mjs]'); process.exit(0); }

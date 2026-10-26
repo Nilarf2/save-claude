@@ -40,8 +40,7 @@ function advance(s) {
   return s.getView();
 }
 
-const { compileStory } = await import('../../engine/packages/content/dist/index.js');
-const { createSession } = await import('../../engine/packages/core/dist/index.js');
+const { compileStory, createSession } = await import('@general-engine/engine/narrative');
 const compiled = compileStory(story);
 
 const endingsFound = new Map();

@@ -15,8 +15,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts
-      - name: Require a committed upstream snapshot
-        run: node --input-type=module -e "import fs from 'node:fs'; if (JSON.parse(fs.readFileSync('engine/UPSTREAM.json', 'utf8')).dirty) throw Error('Sync a clean upstream commit before CI');"
+      - name: Verify the pinned General Engine package
+        run: node tools/check-general-engine.mjs
       - run: npm run build
       - run: npm run check
       - name: Keep committed browser artifacts current
