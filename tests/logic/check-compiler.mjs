@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-import { compileMarkdown } from '../../engine/tools/authoring/compile-markdown.mjs';
+import { compileMarkdown } from '../../tools/compile/compile-markdown.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 const [source,planText,portraits,config]=await Promise.all(['story/03-story.md','story/stage-plan.json','web/character-portraits.json','tools/compile/game-config.json'].map(async file=>{const text=await readFile(resolve(root,file),'utf8');return file.endsWith('.json')&&file!=='story/stage-plan.json'?JSON.parse(text):text;}));
  let checks=0;

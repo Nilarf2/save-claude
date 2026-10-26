@@ -8,7 +8,7 @@
 
 在线游玩：[VibeHub](https://gamesvibe.app/play/dmasjcjx8zhg8rIwpmJGL) · [BilibiliToy](https://www.bilibili.com/toy/save-claude/index.html)。Toy 更新需经过平台审核，正式站点版本可能晚于 GitHub。
 
-本仓库是这款游戏的内容、界面与交付工具。通用确定性状态机来自独立项目 [Text Adventure Engine](https://github.com/Nilarf2/text-adventure-engine)；游戏内 `engine/` 是有来源记录的运行快照，不是另一套独立开发的引擎。
+本仓库是这款游戏的内容、界面与交付工具。确定性的 JSON 剧情会话来自独立项目 [General Engine](https://github.com/Nilarf2/general-engine) 的 Narrative 公共入口；消费者只入库已构建的受控 tarball，不维护通用引擎源码副本。接口和更新流程见[引擎消费者说明](docs/ENGINE-MIGRATION.md)。
 
 ## 运行游戏
 
@@ -35,7 +35,7 @@ python3 -m http.server 8123 --bind 127.0.0.1
 
 ## 从源码准备交付包
 
-开发检查需要 Node.js 20.19+、npm 和 Python 3.11+。已有引擎运行快照可直接使用：
+开发检查需要 Node.js 22.12+、npm 和 Python 3.11+。General Engine Narrative 的受控 tarball 与 provenance 已随仓库提供：
 
 ```sh
 npm ci --ignore-scripts
@@ -44,7 +44,7 @@ npm run check
 npm run build:map
 ```
 
-`build` 将 `story/03-story.md`、舞台计划和立绘登记编译为 `web/story.json`，并从引擎快照生成已提交的 `web/engine-runtime.js`；`check` 检查引擎来源、源码与产物一致性、舞台、固定路线/结局及发布资源回归。地图为只读作者工具。
+`build` 将 `story/03-story.md`、舞台计划和立绘登记编译为 `web/story.json`，并从锁定的 General Engine Narrative 包生成已提交的 `web/engine-runtime.js`；`check` 校验 tarball hash/provenance、源码与产物一致性、舞台、固定路线/结局及发布资源回归。地图为只读作者工具。
 
 准备发布输入后，先检查再写入新的输出目录：
 
@@ -54,7 +54,7 @@ python3 tools/release/build-release.py --out-dir ../save-claude-release/1.1.0 --
 python3 tools/release/build-release.py --out-dir ../save-claude-release/1.1.0 --version 1.1.0
 ```
 
-输出目录已存在时命令会拒绝覆盖。准备包仅写本地产物，不代表上传或正式发布。运行包从明确清单收集剧情、实际引用素材、封面、字体和引擎模块，不需要携带制作参考或凭据。
+输出目录已存在时命令会拒绝覆盖。准备包仅写本地产物，不代表上传或正式发布。运行包从明确清单收集剧情、实际引用素材、封面、字体和 Narrative runtime，不需要携带制作参考或凭据。
 
 运行时通过外部脚本载入引擎，不依赖内联 importmap，兼容限制内联脚本的平台。发布包给脚本、样式、剧情和媒体的文件名加入内容指纹；未变化的资源保持相同名称，便于平台复用缓存。资源映射与 `release-manifest.json` 记录实际文件和校验值，详见 [发布说明](tools/release/README.zh-CN.md)。
 
@@ -66,7 +66,7 @@ AUDIT_URL=https://example.com/game/index.html node tests/ui/startup-audit.mjs
 
 该检查验证引擎脚本的 HTTP 状态和文件类型、实际开局，以及文件缺失时的提示和重试。`AUDIT_URL` 应指向游戏页面本身；平台外层页面需要另行打开试玩。现有浏览器安装可通过 `PLAYWRIGHT_MODULE` 和 `CHROMIUM_PATH` 指定。
 
-更新引擎时，应先在独立引擎仓库安装并构建，再用 `node tools/sync-engine.mjs --source <引擎检出目录>` 同步，随后重新执行上述构建与检查。来源、提交和文件清单见 `engine/UPSTREAM.json`；正式交付应使用已提交的干净引擎版本。
+更新引擎时，应在独立 General Engine 检出目录安装并构建，然后显式运行 `node tools/sync-general-engine.mjs --source /absolute/path/to/general-engine`。脚本只把 Narrative 公共入口打包为仓库内 tarball，并更新 `vendor/general-engine/PROVENANCE.json` 与 `package-lock.json`；不会写入本机路径。更新后重新执行上述构建与检查。
 
 ## 文件与授权
 
@@ -78,6 +78,6 @@ AUDIT_URL=https://example.com/game/index.html node tests/ui/startup-audit.mjs
 | `assets/ASSET-SOURCES.json` | 素材类别、文件与可核实来源 |
 | `marketing/release/` | 当前选定封面及发布媒体 |
 | `tools/authoring/` | 只读地图与路线检查 |
-| `engine/UPSTREAM.json` | 独立引擎快照来源 |
+| `vendor/general-engine/PROVENANCE.json`、`vendor/general-engine-narrative.tgz` | General Engine Narrative 包来源、commit 与 hash |
 
 项目代码适用根目录 [MIT License](LICENSE)。**剧情、立绘、背景、封面和音频不因此自动获得 MIT 授权，也不代表整个素材库可以自由商用。** 素材及字体的范围、来源与待确认权利见 [ASSET-LICENSE.md](ASSET-LICENSE.md)。维护说明见 [HANDOFF.md](HANDOFF.md)，当前设计见 [story/00-design.md](story/00-design.md)。

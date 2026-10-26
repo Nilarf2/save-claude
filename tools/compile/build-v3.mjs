@@ -3,7 +3,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { compileMarkdownFile } from '../../engine/tools/authoring/compile-markdown.mjs';
+import { compileMarkdownFile } from './compile-markdown.mjs';
 
 const args=process.argv.slice(2);
 if(args.length&&(args.length!==2||args[0]!=='--out'))throw Error('Usage: node tools/compile/build-v3.mjs [--out path/to/story.json]');

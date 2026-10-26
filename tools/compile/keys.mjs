@@ -1,6 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { compileStory } from '../../engine/packages/content/dist/index.js';
-import { createSession } from '../../engine/packages/core/dist/index.js';
+import { compileStory, createSession } from '@general-engine/engine/narrative';
 
 const story = JSON.parse(await readFile('web/story.json', 'utf8'));
 const compiled = compileStory(story);

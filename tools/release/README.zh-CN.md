@@ -1,6 +1,6 @@
 # 本地发布产物
 
-`build-release.py` 只准备 offline、Toy 和 VibeHub 的本地静态目录与 ZIP，不上传、不改变审核状态。先执行仓库 README 中的构建与检查，确保浏览器引擎 bundle 与已提交的引擎快照一致，再使用新的输出目录：
+`build-release.py` 只准备 offline、Toy 和 VibeHub 的本地静态目录与 ZIP，不上传、不改变审核状态。先执行仓库 README 中的构建与检查，确保浏览器引擎 bundle 与锁定 General Engine Narrative tarball 一致，再使用新的输出目录：
 
 ```sh
 python3 tools/release/build-release.py --out-dir ../release/1.1.0 --version 1.1.0 --check-only

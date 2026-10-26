@@ -3,8 +3,7 @@
 // Only continue/choose are dispatched. There is no snapshot editing or jump.
 import { readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
-import { compileStory } from '@text-adventure/content';
-import { createSession } from '@text-adventure/core';
+import { compileStory, createSession } from '@general-engine/engine/narrative';
 const args = process.argv.slice(2);
 const arg = key => { const i=args.indexOf(key); return i<0 ? undefined : args[i+1]; };
 for(let i=0;i<args.length;i+=2) assert.ok(['--story','--report'].includes(args[i]) && args[i+1], 'Usage: check-endings.mjs [--story file] [--report file]');

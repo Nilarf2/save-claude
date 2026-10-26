@@ -1,6 +1,8 @@
 # 维护说明
 
-本项目是《拯救 Claude 大小姐》游戏，不是通用引擎的主仓库。引擎维护与版本更新应在 [Text Adventure Engine](https://github.com/Nilarf2/text-adventure-engine) 进行；本仓库只通过 `tools/sync-engine.mjs` 更新受控快照，保留 `engine/UPSTREAM.json` 与引擎许可证。
+本项目是《拯救 Claude 大小姐》游戏，不是通用引擎的主仓库。Narrative 引擎维护与版本更新应在 [General Engine](https://github.com/Nilarf2/general-engine) 进行；本仓库通过 `tools/sync-general-engine.mjs` 从显式的干净检出生成受控 tarball，保留 `vendor/general-engine/PROVENANCE.json`、包内许可证和锁定 hash。
+
+迁移后的 API 边界和更新命令见 [General Engine Consumer](docs/ENGINE-MIGRATION.md)。
 
 ## 当前内容约定
 
@@ -16,9 +18,9 @@
 2. 在仓库根执行 `npm ci --ignore-scripts`、`npm run build`、`npm run check`。只改文档不必重编剧情；只改素材时做对应画面和资源的定向检查。
 3. 需要作者地图时运行 `npm run build:map`；地图不写入玩家存档或剧本。
 4. 使用独立浏览器上下文检查实际变化。界面测试在 `tests/ui/player-audit.mjs`，需可用 Playwright 与 Chromium，可通过环境变量指定路径；不要把测试环境绝对路径作为项目依赖。
-5. 按 README 的准备包流程检查输入并生成新目录。确认包内入口、字体、音频、剧情与引擎模块能读取，再做发布审阅。
+5. 按 README 的准备包流程检查输入并生成新目录。确认包内入口、字体、音频、剧情与 Narrative runtime 能读取，再做发布审阅。
 
-更新引擎前先在其独立检出目录执行 `npm ci` 和 `npm run build`；同步后重新检查游戏。开发用的 dirty 快照不应作为最终来源声明。
+更新引擎前先在其独立检出目录执行 `npm ci` 和 `npm run build`；用 `tools/sync-general-engine.mjs --source /absolute/path/to/general-engine` 同步后重新检查游戏。脚本拒绝 dirty 检出；tarball 之外不把引擎源码复制进本项目。
 
 ## 素材维护
 

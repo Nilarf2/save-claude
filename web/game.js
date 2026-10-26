@@ -1,5 +1,5 @@
 // 拯救 Claude 大小姐 — 传统立绘 + 文本框 AVG
-import { compileStory, createSession } from './engine-runtime.js';
+import { compileStory, createSession, prepareSnapshot, createNarrativeWebAdapter, NARRATIVE_ENGINE_VERSION } from './engine-runtime.js';
 
 const $ = (s) => document.querySelector(s);
 const releaseAssetsNode = $('#release-assets');
@@ -35,7 +35,7 @@ const S = {
   sfxPlaying: new Set(),
   busy: false, renderPending: false, pendingChoice: false, slotMode: 'save',
   chapterName: '', renderId: 0, renderSequence: 0, finishTyping: null,
-  restoredStage: null, restoredLog: false,
+  restoredStage: null, restoredLog: false, narrativeAdapter: null, engineScene: null,
 };
 
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
@@ -269,6 +269,19 @@ function setBgm(musicId) {
   }
   S.bgm.volume = S.musicVolume;
   if (S.musicOn) resumeMusic(); else S.bgm.pause();
+}
+
+// The General Engine adapter owns effect dispatch while this game keeps its
+// established visual/audio presentation and user preference controls.
+function createGameNarrativeAdapter() {
+  return createNarrativeWebAdapter({
+    onScene: scene => { S.engineScene = scene; void setBg(scene.background || scene.id); },
+    onEffect: effect => {
+      if (effect.type === 'audio.play' && effect.channel === 'music') setBgm(effect.track.asset);
+      else if (effect.type === 'audio.stop' && effect.channel === 'music') S.bgm?.pause();
+      else if (effect.type === 'audio.sfx') setSfx(effect.asset);
+    },
+  });
 }
 function audioSettings() {
   try {
@@ -578,6 +591,7 @@ async function renderNode(result) {
   clearTimeout(S.autoTimer);
   S.finishTyping?.(false);
   const v = result.view ?? result;
+  await S.narrativeAdapter?.apply(result.effects || [], result.events || []);
   // 进入新对白后先清掉上一句；背景/立绘资源闸门期间保持空框，
   // 不让旧文字与尚未就绪的新角色错配。
   if (v.line) {
@@ -888,6 +902,7 @@ function resetPlayback() {
   el.autoBtn.setAttribute('aria-pressed', 'false');
   S.log = []; S.bgId = null; S.bgTarget = null; S.bgReady = null; S.chapterId = null; S.chapterName = '';
   S.stageContinuity = null; S.present.clear();
+  S.engineScene = null;
   S.restoredStage = null; S.restoredLog = false;
   hideSprite();
   S.spriteSides.clear();
@@ -902,7 +917,12 @@ function restoreSession(snapshot, saved = {}) {
   // 先验证，再替换当前会话；坏档不会清掉正在玩的进度。
   const session = createSession(S.compiled, { seed: 42 });
   let r;
-  try { r = session.restore(snapshot); }
+  try {
+    const prepared = prepareSnapshot(snapshot, S.compiled, {
+      isEngineVersionCompatible: (saved, current) => saved === current || (saved === '0.1.0' && current === NARRATIVE_ENGINE_VERSION),
+    });
+    r = session.restore(prepared);
+  }
   catch (error) { session.dispose(); throw error; }
   // Stage/history are optional display metadata. Malformed history must not
   // break the log panel or require migrating a different content version.
@@ -968,6 +988,7 @@ async function boot() {
   if (!res.ok) throw new Error('剧本加载失败（HTTP ' + res.status + '）');
   S.story = await res.json();
   S.compiled = compileStory(S.story);
+  S.narrativeAdapter = createGameNarrativeAdapter();
   if (!prepareSaveStorage(S.story.version)) {
     $('.title-version').textContent = '当前环境无法保存进度，离开后需重新开始';
   }

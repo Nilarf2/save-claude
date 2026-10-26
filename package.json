@@ -3,23 +3,21 @@
   "version": "1.1.0",
   "private": true,
   "type": "module",
-  "description": "Game sources and controlled runtime snapshot",
+  "description": "AVG game consumer of General Engine Narrative",
   "engines": {
-    "node": ">=20.19"
+    "node": ">=22.12"
   },
-  "workspaces": [
-    "engine/packages/*"
-  ],
   "scripts": {
     "build": "node tools/compile/build-v3.mjs && npm run build:runtime",
     "build:map": "node tools/authoring/build-story-map.mjs",
-    "check:engine": "node tools/sync-engine.mjs --check",
+    "check:engine": "node tools/check-general-engine.mjs",
     "check:story": "node tools/compile/check-snapshot.mjs",
     "check:stage": "node tools/compile/audit-stage.mjs",
     "test:compiler": "node tests/logic/check-compiler.mjs",
     "test:logic": "node tests/logic/check-endings.mjs",
+    "test:engine": "node tests/logic/check-engine-contract.mjs",
     "test:fixed": "node tools/authoring/check-fixed-paths.mjs",
-    "test": "npm run test:compiler && npm run test:logic && npm run test:fixed",
+    "test": "npm run test:compiler && npm run test:engine && npm run test:logic && npm run test:fixed",
     "check": "npm run check:engine && npm run check:runtime && npm run check:story && npm run check:stage && npm test && npm run check:release",
     "build:runtime": "node tools/compile/build-browser-runtime.mjs",
     "check:runtime": "node tools/compile/build-browser-runtime.mjs --check",
@@ -27,5 +25,12 @@
   },
   "devDependencies": {
     "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "@general-engine/engine": "file:vendor/general-engine-narrative.tgz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nilarf2/save-claude.git"
   }
 }
