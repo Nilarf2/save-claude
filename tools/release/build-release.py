@@ -17,7 +17,7 @@ from html.parser import HTMLParser
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
-WEB_FILES = ("index.html", "start.js", "game.js", "engine-runtime.js", "style.css", "story.json", "character-portraits.json")
+WEB_FILES = ("index.html", "start.js", "game.js", "engine-runtime.js", "style.css", "story.json", "character-portraits.json", "voice-assets.json")
 HASH_LENGTH = 16
 
 
@@ -67,7 +67,7 @@ def prepare_resources(assets: list[str]) -> tuple[dict[str, str], dict[str, byte
     for logical in assets:
         # Attribution/license documents retain readable stable names and bytes.
         add(logical, (ROOT / "web" / logical).read_bytes(), Path(logical).suffix.lower() not in {".txt", ".md"})
-    for logical in ("story.json", "character-portraits.json"):
+    for logical in ("story.json", "character-portraits.json", "voice-assets.json"):
         add(logical, (ROOT / "web" / logical).read_bytes())
     # The committed browser bundle avoids bare imports and inline-import-map
     # restrictions, and ordinary filenames avoid uploaders skipping dist/.
@@ -154,7 +154,7 @@ def validate_references(dist: Path) -> None:
             elif not urlsplit(specifier).scheme:
                 raise ValueError("Unmapped release module: " + specifier)
     # game.js resolves these logical document names through the injected map.
-    for name in ("story.json", "character-portraits.json"):
+    for name in ("story.json", "character-portraits.json", "voice-assets.json"):
         if name not in entry.assets:
             raise ValueError("Missing release document mapping: " + name)
         document = local_file(entry.assets[name], dist / "index.html")
@@ -167,13 +167,26 @@ def validate_references(dist: Path) -> None:
                 for item in value:
                     check_logical_assets(item)
             elif isinstance(value, str) and value.startswith("assets/"):
+                if name == "voice-assets.json" and (Path(value).is_absolute() or ".." in Path(value).parts):
+                    raise ValueError("Voice asset mapping escapes the web asset directory")
                 # Match the game's existing image/audio suffix normalization.
-                logical = re.sub(r"\.(ogg|wav)$", ".mp3", value, flags=re.IGNORECASE)
+                logical = re.sub(r"\.(ogg|wav)$", ".mp3", value, flags=re.IGNORECASE) if not value.startswith("assets/voice/") else value
                 logical = re.sub(r"\.(png|jpg|jpeg)$", ".webp", logical, flags=re.IGNORECASE)
                 if logical not in entry.assets:
                     raise ValueError(f"Missing logical release asset mapping: {name} -> {logical}")
 
         check_logical_assets(json.loads(document.read_text(encoding="utf-8")))
+
+    story_document = json.loads(local_file(entry.assets["story.json"], dist / "index.html").read_text(encoding="utf-8"))
+    voice_document = json.loads(local_file(entry.assets["voice-assets.json"], dist / "index.html").read_text(encoding="utf-8"))
+    for item in voice_document.get("items", []):
+        node = next((entry for entry in story_document.get("nodes", []) if entry.get("id") == item.get("nodeId")), None)
+        line_index = item.get("lineIndex")
+        source = item.get("file", "")
+        if node is None or node.get("type") != "dialogue" or not isinstance(line_index, int) or isinstance(line_index, bool) or line_index < 0 or line_index >= len(node.get("lines", [])):
+            raise ValueError("Voice asset mapping points to a missing story line")
+        if not isinstance(source, str) or not source.startswith("assets/voice/") or Path(source).is_absolute() or ".." in Path(source).parts:
+            raise ValueError("Voice asset mapping escapes the web asset directory")
 
 
 def write_manifest(dist: Path, mapping: dict[str, str]) -> None:
@@ -219,6 +232,20 @@ def asset_paths(story: dict, portraits: dict) -> list[str]:
             paths.add(value)
 
     walk(portraits)
+    voice_manifest = json.loads((ROOT / "web/voice-assets.json").read_text(encoding="utf-8"))
+    if voice_manifest.get("schemaVersion") != 1 or not isinstance(voice_manifest.get("items"), list):
+        raise ValueError("Invalid voice-assets.json manifest")
+    for item in voice_manifest["items"]:
+        source = item.get("file") if isinstance(item, dict) else None
+        if not isinstance(item, dict) or not isinstance(item.get("nodeId"), str) or not isinstance(item.get("lineIndex"), int) or isinstance(item.get("lineIndex"), bool) or not isinstance(source, str) or not source.startswith("assets/voice/"):
+            raise ValueError("Invalid voice asset mapping")
+        node = next((entry for entry in story.get("nodes", []) if entry.get("id") == item["nodeId"]), None)
+        line_index = item["lineIndex"]
+        if node is None or node.get("type") != "dialogue" or line_index < 0 or line_index >= len(node.get("lines", [])):
+            raise ValueError("Voice asset mapping points to a missing story line")
+        if Path(source).is_absolute() or ".." in Path(source).parts:
+            raise ValueError("Voice asset mapping escapes the web asset directory")
+        paths.add(source)
     paths.update("assets/sfx/" + name + ".mp3" for name in ["page", "click", "choice", "bell"])
     paths.update(["assets/cover/title.webp", "assets/fonts/story-serif.woff2", "assets/fonts/OFL.txt", "assets/fonts/NOTICE.txt"])
     css = (ROOT / "web/style.css").read_text(encoding="utf-8")
@@ -291,7 +318,7 @@ def main() -> None:
         index = rewrite_html((ROOT / "web/index.html").read_text(encoding="utf-8"), mapping)
         # Read synchronously by game.js; development pages have no map and keep
         # using original logical URLs. Escape '<' to prevent script termination.
-        asset_map = {name: mapping[name] for name in [*assets, "story.json", "character-portraits.json"]}
+        asset_map = {name: mapping[name] for name in [*assets, "story.json", "character-portraits.json", "voice-assets.json"]}
         asset_json = json.dumps(asset_map, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
         asset_script = '<script type="application/json" id="release-assets">' + asset_json + '</script>\n'
         if index.count("</head>") != 1 or 'id="release-assets"' in index:
