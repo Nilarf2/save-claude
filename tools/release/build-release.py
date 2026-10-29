@@ -138,7 +138,7 @@ def validate_references(dist: Path) -> None:
         raise ValueError("Release entry requires external ESM, not an inline import map")
     for value in entry.assets.values():
         local_file(value, dist / "index.html")
-    for path in dist.glob("*.html"):
+    for path in dist.rglob("*.html"):
         page = ReleaseHTML()
         page.feed(path.read_text(encoding="utf-8"))
         for reference in page.references:
@@ -344,6 +344,12 @@ def main() -> None:
             copy(ROOT / "marketing/release" / name, dist / "media" / name)
         for screenshot in sorted((ROOT / "marketing/release/screenshots").glob("*.png")):
             copy(screenshot, dist / "media/screenshots" / screenshot.name)
+        if platform == "vibehub":
+            audition_root = ROOT / "tts-audition"
+            for source in sorted(audition_root.rglob("*")):
+                if source.is_file():
+                    target = dist / "tts-audition" / source.relative_to(audition_root)
+                    copy(source, target)
         release = {"version": args.version, "gameId": story["id"], "contentVersion": story["version"], "start": story["start"], "nodes": len(story["nodes"]), "runtimeAssets": len(assets), "platform": platform, "engineCommit": upstream["commit"], "manifest": "release-manifest.json"}
         (dist / "release.json").write_text(json.dumps(release, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         if platform == "offline":

@@ -33,6 +33,8 @@ class ReleaseTests(unittest.TestCase):
         self.put('web/character-portraits.json', json.dumps({'portrait': 'assets/char/normal.webp'}))
         self.put('web/voice-assets.json', json.dumps({'schemaVersion': 1, 'items': [{'nodeId': 'start', 'lineIndex': 0, 'file': 'assets/voice/start-00.wav'}]}))
         self.put('web/portraits.html', '<a href="index.html">Play</a><img src="assets/char/normal.webp">')
+        self.put('tts-audition/index.html', '<!doctype html><audio controls src="audio/voice-a.wav"></audio>')
+        self.put('tts-audition/audio/voice-a.wav', b'audition voice')
         self.put('web/engine-runtime.js', 'export const compileStory = () => 1;\nexport const createSession = () => null;\n')
         self.put('vendor/general-engine/PROVENANCE.json', json.dumps({'commit': 'fixture-commit'}))
         for name in ['LICENSE', 'vendor/general-engine/LICENSE', 'assets/ASSET-SOURCES.json', 'marketing/description.md', 'marketing/release-notes.md', 'marketing/platforms.json', 'tools/release/platform-vibehub.js']:
@@ -83,6 +85,13 @@ class ReleaseTests(unittest.TestCase):
                 if entry['fingerprinted']:
                     self.assertIn('.' + entry['sha256'][:16] + '.', entry['path'])
             self.assertEqual(set(f['path'] for f in files.values()) | {'release-manifest.json'}, {p.relative_to(a / platform).as_posix() for p in (a / platform).rglob('*') if p.is_file()})
+        self.assertFalse((a / 'toy/tts-audition/index.html').exists())
+        audition_page = a / 'vibehub/tts-audition/index.html'
+        self.assertTrue(audition_page.is_file())
+        self.assertEqual((a / 'vibehub/tts-audition/audio/voice-a.wav').read_bytes(), b'audition voice')
+        page = release.ReleaseHTML()
+        page.feed(audition_page.read_text())
+        self.assertIn('audio/voice-a.wav', page.references)
 
     def test_code_change_leaves_media_css_and_engine_names_unchanged(self):
         a = self.build('before')
