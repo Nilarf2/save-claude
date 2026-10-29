@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepSeek 参考音色试听 · Save Claude</title>
+  <style>
+    :root { color-scheme: dark; --bg:#111016; --panel:#1d1a23; --line:#3d3345; --gold:#d8b36a; --text:#f4eee4; --muted:#b9adbd; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(circle at 50% 0,#302336 0,#111016 54%); color:var(--text); font:16px/1.65 system-ui,-apple-system,"Segoe UI","Noto Sans CJK SC",sans-serif; }
+    main { width:min(860px,calc(100% - 32px)); margin:0 auto; padding:56px 0 72px; }
+    header { margin-bottom:28px; }
+    .eyebrow { color:var(--gold); letter-spacing:.12em; font-size:12px; }
+    h1 { margin:8px 0 10px; font:700 clamp(28px,5vw,44px)/1.12 Georgia,"Noto Serif CJK SC",serif; }
+    .intro { color:var(--muted); max-width:680px; margin:0; }
+    .grid { display:grid; gap:14px; }
+    article { background:rgba(29,26,35,.92); border:1px solid var(--line); padding:20px; border-radius:8px; }
+    article.active { border-color:var(--gold); box-shadow:0 0 0 1px rgba(216,179,106,.2); }
+    h2 { margin:0 0 3px; font-size:20px; }
+    .meta { color:var(--gold); font-size:13px; margin-bottom:8px; }
+    p { margin:0 0 14px; color:#e4dce6; }
+    audio { width:100%; height:42px; accent-color:var(--gold); }
+    footer { color:var(--muted); font-size:13px; margin-top:22px; }
+    code { color:#ead49d; }
+    @media (max-width:600px) { main { padding-top:34px; } article { padding:16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">SAVE CLAUDE · TTS AUDITION</div>
+      <h1>DeepSeek 参考音色</h1>
+      <p class="intro">同一段台词的三种方向，用来先确定角色的基础音色。确认方向后，再固定角色身份并处理情绪、停连和字幕同步。</p>
+    </header>
+    <section class="grid" aria-label="参考音色">
+      <article>
+        <h2>A · 轻亮活泼</h2>
+        <div class="meta">中高音 · 明亮 · 灵动亲切</div>
+        <p>更接近活泼、直率的大肥鱼方向，保留少女感但不做幼儿声。</p>
+        <audio controls preload="metadata" src="audio/voice-a.wav"></audio>
+      </article>
+      <article>
+        <h2>B · 中低慵懒</h2>
+        <div class="meta">中低音 · 温暖略沙 · 从容</div>
+        <p>音色更厚、更松弛，适合把角色做得有辨识度且不和其他年轻女声混在一起。</p>
+        <audio controls preload="metadata" src="audio/voice-b.wav"></audio>
+      </article>
+      <article>
+        <h2>C · 清脆直爽</h2>
+        <div class="meta">中音 · 清脆 · 辅音利落</div>
+        <p>节奏更直接，字头清楚，适合快速对白和有一点吐槽感的表达。</p>
+        <audio controls preload="metadata" src="audio/voice-c.wav"></audio>
+      </article>
+    </section>
+    <footer>测试台词：<code>哎，等一下！你先别急着跑——我有件事想告诉你。真的，听我说完，好吗？</code><br>三条音频均由 Qwen3-TTS-12Hz-1.7B-VoiceDesign 生成。</footer>
+  </main>
+</body>
+</html>

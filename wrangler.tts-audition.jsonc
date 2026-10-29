@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "save-claude-tts",
+  "compatibility_date": "2026-10-29",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "tts.nfffff.dpdns.org",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./tts-audition"
+  }
+}
