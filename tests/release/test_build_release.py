@@ -29,8 +29,9 @@ class ReleaseTests(unittest.TestCase):
         self.put('web/start.js', "import('./game.js').catch(console.error);\n")
         self.put('web/game.js', "import { compileStory } from './engine-runtime.js';\nfetch('story.json');\n")
         self.put('web/style.css', '@font-face{src:url("assets/fonts/story-serif.woff2")}')
-        self.put('web/story.json', json.dumps({'id': 'fixture', 'version': '1', 'start': 'start', 'nodes': [{'id': 'start', 'type': 'end'}], 'assets': {'theme': {'type': 'audio', 'src': 'assets/bgm/theme.ogg'}}}))
+        self.put('web/story.json', json.dumps({'id': 'fixture', 'version': '1', 'start': 'start', 'nodes': [{'id': 'start', 'type': 'dialogue', 'lines': [{'text': 'Hello', 'speaker': 'test'}]}], 'assets': {'theme': {'type': 'audio', 'src': 'assets/bgm/theme.ogg'}}}))
         self.put('web/character-portraits.json', json.dumps({'portrait': 'assets/char/normal.webp'}))
+        self.put('web/voice-assets.json', json.dumps({'schemaVersion': 1, 'items': [{'nodeId': 'start', 'lineIndex': 0, 'file': 'assets/voice/start-00.wav'}]}))
         self.put('web/portraits.html', '<a href="index.html">Play</a><img src="assets/char/normal.webp">')
         self.put('web/engine-runtime.js', 'export const compileStory = () => 1;\nexport const createSession = () => null;\n')
         self.put('vendor/general-engine/PROVENANCE.json', json.dumps({'commit': 'fixture-commit'}))
@@ -40,7 +41,7 @@ class ReleaseTests(unittest.TestCase):
         self.put('SOURCE-NOTICE.md', 'Adapted reference source and maintainer contact.\n')
         for name in ['cover-16x9.jpg', 'cover-4x3.jpg', 'icon.jpg']:
             self.put('marketing/release/' + name, b'marketing')
-        for path in ['cover/title.webp', 'char/normal.webp', 'bgm/theme.mp3', 'fonts/story-serif.woff2', 'fonts/OFL.txt', 'fonts/NOTICE.txt', *['sfx/' + p + '.mp3' for p in ['page', 'click', 'choice', 'bell']]]:
+        for path in ['cover/title.webp', 'char/normal.webp', 'bgm/theme.mp3', 'voice/start-00.wav', 'fonts/story-serif.woff2', 'fonts/OFL.txt', 'fonts/NOTICE.txt', *['sfx/' + p + '.mp3' for p in ['page', 'click', 'choice', 'bell']]]:
             self.put('web/assets/' + path, b'fixture media: ' + path.encode())
         # Big enough to catch accidental global version-based asset renaming.
         self.put('web/assets/cover/title.webp', b'unchanged-art' * 100000)
@@ -121,7 +122,7 @@ class ReleaseTests(unittest.TestCase):
         page = release.ReleaseHTML()
         page.feed((out / 'toy/index.html').read_text())
         files = self.manifest(out)
-        for logical in ('story.json', 'character-portraits.json', 'assets/sfx/page.mp3', 'assets/bgm/theme.mp3'):
+        for logical in ('story.json', 'character-portraits.json', 'voice-assets.json', 'assets/voice/start-00.wav', 'assets/sfx/page.mp3', 'assets/bgm/theme.mp3'):
             self.assertEqual(page.assets[logical], files[logical]['path'])
         story_file = out / 'toy' / files['story.json']['path']
         original = story_file.read_bytes()
@@ -133,6 +134,22 @@ class ReleaseTests(unittest.TestCase):
         story_file.write_bytes(original)
         (out / 'toy' / files['assets/sfx/page.mp3']['path']).unlink()
         with self.assertRaisesRegex(ValueError, 'Missing/nonlocal release reference'):
+            release.validate_references(out / 'toy')
+
+    def test_voice_mapping_requires_existing_story_line_and_local_asset(self):
+        out = self.build('voice-map')
+        files = self.manifest(out)
+        manifest_path = out / 'toy' / files['voice-assets.json']['path']
+        original = json.loads(manifest_path.read_text())
+        invalid = json.loads(json.dumps(original))
+        invalid['items'][0]['lineIndex'] = 1
+        manifest_path.write_text(json.dumps(invalid))
+        with self.assertRaisesRegex(ValueError, 'missing story line'):
+            release.validate_references(out / 'toy')
+        invalid['items'][0]['lineIndex'] = 0
+        invalid['items'][0]['file'] = 'assets/voice/../outside.wav'
+        manifest_path.write_text(json.dumps(invalid))
+        with self.assertRaisesRegex(ValueError, 'escapes the web asset directory'):
             release.validate_references(out / 'toy')
 
     def test_check_only_writes_nothing_and_changed_startup_contract_fails(self):

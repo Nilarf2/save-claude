@@ -20,6 +20,7 @@
 | 场景背景 | AI 图像生成，场景提示词与当前背景文件对应 | 默认不在代码 MIT 内；生成过程不是无限制使用或第三方许可的证明 |
 | 游戏封面与宣传裁版 | 当前选定的 AI 生成/编辑群像及有字标题图；以 `web/assets/cover/`、`marketing/release/` 为准 | 默认不在代码 MIT 内；选定某幅图不等于取得所有参考内容的再授权。历史未选候选不作为当前封面 |
 | BGM 与音效 | `tools/audio/make_bgm.py` 用数值振荡、噪声、包络和合成混响本地生成；未读取外部音频采样 | 合成器代码适用代码许可；现有音频文件单独保留授权。程序合成不等于公共领域、免版权或自动获得无限商用许可 |
+| 角色配音 | `tools/audio/generate-voice-design.mjs` 通过 Tailscale SSH 调用本地 Qwen3-TTS VoiceDesign；角色音色提示见 `tools/audio/voice-design.json`，逐句输出与运行清单见 `web/voice-assets.json` | 模型生成记录说明制作流程，不代表模型输出自动取得无限制分发或商用许可；与代码 MIT 分开，具体使用权利须按适用条款核实 |
 | 游戏内中文字体 | `Save Claude Serif` 是 `Noto Serif CJK SC` 的字符子集并改名；字体版权元数据与 OFL 可核实 | 适用 SIL Open Font License 1.1，保留 `web/assets/fonts/NOTICE.txt` 和 `OFL.txt`；字体不改用 MIT |
 | 原始参考图、漫画/角色资料与第三方名称、商标 | 部分用于制作参考，未附可公开转授的完整权利证明 | 不随代码许可授予。参考附件不属于公开运行包；名称出现不代表相关机构官方授权或关联 |
 

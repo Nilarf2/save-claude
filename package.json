@@ -20,6 +20,8 @@
     "test": "npm run test:compiler && npm run test:engine && npm run test:logic && npm run test:fixed",
     "check": "npm run check:engine && npm run check:runtime && npm run check:story && npm run check:stage && npm test && npm run check:release",
     "build:runtime": "node tools/compile/build-browser-runtime.mjs",
+    "voice:plan": "node tools/audio/generate-voice-design.mjs",
+    "voice:generate": "node tools/audio/generate-voice-design.mjs --generate",
     "check:runtime": "node tools/compile/build-browser-runtime.mjs --check",
     "check:release": "python3 -B -m unittest discover -s tests/release -v"
   },

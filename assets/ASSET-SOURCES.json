@@ -174,6 +174,25 @@
       ],
       "licenseStatus": "audio outputs separate from code-MIT; no blanket asset grant"
     },
+    "voiceActing": {
+      "kind": "locally-generated-Qwen3-TTS-VoiceDesign-dialogue",
+      "files": [
+        "web/voice-assets.json",
+        "web/assets/voice/"
+      ],
+      "evidence": [
+        "tools/audio/generate-voice-design.mjs",
+        "tools/audio/voice-design.json",
+        "tools/audio/README.zh-CN.md"
+      ],
+      "model": "Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+      "generationHost": "User-controlled Tailscale-connected GPU host; endpoint details stay in local environment configuration",
+      "counts": {
+        "mappedDialogueLines": 156,
+        "uniqueWavFiles": 155
+      },
+      "licenseStatus": "generated audio separate from code-MIT; model/output terms and third-party story rights must be reviewed independently; no blanket asset grant"
+    },
     "font": {
       "kind": "renamed-subset-of-Noto-Serif-CJK-SC",
       "files": [

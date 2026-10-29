@@ -32,7 +32,7 @@ const S = {
   spriteSlots: { left: null, right: null }, spriteSides: new Map(), activeSprite: null, chapterId: null,
   stageContinuity: null, present: new Set(),
   bgmId: null, bgm: null, musicOn: true, musicVolume: .34, sfxOn: true, sfxVolume: .42,
-  sfxPlaying: new Set(),
+  sfxPlaying: new Set(), voiceOn: true, voiceVolume: .8, voiceManifest: new Map(), voiceAudio: null,
   busy: false, renderPending: false, pendingChoice: false, slotMode: 'save',
   chapterName: '', renderId: 0, renderSequence: 0, finishTyping: null,
   restoredStage: null, restoredLog: false, narrativeAdapter: null, engineScene: null,
@@ -286,10 +286,10 @@ function createGameNarrativeAdapter() {
 function audioSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem(AUDIO_KEY) || '{}');
-    for (const key of ['musicOn', 'sfxOn']) if (typeof saved[key] === 'boolean') S[key] = saved[key];
-    for (const key of ['musicVolume', 'sfxVolume']) if (Number.isFinite(saved[key])) S[key] = Math.max(0, Math.min(1, saved[key]));
+    for (const key of ['musicOn', 'sfxOn', 'voiceOn']) if (typeof saved[key] === 'boolean') S[key] = saved[key];
+    for (const key of ['musicVolume', 'sfxVolume', 'voiceVolume']) if (Number.isFinite(saved[key])) S[key] = Math.max(0, Math.min(1, saved[key]));
   } catch (e) {}
-  for (const [prefix, onKey, volumeKey] of [['music', 'musicOn', 'musicVolume'], ['sfx', 'sfxOn', 'sfxVolume']]) {
+  for (const [prefix, onKey, volumeKey] of [['music', 'musicOn', 'musicVolume'], ['sfx', 'sfxOn', 'sfxVolume'], ['voice', 'voiceOn', 'voiceVolume']]) {
     const toggle = $('#' + prefix + '-on'), slider = $('#' + prefix + '-volume'), output = $('#' + prefix + '-level');
     toggle.checked = S[onKey]; slider.value = Math.round(S[volumeKey] * 100); output.textContent = slider.value + '%';
     const update = () => {
@@ -297,14 +297,16 @@ function audioSettings() {
       if (S.bgm) { S.bgm.volume = S.musicVolume; if (S.musicOn) resumeMusic(); else S.bgm.pause(); }
       if (!S.sfxOn) stopSfx();
       else for (const audio of S.sfxPlaying) audio.volume = S.sfxVolume;
-      try { localStorage.setItem(AUDIO_KEY, JSON.stringify({ musicOn: S.musicOn, musicVolume: S.musicVolume, sfxOn: S.sfxOn, sfxVolume: S.sfxVolume })); } catch (e) {}
+      if (!S.voiceOn) { stopVoice(); scheduleAuto(); }
+      else if (S.voiceAudio) S.voiceAudio.volume = S.voiceVolume;
+      try { localStorage.setItem(AUDIO_KEY, JSON.stringify({ musicOn: S.musicOn, musicVolume: S.musicVolume, sfxOn: S.sfxOn, sfxVolume: S.sfxVolume, voiceOn: S.voiceOn, voiceVolume: S.voiceVolume })); } catch (e) {}
     };
     toggle.addEventListener('change', update); slider.addEventListener('input', update);
   }
   document.addEventListener('pointerdown', resumeMusic, { passive: true });
   document.addEventListener('keydown', resumeMusic);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { S.bgm?.pause(); stopSfx(); clearTimeout(S.autoTimer); }
+    if (document.hidden) { S.bgm?.pause(); stopSfx(); stopVoice(); clearTimeout(S.autoTimer); }
     else { resumeMusic(); scheduleAuto(); }
   });
 }
@@ -323,6 +325,25 @@ function setSfx(name) {
 function stopSfx() {
   for (const audio of S.sfxPlaying) audio.pause();
   S.sfxPlaying.clear();
+}
+function stopVoice() {
+  if (S.voiceAudio) { S.voiceAudio.pause(); S.voiceAudio.currentTime = 0; S.voiceAudio = null; }
+}
+function playLineVoice(nodeId, lineIndex) {
+  stopVoice();
+  if (!S.voiceOn || document.hidden) return;
+  const path = S.voiceManifest.get(`${nodeId}:${lineIndex}`);
+  if (!path) return;
+  const audio = new Audio(resolveAsset(path));
+  audio.volume = S.voiceVolume;
+  S.voiceAudio = audio;
+  audio.addEventListener('ended', () => { if (S.voiceAudio === audio) S.voiceAudio = null; }, { once: true });
+  audio.addEventListener('error', () => {
+    if (S.voiceAudio === audio) { S.voiceAudio = null; if (S.auto) scheduleAuto(); }
+  }, { once: true });
+  audio.play().catch(() => {
+    if (S.voiceAudio === audio) { S.voiceAudio = null; if (S.auto) scheduleAuto(); }
+  });
 }
 
 // ---------- 立绘 ----------
@@ -591,6 +612,7 @@ async function renderNode(result) {
   clearTimeout(S.autoTimer);
   S.finishTyping?.(false);
   const v = result.view ?? result;
+  if (v.line) stopVoice();
   await S.narrativeAdapter?.apply(result.effects || [], result.events || []);
   // 进入新对白后先清掉上一句；背景/立绘资源闸门期间保持空框，
   // 不让旧文字与尚未就绪的新角色错配。
@@ -671,6 +693,7 @@ async function renderNode(result) {
     el.nextInd.classList.remove('show');
     await painted();
     if (renderId !== S.renderId) return;
+    playLineVoice(v.nodeId, result.state?.lineIndex ?? S.session?.snapshot()?.lineIndex ?? 0);
 
     const kind = isAction ? 'act' : (line.speaker ? 'speak' : 'narr');
     const last = S.log.at(-1);
@@ -718,6 +741,7 @@ function renderChoices(v) {
 
 async function pick(optionId, text) {
   if (!S.pendingChoice) return;
+  stopVoice();
   S.pendingChoice = false;
   setSfx('choice');
   el.choices.classList.add('hidden');
@@ -736,6 +760,7 @@ function advance() {
   if (S.renderPending) return;
   const v = S.session.getView();
   if (v.awaiting !== 'continue') return;
+  stopVoice();
   el.nextInd.classList.remove('show');
   setSfx('click');
   const r = S.session.dispatch({ type: 'continue' });
@@ -748,7 +773,27 @@ function scheduleAuto() {
   const v = S.session.getView();
   if (v.awaiting !== 'continue') return;
   const len = (S.fullText || '').length;
-  S.autoTimer = setTimeout(() => { if (S.auto) advance(); }, Math.min(6000, 1300 + len * 55));
+  const readDelay = Math.min(6000, 1300 + len * 55);
+  let delay = readDelay;
+  if (S.voiceOn && S.voiceAudio) {
+    const audio = S.voiceAudio;
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+      delay = Math.max(delay, Math.max(0, audio.duration - audio.currentTime) * 1000 + 120);
+    } else {
+      audio.addEventListener('loadedmetadata', () => { if (S.auto && S.voiceAudio === audio) scheduleAuto(); }, { once: true });
+      audio.addEventListener('error', () => { if (S.auto && S.voiceAudio === audio) scheduleAuto(); }, { once: true });
+      return;
+    }
+  }
+  const waitForVoice = () => {
+    if (!S.auto) return;
+    if (S.voiceOn && S.voiceAudio && !S.voiceAudio.ended) {
+      S.autoTimer = setTimeout(waitForVoice, 250);
+      return;
+    }
+    advance();
+  };
+  S.autoTimer = setTimeout(waitForVoice, delay);
 }
 
 // ---------- 结局 ----------
@@ -895,6 +940,7 @@ function resetPlayback() {
   visualStatus();
   clearTimeout(S.autoTimer);
   stopSfx();
+  stopVoice();
   S.finishTyping?.(false);
   S.pendingChoice = false;
   S.auto = false;
@@ -987,6 +1033,17 @@ async function boot() {
   const res = await fetch(resolveAsset('story.json'));
   if (!res.ok) throw new Error('剧本加载失败（HTTP ' + res.status + '）');
   S.story = await res.json();
+  try {
+    const voiceRes = await fetch(resolveAsset('voice-assets.json'));
+    if (voiceRes.ok) {
+      const manifest = await voiceRes.json();
+      if (manifest.schemaVersion === 1 && Array.isArray(manifest.items)) {
+        for (const item of manifest.items) {
+          if (typeof item.nodeId === 'string' && Number.isInteger(item.lineIndex) && typeof item.file === 'string' && item.file.startsWith('assets/voice/')) S.voiceManifest.set(`${item.nodeId}:${item.lineIndex}`, item.file);
+        }
+      }
+    }
+  } catch {}
   S.compiled = compileStory(S.story);
   S.narrativeAdapter = createGameNarrativeAdapter();
   if (!prepareSaveStorage(S.story.version)) {
@@ -1084,6 +1141,7 @@ function returnToTitle() {
   S.bgReady = null; S.bgTarget = null;
   S.renderPending = false;
   S.finishTyping?.(false);
+  stopVoice();
   S.auto = false;
   el.autoBtn.classList.remove('on');
   el.autoBtn.setAttribute('aria-pressed', 'false');

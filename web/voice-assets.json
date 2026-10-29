@@ -1,0 +1,786 @@
+{
+  "schemaVersion": 1,
+  "model": "Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+  "items": [
+    {
+      "nodeId": "A00:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A00_s0-06-c8d1a60b8dd0b968.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 11,
+      "file": "assets/voice/A01_s0-11-8387c0752e50e625.wav"
+    },
+    {
+      "nodeId": "HUB:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/HUB_s0-02-feb6cc609c7da11a.wav"
+    },
+    {
+      "nodeId": "HUB:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/HUB_s0-04-32b85886651aadeb.wav"
+    },
+    {
+      "nodeId": "A00:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A00_s0-05-13ded9467e2f2a0f.wav"
+    },
+    {
+      "nodeId": "A00:s1:c:feedback-c",
+      "lineIndex": 0,
+      "file": "assets/voice/A00_s1_c_feedback-c-00-78e6e254fe3a7647.wav"
+    },
+    {
+      "nodeId": "A00_x:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A00_x_s0-01-1062bec545cd3c91.wav"
+    },
+    {
+      "nodeId": "A00_x:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A00_x_s0-03-a172554ead693ce8.wav"
+    },
+    {
+      "nodeId": "A00_x:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A00_x_s0-05-d6738346664cf1d4.wav"
+    },
+    {
+      "nodeId": "A00_2:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A00_2_s0-01-728af0047580927c.wav"
+    },
+    {
+      "nodeId": "A00_2:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/A00_2_s0-02-e0abd5363b235d92.wav"
+    },
+    {
+      "nodeId": "A00_2:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A00_2_s0-03-31f19f2b46b398c8.wav"
+    },
+    {
+      "nodeId": "A00_2:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A00_2_s0-05-d5ec221c79e35004.wav"
+    },
+    {
+      "nodeId": "A00_2:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/A00_2_s0-08-de7d7a952c71f5e8.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A01_s0-01-a0abe0ed840ea6fd.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A01_s0-03-7af6c1aa755f3fa4.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A01_s0-05-7b0f4a39ec66865b.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A01_s0-06-a3d5eb7a43512131.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A01_s0-07-b5988748b8e3aae0.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 10,
+      "file": "assets/voice/A01_s0-10-f9ad6ac6e65934d2.wav"
+    },
+    {
+      "nodeId": "A01:s0",
+      "lineIndex": 12,
+      "file": "assets/voice/A01_s0-12-35fb7835c5b44646.wav"
+    },
+    {
+      "nodeId": "A02:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A02_s0-01-8aa9becd2e330543.wav"
+    },
+    {
+      "nodeId": "A02:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/A02_s0-02-301a0ecd6248dddd.wav"
+    },
+    {
+      "nodeId": "A02:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A02_s0-06-372859e7b8b44f8b.wav"
+    },
+    {
+      "nodeId": "A02:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A02_s0-07-620db9382fe52ed0.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A02_hall_s0-01-23cada5f44fc6384.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/A02_hall_s0-02-b9398f4613c1300a.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A02_hall_s0-03-e179da6366872b89.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/A02_hall_s0-04-7fc0378af108bcb3.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A02_hall_s0-05-f10d9220ae3f4d5d.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A02_hall_s0-06-58b599b44fb75e2a.wav"
+    },
+    {
+      "nodeId": "A02_hall:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A02_hall_s0-07-7822a31e4efd01ac.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A03_s0-03-5ffb45eab514fb2c.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A03_s0-06-10cf2a3b9139aee6.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A03_s0-07-78b489243f5a976a.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/A03_s0-08-0052fada5ebf7e09.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 9,
+      "file": "assets/voice/A03_s0-09-eef69306d27e6a85.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 10,
+      "file": "assets/voice/A03_s0-10-1c4076b3b8338ee7.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 12,
+      "file": "assets/voice/A03_s0-12-73b9f72788383d5f.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 13,
+      "file": "assets/voice/A03_s0-13-607b2946e0a16604.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 14,
+      "file": "assets/voice/A03_s0-14-ef937349a5b8d762.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 15,
+      "file": "assets/voice/A03_s0-15-3bc20d0d3b9ed640.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 16,
+      "file": "assets/voice/A03_s0-16-2bd34b6c7209dc19.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 18,
+      "file": "assets/voice/A03_s0-18-aa556211381ce4bf.wav"
+    },
+    {
+      "nodeId": "A03:s0",
+      "lineIndex": 19,
+      "file": "assets/voice/A03_s0-19-d7abad3f937eec55.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A04_s0-01-fb2f90472fd928ab.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/A04_s0-02-0326974e10a55a82.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A04_s0-03-43d70ba428c45f17.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A04_s0-05-0e8534aa9f0ebc84.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A04_s0-06-e7f15063bcf4361b.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A04_s0-07-190f8c49e82dc315.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/A04_s0-08-d8d72daa1430331f.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 9,
+      "file": "assets/voice/A04_s0-09-97ed2e82f39fd5f8.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 11,
+      "file": "assets/voice/A04_s0-11-3cb1287b8b4aee39.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 12,
+      "file": "assets/voice/A04_s0-12-37f9fd9474afb23b.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 13,
+      "file": "assets/voice/A04_s0-13-0eb967f667696000.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 14,
+      "file": "assets/voice/A04_s0-14-fbc450a02cbd4b21.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 16,
+      "file": "assets/voice/A04_s0-16-5a59c93937a1012e.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 17,
+      "file": "assets/voice/A04_s0-17-ee0c68fb0435f900.wav"
+    },
+    {
+      "nodeId": "A04:s0",
+      "lineIndex": 18,
+      "file": "assets/voice/A04_s0-18-37e656e52efebf7d.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A05_s0-01-b3e1d4083e2ef0c7.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/A05_s0-02-8bcb486077a028ae.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/A05_s0-03-50f9a329e3361373.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/A05_s0-04-7f06d41917193a93.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/A05_s0-06-8a8d78e039677fcb.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A05_s0-07-9a604ad48ba145a5.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/A05_s0-08-8ac3dd5be02606b4.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 9,
+      "file": "assets/voice/A05_s0-09-2ae95605957fe2e7.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 10,
+      "file": "assets/voice/A05_s0-10-e9aef5ed0b247166.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 12,
+      "file": "assets/voice/A05_s0-12-8b7314f86147eec6.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 13,
+      "file": "assets/voice/A05_s0-13-b8f560bfe1e20b97.wav"
+    },
+    {
+      "nodeId": "A05:s0",
+      "lineIndex": 14,
+      "file": "assets/voice/A05_s0-14-e3d69318ebc5136d.wav"
+    },
+    {
+      "nodeId": "A03b:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/A03b_s0-04-6aabcc7943cdc0df.wav"
+    },
+    {
+      "nodeId": "A03b:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A03b_s0-05-ab3eda58b0382a0b.wav"
+    },
+    {
+      "nodeId": "A04b:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/A04b_s0-02-844473bec20f80bd.wav"
+    },
+    {
+      "nodeId": "A04b:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/A04b_s0-04-e855eeba0035ea50.wav"
+    },
+    {
+      "nodeId": "A04b:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/A04b_s0-05-13dcdae7fd11cf8a.wav"
+    },
+    {
+      "nodeId": "A04b:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/A04b_s0-07-8d488ae3c9f73e1c.wav"
+    },
+    {
+      "nodeId": "A04c:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/A04c_s0-01-ac6cb2eb2838fb1e.wav"
+    },
+    {
+      "nodeId": "A04c:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/A04c_s0-04-f417d6afee5091e7.wav"
+    },
+    {
+      "nodeId": "B06:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B06_s0-01-2c426f460c837a92.wav"
+    },
+    {
+      "nodeId": "B06:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B06_s0-03-2a653f036b69d0ff.wav"
+    },
+    {
+      "nodeId": "B06:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/B06_s0-04-44da7d8f960fe5a0.wav"
+    },
+    {
+      "nodeId": "B06:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/B06_s0-05-f7989464ad137870.wav"
+    },
+    {
+      "nodeId": "B06_2:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B06_2_s0-01-356276eb09cd21eb.wav"
+    },
+    {
+      "nodeId": "B06_2:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B06_2_s0-03-fe95427d8adbcd6b.wav"
+    },
+    {
+      "nodeId": "B06_2:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/B06_2_s0-04-b3e71f211dd61d1c.wav"
+    },
+    {
+      "nodeId": "B07:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B07_s0-01-8a6832e83f34e6fe.wav"
+    },
+    {
+      "nodeId": "B07:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/B07_s0-04-3f85dbc67f3ad4b1.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B08_s0-01-c2b09f9889a7eea1.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B08_s0-03-1aad112cce381116.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/B08_s0-04-bbdc4236b0cfc791.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/B08_s0-05-a08f333c987fa43a.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/B08_s0-07-4e4fcf4bcfaf87cf.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/B08_s0-08-7d8058a6670011c2.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 9,
+      "file": "assets/voice/B08_s0-09-7f3a4487a3fe499a.wav"
+    },
+    {
+      "nodeId": "B08:s0",
+      "lineIndex": 10,
+      "file": "assets/voice/B08_s0-10-5b8cc24a22d841c5.wav"
+    },
+    {
+      "nodeId": "B08:s1:c:feedback-a",
+      "lineIndex": 1,
+      "file": "assets/voice/B08_s1_c_feedback-a-01-ce58b19b0e1ce5d4.wav"
+    },
+    {
+      "nodeId": "B08:s1:c:feedback-b",
+      "lineIndex": 1,
+      "file": "assets/voice/B08_s1_c_feedback-b-01-2471334806249685.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B09_s0-01-4f9cf0de48512d5c.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/B09_s0-02-a085b8dc55812fab.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B09_s0-03-045377ae66568bbf.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/B09_s0-05-8cf91a63e10c8a63.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/B09_s0-06-d1b9810be53bf481.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 9,
+      "file": "assets/voice/B09_s0-09-2a40333354e6680c.wav"
+    },
+    {
+      "nodeId": "B09:s0",
+      "lineIndex": 10,
+      "file": "assets/voice/B09_s0-10-8b17308312cc50e3.wav"
+    },
+    {
+      "nodeId": "B10:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B10_s0-03-0316a880f342bc0d.wav"
+    },
+    {
+      "nodeId": "B10:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/B10_s0-05-9888bd77f2756b3e.wav"
+    },
+    {
+      "nodeId": "B10:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/B10_s0-06-16802ea233f65e42.wav"
+    },
+    {
+      "nodeId": "B10:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/B10_s0-07-bce5d353da1f44a5.wav"
+    },
+    {
+      "nodeId": "B10_arrival:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B10_arrival_s0-03-9791baf8536ccf1f.wav"
+    },
+    {
+      "nodeId": "B11:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B11_s0-03-59cd406f23b7f6f9.wav"
+    },
+    {
+      "nodeId": "B11:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/B11_s0-05-9019c31b2dc0c029.wav"
+    },
+    {
+      "nodeId": "B11_404:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B11_404_s0-01-8b7e51e3a49f1e08.wav"
+    },
+    {
+      "nodeId": "B11_true:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/B11_true_s0-02-6041955310af62f2.wav"
+    },
+    {
+      "nodeId": "B11_true:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/B11_true_s0-04-7010e1d364668891.wav"
+    },
+    {
+      "nodeId": "B11_copy:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B11_copy_s0-01-66b21af788b31865.wav"
+    },
+    {
+      "nodeId": "B11_copy:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B11_copy_s0-03-89d766b86b936ff0.wav"
+    },
+    {
+      "nodeId": "B11_tape:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/B11_tape_s0-02-0ef3a1ba6da47bb8.wav"
+    },
+    {
+      "nodeId": "B11_tape:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/B11_tape_s0-03-75cfbad32ecb42a9.wav"
+    },
+    {
+      "nodeId": "C01:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/C01_s0-03-82a1ca9a28457990.wav"
+    },
+    {
+      "nodeId": "C02:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/C02_s0-05-4f2895bb97327619.wav"
+    },
+    {
+      "nodeId": "C03:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/C03_s0-04-cc62f7b72a2cc4dd.wav"
+    },
+    {
+      "nodeId": "C04_lost:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/C04_lost_s0-02-8f2b9e926f8b3e81.wav"
+    },
+    {
+      "nodeId": "D01:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/D01_s0-03-23c88d36dc86b91a.wav"
+    },
+    {
+      "nodeId": "D02:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/D02_s0-04-6be78aad02737d6c.wav"
+    },
+    {
+      "nodeId": "D02:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/D02_s0-05-5dc577332397e206.wav"
+    },
+    {
+      "nodeId": "D02:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/D02_s0-07-ac9e129c76944d93.wav"
+    },
+    {
+      "nodeId": "D03:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/D03_s0-04-2b987a9dacfc3906.wav"
+    },
+    {
+      "nodeId": "D03:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/D03_s0-06-49c21efb33f26e75.wav"
+    },
+    {
+      "nodeId": "D04:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/D04_s0-03-3a11c35c150544f8.wav"
+    },
+    {
+      "nodeId": "D04_watchman:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/D04_watchman_s0-01-8f64b491a2ebc81b.wav"
+    },
+    {
+      "nodeId": "E01:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/E01_s0-03-d9af5d58ed0e99d3.wav"
+    },
+    {
+      "nodeId": "E01:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/E01_s0-05-cfeb4cfadde1deb1.wav"
+    },
+    {
+      "nodeId": "E01:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/E01_s0-06-02843bc0f800f197.wav"
+    },
+    {
+      "nodeId": "E01:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/E01_s0-07-45695bf779592080.wav"
+    },
+    {
+      "nodeId": "E01:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/E01_s0-08-39affcb0e2b0c10b.wav"
+    },
+    {
+      "nodeId": "E02:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/E02_s0-04-2c7e86b3629053d7.wav"
+    },
+    {
+      "nodeId": "E02:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/E02_s0-05-bd1355651faa6f27.wav"
+    },
+    {
+      "nodeId": "E02:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/E02_s0-06-6dcbdd744146071f.wav"
+    },
+    {
+      "nodeId": "E02:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/E02_s0-07-feaf9409a373b295.wav"
+    },
+    {
+      "nodeId": "E02:s0",
+      "lineIndex": 8,
+      "file": "assets/voice/E02_s0-08-d709da7efe0e7c91.wav"
+    },
+    {
+      "nodeId": "E03:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/E03_s0-03-591eaf45b8905f50.wav"
+    },
+    {
+      "nodeId": "E03:s0",
+      "lineIndex": 4,
+      "file": "assets/voice/E03_s0-04-452e530f183ffb79.wav"
+    },
+    {
+      "nodeId": "E04:s0",
+      "lineIndex": 2,
+      "file": "assets/voice/E04_s0-02-0c4bb9a2c3a8d9da.wav"
+    },
+    {
+      "nodeId": "E04:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/E04_s0-03-01a06f5d4e702e59.wav"
+    },
+    {
+      "nodeId": "E04:s0",
+      "lineIndex": 5,
+      "file": "assets/voice/E04_s0-05-f860ed82ced847cc.wav"
+    },
+    {
+      "nodeId": "E04_accomplice:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/E04_accomplice_s0-01-ae76fe98c88268db.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 1,
+      "file": "assets/voice/B11_s0-03-59cd406f23b7f6f9.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 3,
+      "file": "assets/voice/F02_s0-03-2c8b747099615632.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 6,
+      "file": "assets/voice/F02_s0-06-34de76b9921ca4b9.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 7,
+      "file": "assets/voice/F02_s0-07-9275b8f26720c724.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 10,
+      "file": "assets/voice/F02_s0-10-477defbda47ee9c5.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 13,
+      "file": "assets/voice/F02_s0-13-f188e5b1c3dc3ce9.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 14,
+      "file": "assets/voice/F02_s0-14-383e712ada9a6d7d.wav"
+    },
+    {
+      "nodeId": "F02:s0",
+      "lineIndex": 16,
+      "file": "assets/voice/F02_s0-16-a7e0ebb79e9e60a4.wav"
+    }
+  ]
+}
